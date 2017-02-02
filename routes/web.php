@@ -11,7 +11,7 @@
 |
 */
 
-
+Route::get('/menu', 'HomeController@menu');
 
 Auth::routes();
 

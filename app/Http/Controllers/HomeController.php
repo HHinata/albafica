@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,30 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('welcome');
+    }
+
+    public function menu()
+    {
+        $menu =
+            [
+                [
+                    "menuName"=>"Profile",
+                    "menuCode"=>"1",
+                    "children"=>[
+                        [
+                            "menuName"=>"Account",
+                            "menuCode"=>"",
+                            "children"=>[]
+                        ],
+                        [
+                            "menuName"=>"Email",
+                            "menuCode"=>"",
+                            "children"=>[]
+                        ]
+                    ]
+                ]
+            ];
+        return Response::json($menu);
     }
 }

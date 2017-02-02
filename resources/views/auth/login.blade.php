@@ -12,14 +12,15 @@ login-page
         </div>
         <div class="card">
             <div class="body">
-                <form id="sign_in" method="POST">
+                <form id="sign_in" method="POST" action="{{ url('/login') }}">
+                    {{ csrf_field() }}
                     <div class="msg">Sign in to start your session</div>
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
                         </span>
                         <div class="form-line">
-                            <input type="text" class="form-control" name="username" placeholder="Username" required autofocus>
+                            <input type="text" class="form-control" name="email" placeholder="Email" required autofocus>
                         </div>
                     </div>
                     <div class="input-group">
@@ -41,7 +42,7 @@ login-page
                     </div>
                     <div class="row m-t-15 m-b--20">
                         <div class="col-xs-6">
-                            <a href="sign-up.html">Register Now!</a>
+                            <a href="/register">Register Now!</a>
                         </div>
                         <div class="col-xs-6 align-right">
                             <a href="forgot-password.html">Forgot Password?</a>
