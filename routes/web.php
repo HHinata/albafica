@@ -15,7 +15,12 @@ Route::get('/menu', 'HomeController@menu');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/index', function(){
+    return Redirect::to('/');
+});
+Route::get('/home', function(){
+    return Redirect::to('/');
+});
 Route::get('/', 'HomeController@index');
 //
 //Route::get('/', function () {

@@ -12412,7 +12412,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('a', {
     staticClass: "navbar-brand",
     attrs: {
-      "href": "index.html"
+      "href": "index"
     }
   }, [_vm._v("ADMINBSB - MATERIAL DESIGN")])]), _vm._v(" "), _c('div', {
     staticClass: "collapse navbar-collapse",
@@ -13027,6 +13027,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('li', [_c('a', {
     staticClass: "waves-effect waves-block",
     class: _vm.isFolder ? 'menu-toggle' : '',
+    attrs: {
+      "href": _vm.model.url
+    },
     on: {
       "click": _vm.toggle
     }
@@ -43485,7 +43488,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     toggle: function toggle() {
       if (this.isFolder) {
         this.open = !this.open;
-        console.log(this.open);
       }
     }
   }
@@ -43745,6 +43747,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MenuItems_vue__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MenuItems_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__MenuItems_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 //
 //
 //
@@ -43944,69 +43948,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-var menuData = [{
-  'id': '1',
-  'menuName': '基础管理',
-  'menuCode': '10',
-  'children': [{
-    'menuName': '用户管理',
-    'menuCode': '11'
-  }, {
-    'menuName': '角色管理',
-    'menuCode': '12',
-    'children': [{
-      'menuName': '管理员',
-      'menuCode': '121'
-    }, {
-      'menuName': 'CEO',
-      'menuCode': '122'
-    }, {
-      'menuName': 'CFO',
-      'menuCode': '123'
-    }, {
-      'menuName': 'COO',
-      'menuCode': '124'
-    }, {
-      'menuName': '普通人',
-      'menuCode': '124'
-    }]
-  }, {
-    'menuName': '权限管理',
-    'menuCode': '13'
-  }]
-}, {
-  'id': '2',
-  'menuName': '商品管理',
-  'menuCode': ''
-}, {
-  'id': '3',
-  'menuName': '订单管理',
-  'menuCode': '30',
-  'children': [{
-    'menuName': '订单列表',
-    'menuCode': '31'
-  }, {
-    'menuName': '退货列表',
-    'menuCode': '32',
-    'children': []
-  }]
-}, {
-  'id': '4',
-  'menuName': '商家管理',
-  'menuCode': '',
-  'children': []
-}];
+var menuData = [{ "menuName": "Profile", "menuCode": "1", "children": [{ "menuName": "Account", "menuCode": "", "children": [] }, { "menuName": "Email", "menuCode": "", "children": [] }] }];
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = {
-  components: {
-    menuItems: __WEBPACK_IMPORTED_MODULE_0__MenuItems_vue___default.a
-  },
-  data: function data() {
-    return {
-      menu: menuData
-    };
-  }
+    components: {
+        menuItems: __WEBPACK_IMPORTED_MODULE_0__MenuItems_vue___default.a
+    },
+    data: function data() {
+        return {
+            menu: menuData
+        };
+    },
+
+    mounted: function mounted() {
+        this.getData();
+    },
+    methods: {
+        getData: function getData() {
+            var _this = this;
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('\menu').then(function (res) {
+                _this.menu = res.data;
+                console.log(_this.menu);
+            });
+        }
+    }
 };
 
 /***/ }),

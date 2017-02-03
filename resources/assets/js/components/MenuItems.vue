@@ -1,6 +1,6 @@
 <template>
   <li>
-    <a @click="toggle" class="waves-effect waves-block" :class="isFolder? 'menu-toggle':''">
+    <a @click="toggle" class="waves-effect waves-block" :class="isFolder? 'menu-toggle':''" v-bind:href="model.url">
     <span >
       {{ model.menuName }}
     </span>
@@ -30,7 +30,6 @@ export default {
     toggle: function() {
       if (this.isFolder) {
         this.open = !this.open
-        console.log(this.open)
       }
     }
   }

@@ -38,12 +38,14 @@ class HomeController extends Controller
                         [
                             "menuName"=>"Account",
                             "menuCode"=>"",
-                            "children"=>[]
+                            "children"=>[],
+                            "url"=>"#/foo"
                         ],
                         [
                             "menuName"=>"Email",
                             "menuCode"=>"",
-                            "children"=>[]
+                            "children"=>[],
+                            "url"=>"#/bar"
                         ]
                     ]
                 ]
