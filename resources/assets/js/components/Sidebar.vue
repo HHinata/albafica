@@ -207,7 +207,7 @@ export default {
     },
     data() {
         return {
-        menu: menuData
+            menu: menuData
         }
     },
     mounted:function(){
@@ -218,7 +218,6 @@ export default {
             var _this = this;
             axios.get('\menu').then(function(res){
                 _this.menu = res.data;
-                console.log(_this.menu);
             });
         }
     }

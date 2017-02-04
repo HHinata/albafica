@@ -22,7 +22,8 @@ class ProblemController extends Controller
         $data = Request::all();
 
         $content = $this->problem
-            ->obtainContent($data['platform'], $data['id']);
+            ->setPlatform($data['platform'])
+            ->obtainContent($data['id']);
 
         return Response::Json($content);
     }

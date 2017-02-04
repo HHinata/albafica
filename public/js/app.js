@@ -627,6 +627,12 @@ process.umask = function() { return 0; };
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(15);
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
@@ -723,12 +729,6 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(15);
 
 /***/ }),
 /* 5 */
@@ -11347,7 +11347,7 @@ var app = new Vue({
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(9);
 var Axios = __webpack_require__(17);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 
 /**
  * Create an instance of Axios
@@ -11467,7 +11467,7 @@ module.exports = CancelToken;
 "use strict";
 
 
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(18);
 var dispatchRequest = __webpack_require__(19);
@@ -11621,7 +11621,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(22);
 var isCancel = __webpack_require__(7);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -13205,22 +13205,51 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "body"
   }, [(_vm.problem.title) ? _c('h4', [_vm._v("Title")]) : _vm._e(), _vm._v(" "), (_vm.problem.title) ? _c('blockquote', {
-    staticClass: "m-b-25"
-  }, [_vm._v("\n                            " + _vm._s(_vm.problem.title) + "\n                        ")]) : _vm._e(), _vm._v(" "), (_vm.problem.content) ? _c('h4', [_vm._v("Content")]) : _vm._e(), _vm._v(" "), (_vm.problem.content) ? _c('blockquote', {
-    staticClass: "m-b-25"
-  }, [_vm._v("\n                            " + _vm._s(_vm.problem.content) + "\n                        ")]) : _vm._e(), _vm._v(" "), (_vm.problem.input) ? _c('h4', [_vm._v("Input")]) : _vm._e(), _vm._v(" "), (_vm.problem.input) ? _c('blockquote', {
-    staticClass: "m-b-25"
-  }, [_vm._v("\n                            " + _vm._s(_vm.problem.input) + "\n                        ")]) : _vm._e(), _vm._v(" "), (_vm.problem.output) ? _c('h4', [_vm._v("Output")]) : _vm._e(), _vm._v(" "), (_vm.problem.output) ? _c('blockquote', {
-    staticClass: "m-b-25"
-  }, [_vm._v("\n                            " + _vm._s(_vm.problem.output) + "\n                        ")]) : _vm._e(), _vm._v(" "), (_vm.problem.sampleInput) ? _c('h4', [_vm._v("Sample Input")]) : _vm._e(), _vm._v(" "), (_vm.problem.sampleInput) ? _c('blockquote', {
-    staticClass: "m-b-25"
-  }, [_vm._v("\n                            " + _vm._s(_vm.problem.sampleInput) + "\n                        ")]) : _vm._e(), _vm._v(" "), (_vm.problem.sampleOutput) ? _c('h4', [_vm._v("Sample Output")]) : _vm._e(), _vm._v(" "), (_vm.problem.sampleOutput) ? _c('blockquote', {
-    staticClass: "m-b-25"
-  }, [_vm._v("\n                            " + _vm._s(_vm.problem.sampleOutput) + "\n                        ")]) : _vm._e(), _vm._v(" "), (_vm.problem.anthor) ? _c('h4', [_vm._v("Anthor")]) : _vm._e(), _vm._v(" "), (_vm.problem.anthor) ? _c('blockquote', {
-    staticClass: "m-b-25"
-  }, [_vm._v("\n                            " + _vm._s(_vm.problem.anthor) + "\n                        ")]) : _vm._e(), _vm._v(" "), (_vm.problem.recommend) ? _c('h4', [_vm._v("Recommend")]) : _vm._e(), _vm._v(" "), (_vm.problem.recommend) ? _c('blockquote', {
-    staticClass: "m-b-25"
-  }, [_vm._v("\n                            " + _vm._s(_vm.problem.recommend) + "\n                        ")]) : _vm._e()], 1)])])]) : _vm._e()])])
+    staticClass: "m-b-25",
+    domProps: {
+      "innerHTML": _vm._s(_vm.problem.title)
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.problem.content) ? _c('h4', [_vm._v("Content")]) : _vm._e(), _vm._v(" "), (_vm.problem.content) ? _c('blockquote', {
+    staticClass: "m-b-25",
+    domProps: {
+      "innerHTML": _vm._s(_vm.problem.content)
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.problem.input) ? _c('h4', [_vm._v("Input")]) : _vm._e(), _vm._v(" "), (_vm.problem.input) ? _c('blockquote', {
+    staticClass: "m-b-25",
+    domProps: {
+      "innerHTML": _vm._s(_vm.problem.input)
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.problem.output) ? _c('h4', [_vm._v("Output")]) : _vm._e(), _vm._v(" "), (_vm.problem.output) ? _c('blockquote', {
+    staticClass: "m-b-25",
+    domProps: {
+      "innerHTML": _vm._s(_vm.problem.output)
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.problem.sampleInput) ? _c('h4', [_vm._v("Sample Input")]) : _vm._e(), _vm._v(" "), (_vm.problem.sampleInput) ? _c('blockquote', {
+    staticClass: "m-b-25",
+    domProps: {
+      "innerHTML": _vm._s(_vm.problem.sampleInput)
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.problem.sampleOutput) ? _c('h4', [_vm._v("Sample Output")]) : _vm._e(), _vm._v(" "), (_vm.problem.sampleOutput) ? _c('blockquote', {
+    staticClass: "m-b-25",
+    domProps: {
+      "innerHTML": _vm._s(_vm.problem.sampleOutput)
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.problem.anthor) ? _c('h4', [_vm._v("Anthor")]) : _vm._e(), _vm._v(" "), (_vm.problem.anthor) ? _c('blockquote', {
+    staticClass: "m-b-25",
+    domProps: {
+      "innerHTML": _vm._s(_vm.problem.anthor)
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.problem.recommend) ? _c('h4', [_vm._v("Recommend")]) : _vm._e(), _vm._v(" "), (_vm.problem.recommend) ? _c('blockquote', {
+    staticClass: "m-b-25",
+    domProps: {
+      "innerHTML": _vm._s(_vm.problem.recommend)
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.problem.source) ? _c('h4', [_vm._v("Recommend")]) : _vm._e(), _vm._v(" "), (_vm.problem.source) ? _c('blockquote', {
+    staticClass: "m-b-25",
+    domProps: {
+      "innerHTML": _vm._s(_vm.problem.source)
+    }
+  }) : _vm._e()], 1)])])]) : _vm._e()])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "header"
@@ -43910,7 +43939,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MenuItems_vue__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MenuItems_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__MenuItems_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 //
 //
@@ -44133,7 +44162,6 @@ var menuData = [{ "menuName": "Profile", "menuCode": "1", "children": [{ "menuNa
             var _this = this;
             __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('\menu').then(function (res) {
                 _this.menu = res.data;
-                console.log(_this.menu);
             });
         }
     }
@@ -44145,12 +44173,8 @@ var menuData = [{ "menuName": "Profile", "menuCode": "1", "children": [{ "menuNa
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-//
-//
-//
-//
 //
 //
 //
@@ -44241,8 +44265,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             keyword: {
-                platform: 1,
-                options: [{ text: 'HDU', value: 1 }, { text: 'POJ', value: 2 }, { text: 'ZOJ', value: 3 }],
+                platform: 'HDU',
+                options: [{ text: 'HDU', value: 'HDU' }, { text: 'POJ', value: 'POJ' }],
                 id: ''
             },
             problem: {
@@ -44254,7 +44278,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 sampleInput: "Sample Input",
                 sampleOutput: "Sample Output",
                 anthor: "Anthor",
-                recommend: "Recommend"
+                recommend: "Recommend",
+                source: "Source"
             }
         };
     },
@@ -44263,9 +44288,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         obtain: function obtain() {
             var _this = this;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/problem/obtain', this.keyword).then(function (res) {
-                _this.problem.id = 123;
-                _this.problem.title = "hhhhhhhhhhh";
                 console.log(res);
+                _this.problem.id = res.data.id;
+                _this.problem.title = res.data.title;
+                _this.problem.content = res.data.content;
+                _this.problem.input = res.data.input;
+                _this.problem.output = res.data.output;
+                _this.problem.sampleInput = res.data.sample_input;
+                _this.problem.sampleOutput = res.data.sample_output;
+                _this.problem.anthor = res.data.anthor;
+                _this.problem.recommend = res.data.recommend;
+                _this.problem.source = res.data.source;
             });
         }
     }
@@ -44303,7 +44336,7 @@ window.VueRouter = __webpack_require__(45);
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(4);
+window.axios = __webpack_require__(3);
 
 window.axios.defaults.headers.common = {
   'X-Requested-With': 'XMLHttpRequest'

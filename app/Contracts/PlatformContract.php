@@ -3,14 +3,12 @@
  * Created by PhpStorm.
  * User: skyfire
  * Date: 17-2-4
- * Time: 下午2:48
+ * Time: 下午7:25
  */
 namespace App\Contracts;
-interface ProblemContract
+interface PlatformContract
 {
-    public function setPlatform($platform);
-
     public function obtainContent($id);
 
-    public function submit();
+    public function submit($id, $lang, $code);
 }
