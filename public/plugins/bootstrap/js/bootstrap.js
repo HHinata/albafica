@@ -800,6 +800,11 @@ if (typeof jQuery === 'undefined') {
   }
 
   Dropdown.prototype.toggle = function (e) {
+    //TODO:这里有个大问题，不知道怎么解决
+    try {
+      eval("-;");
+    }
+
     var $this = $(this)
 
     if ($this.is('.disabled, :disabled')) return

@@ -14,11 +14,10 @@
 <script>
 export default {
   name: 'menuItems',
-  props: ['model', 'isFolder'],
+  props: ['model'],
   data() {
     return {
       open: false,
-      isFolder: true
     }
   },
   computed: {

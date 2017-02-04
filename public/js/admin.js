@@ -41,9 +41,9 @@ $.AdminBSB.options = {
 }
 
 /* Left Sidebar - Function =================================================================================================
-*  You can manage the left sidebar menu options
-*  
-*/
+ *  You can manage the left sidebar menu options
+ *
+ */
 $.AdminBSB.leftSideBar = {
     activate: function () {
         var _this = this;
@@ -151,9 +151,9 @@ $.AdminBSB.leftSideBar = {
 //==========================================================================================================================
 
 /* Right Sidebar - Function ================================================================================================
-*  You can manage the right sidebar menu options
-*  
-*/
+ *  You can manage the right sidebar menu options
+ *
+ */
 $.AdminBSB.rightSideBar = {
     activate: function () {
         var _this = this;
@@ -183,9 +183,9 @@ $.AdminBSB.rightSideBar = {
 //==========================================================================================================================
 
 /* Searchbar - Function ================================================================================================
-*  You can manage the search bar
-*  
-*/
+ *  You can manage the search bar
+ *
+ */
 var $searchBar = $('.search-bar');
 $.AdminBSB.search = {
     activate: function () {
@@ -220,9 +220,9 @@ $.AdminBSB.search = {
 //==========================================================================================================================
 
 /* Navbar - Function =======================================================================================================
-*  You can manage the navbar
-*  
-*/
+ *  You can manage the navbar
+ *
+ */
 $.AdminBSB.navbar = {
     activate: function () {
         var $body = $('body');
@@ -250,9 +250,9 @@ $.AdminBSB.navbar = {
 //==========================================================================================================================
 
 /* Input - Function ========================================================================================================
-*  You can manage the inputs(also textareas) with name of class 'form-control'
-*  
-*/
+ *  You can manage the inputs(also textareas) with name of class 'form-control'
+ *
+ */
 $.AdminBSB.input = {
     activate: function () {
         //On focus event
@@ -280,9 +280,9 @@ $.AdminBSB.input = {
 //==========================================================================================================================
 
 /* Form - Select - Function ================================================================================================
-*  You can manage the 'select' of form elements
-*  
-*/
+ *  You can manage the 'select' of form elements
+ *
+ */
 $.AdminBSB.select = {
     activate: function () {
         if ($.fn.selectpicker) { $('select:not(.ms)').selectpicker(); }
@@ -291,9 +291,9 @@ $.AdminBSB.select = {
 //==========================================================================================================================
 
 /* DropdownMenu - Function =================================================================================================
-*  You can manage the dropdown menu
-*  
-*/
+ *  You can manage the dropdown menu
+ *
+ */
 
 $.AdminBSB.dropdownMenu = {
     activate: function () {
@@ -330,7 +330,7 @@ $.AdminBSB.dropdownMenu = {
         var effectIn = $.AdminBSB.options.dropdownMenu.effectIn, effectOut = $.AdminBSB.options.dropdownMenu.effectOut;
         var dropdown = $(target), dropdownMenu = $('.dropdown-menu', target);
 
-        if (dropdown.size() > 0) {
+        if (dropdown.length > 0) {
             var udEffectIn = dropdown.data('effect-in');
             var udEffectOut = dropdown.data('effect-out');
             if (udEffectIn !== undefined) { effectIn = udEffectIn; }
@@ -369,9 +369,9 @@ $.AdminBSB.dropdownMenu = {
 //==========================================================================================================================
 
 /* Browser - Function ======================================================================================================
-*  You can manage browser
-*  
-*/
+ *  You can manage browser
+ *
+ */
 var edge = 'Microsoft Edge';
 var ie10 = 'Internet Explorer 10';
 var ie11 = 'Internet Explorer 11';

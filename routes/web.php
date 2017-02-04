@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('/menu', 'HomeController@menu');
-
 Auth::routes();
 
 Route::get('/index', function(){
@@ -22,7 +20,7 @@ Route::get('/home', function(){
     return Redirect::to('/');
 });
 Route::get('/', 'HomeController@index');
-//
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+
+
+Route::get('/menu', 'HomeController@menu');
+Route::post('/problem/obtain', 'ProblemController@obtain');

@@ -180,6 +180,10 @@ return [
          * Entrust RBAC Model
          */
         Zizaco\Entrust\EntrustServiceProvider::class,
+        /**
+         * Custom Service Providers...
+         */
+        App\Providers\ProblemServiceProvider::class,
     ],
 
     /*

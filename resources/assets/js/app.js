@@ -17,6 +17,7 @@ Vue.component('navbar', require('./components/Navbar.vue'));
 Vue.component('sidebar', require('./components/Sidebar.vue'));
 Vue.component('loader', require('./components/Loader.vue'));
 Vue.component('searchbar', require('./components/Searchbar.vue'));
+// Vue.component('obtainProblem', require('./components/pages/ObtainProblem.vue'));
 
 // 0. 如果使用模块化机制编程，導入Vue和VueRouter，要调用 Vue.use(VueRouter)
 Vue.use(VueRouter);
@@ -32,7 +33,8 @@ const Bar = { template: '<div>bar</div>' }
 // 我们晚点再讨论嵌套路由。
 const routes = [
     { path: '/foo', component: Foo },
-    { path: '/bar', component: Bar }
+    { path: '/bar', component: Bar },
+    { path: '/obtainProblem', component: require('./components/pages/ObtainProblem.vue') }
 ]
 
 // 3. 创建 router 实例，然后传 `routes` 配置
