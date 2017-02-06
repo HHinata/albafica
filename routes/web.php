@@ -21,6 +21,7 @@ Route::get('/home', function(){
 });
 Route::get('/', 'HomeController@index');
 
-
 Route::get('/menu', 'HomeController@menu');
 Route::post('/problem/obtain', 'ProblemController@obtain');
+
+Route::resource('user', 'UserController');

@@ -23,8 +23,6 @@ Vue.component('searchbar', require('./components/Searchbar.vue'));
 Vue.use(VueRouter);
 // 1. 定义（路由）组件。
 // 可以从其他文件 import 进来
-const Foo = { template: '<div>foo</div>' }
-const Bar = { template: '<div>bar</div>' }
 
 // 2. 定义路由
 // 每个路由应该映射一个组件。 其中"component" 可以是
@@ -32,9 +30,9 @@ const Bar = { template: '<div>bar</div>' }
 // 或者，只是一个组件配置对象。
 // 我们晚点再讨论嵌套路由。
 const routes = [
-    { path: '/foo', component: Foo },
-    { path: '/bar', component: Bar },
-    { path: '/obtainProblem', component: require('./components/pages/ObtainProblem.vue') }
+    { path: '/account', component: require('./components/pages/Account.vue') },
+    { path: '/account-list', component: require('./components/pages/AccountList.vue') },
+    { path: '/obtain-problem', component: require('./components/pages/ObtainProblem.vue') }
 ]
 
 // 3. 创建 router 实例，然后传 `routes` 配置
