@@ -20,7 +20,7 @@ class POJService implements PlatformContract
         'content_sio' => ['.sio','html'],
     ];
 
-    private function dataHandle(Array $array)
+    public function infoFormat(Array $array)
     {
         $problem['title'] = reset($array)['title'];
 
@@ -48,21 +48,25 @@ class POJService implements PlatformContract
         return $problem;
     }
 
-    public function obtainContent($id)
+    public function grabProblem($id)
     {
         $page = sprintf($this->url, $id);
 
-        $data = \QL\QueryList::Query($page,$this->rules)->data;
+        $content = \QL\QueryList::Query($page,$this->rules)->data;
 
-        $data = $this->dataHandle($data);
+        $info = $this->infoFormat($content);
+        $info['id'] = $id;
 
-        $data['id'] = $id;
-
-        return $data;
+        return $info;
     }
 
     public function submit($id, $lang, $code)
     {
 
+    }
+
+    public function login()
+    {
+        // TODO: Implement login() method.
     }
 }

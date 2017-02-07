@@ -3,11 +3,12 @@
 namespace App\Providers;
 
 use App\Services\HDUService;
+use App\Services\PlatformService;
 use App\Services\POJService;
 use App\Services\ProblemService;
 use Illuminate\Support\ServiceProvider;
 
-class ProblemServiceProvider extends ServiceProvider
+class PlatformServiceProvider extends ServiceProvider
 {
 
     private $platforms = [
@@ -33,12 +34,12 @@ class ProblemServiceProvider extends ServiceProvider
     public function register()
     {
 
-        $this->app->singleton('problem',function(){
-            return new ProblemService();
+        $this->app->singleton('platform',function(){
+            return new PlatformService();
         });
 
-        $this->app->bind('App\Contracts\ProblemContract',function(){
-            return new ProblemService();
+        $this->app->bind('App\Contracts\PlatformServiceContract',function(){
+            return new PlatformService();
         });
 
         foreach ($this->platforms as $key => $value)

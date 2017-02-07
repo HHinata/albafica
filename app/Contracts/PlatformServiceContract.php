@@ -6,11 +6,11 @@
  * Time: 下午2:48
  */
 namespace App\Contracts;
-interface ProblemContract
+interface PlatformServiceContract
 {
     public function setPlatform($platform);
 
-    public function obtainContent($id);
+    public function grabProblem($id);
 
-    public function submit();
+    public function submit($id, $lang, $code);
 }

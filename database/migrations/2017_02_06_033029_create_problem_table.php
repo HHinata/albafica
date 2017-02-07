@@ -23,9 +23,9 @@ class CreateProblemTable extends Migration
             $table->string('output');
             $table->string('sample_input');
             $table->string('sample_output');
-            $table->string('hint');
-            $table->string('author');
-            $table->string('source');
+            $table->string('hint')->default('');
+            $table->string('author')->default('');
+            $table->string('source')->default('');
             $table->timestamps();
         });
     }

@@ -8,7 +8,11 @@
 namespace App\Contracts;
 interface PlatformContract
 {
-    public function obtainContent($id);
+    public function login();
+
+    public function infoFormat(Array $array);
+
+    public function grabProblem($id);
 
     public function submit($id, $lang, $code);
 }

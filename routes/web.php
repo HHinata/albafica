@@ -13,15 +13,16 @@
 
 Auth::routes();
 
-Route::get('/index', function(){
-    return Redirect::to('/');
-});
-Route::get('/home', function(){
-    return Redirect::to('/');
-});
 Route::get('/', 'HomeController@index');
-
 Route::get('/menu', 'HomeController@menu');
-Route::post('/problem/obtain', 'ProblemController@obtain');
 
 Route::resource('user', 'UserController');
+Route::resource('problem', 'ProblemController');
+
+Route::group(['prefix'=>'plat'], function ()
+{
+    Route::post('grab', 'PlatformController@grab');
+    Route::post('submit', 'PlatformController@submit');
+});
+
+

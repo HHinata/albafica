@@ -29,8 +29,7 @@ class HomeController extends Controller
 
     public function menu()
     {
-        $menu =
-            [
+        $menu = [
                 [
                     "menuName"=>"Profile",
                     "children"=>[
@@ -45,9 +44,19 @@ class HomeController extends Controller
                             "url"=>"#/account-list"
                         ],
                         [
-                            "menuName"=>"Obtain",
+                            "menuName"=>"Grab",
                             "children"=>[],
-                            "url"=>"#/obtain-problem"
+                            "url"=>"#/grab"
+                        ],
+                        [
+                            "menuName"=>"Submit",
+                            "children"=>[],
+                            "url"=>"#/submit"
+                        ],
+                        [
+                            "menuName"=>"ProblemSet",
+                            "children"=>[],
+                            "url"=>"#/problem-list"
                         ],
                     ]
                 ]

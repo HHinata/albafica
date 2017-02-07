@@ -7,9 +7,9 @@
  */
 namespace App\Services;
 
-use App\Contracts\ProblemContract;
+use App\Contracts\PlatformServiceContract;
 
-class ProblemService implements ProblemContract
+class PlatformService implements PlatformServiceContract
 {
 
     private $platform;
@@ -34,13 +34,13 @@ class ProblemService implements ProblemContract
      * @param $id
      * @return array
      */
-    public function obtainContent($id)
+    public function grabProblem($id)
     {
-        return $this->platform->obtainContent($id);
+        return $this->platform->grabProblem($id);
     }
 
-    public function submit()
+    public function submit($id, $lang, $code)
     {
-
+        return $this->platform->submit($id, $lang, $code);
     }
 }

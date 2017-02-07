@@ -27,7 +27,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                        <button type="button" class="btn btn-primary btn-lg m-l-15 waves-effect" v-on:click="obtain">OBTAIN</button>
+                                        <button type="button" class="btn btn-primary btn-lg m-l-15 waves-effect" v-on:click="grab">GRAB</button>
                                     </div>
                                 </div>
                             </form>
@@ -111,10 +111,10 @@ export default {
     },
     methods:
     {
-        obtain:function()
+        grab:function()
         {
             var _this = this;
-            axios.post('/problem/obtain', this.keyword).then(function(res){
+            axios.post('/plat/grab', this.keyword).then(function(res){
                 console.log(res);
                 _this.problem.id = res.data.id;
                 _this.problem.title = res.data.title;

@@ -183,7 +183,7 @@ return [
         /**
          * Custom Service Providers...
          */
-        App\Providers\ProblemServiceProvider::class,
+        App\Providers\PlatformServiceProvider::class,
     ],
 
     /*

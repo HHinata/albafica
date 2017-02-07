@@ -2,29 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\ProblemContract;
+use App\Models\Problem;
 use Request;
-use Illuminate\Support\Facades\Response;
 
 class ProblemController extends Controller
 {
-    //
-    public function __construct(ProblemContract $problem)
+    /**
+     * @return Response
+     */
+    public function index(Request $request)
     {
-        $this->problem = $problem;
+        $problems = Problem::all();
+        return $problems;
     }
 
     /**
-     * Obtain from Judge platform
+     * @return Response
      */
-    public function obtain()
+    public function create()
     {
-        $data = Request::all();
+        //
+    }
 
-        $content = $this->problem
-            ->setPlatform($data['platform'])
-            ->obtainContent($data['id']);
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
 
-        return Response::Json($content);
+    /**
+     * @param int $id
+     * @return Response
+     */
+    public function show($id)
+    {
+
+    }
+
+    /**
+     * @param int $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * @param int $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }
