@@ -69,4 +69,9 @@ class POJService implements PlatformContract
     {
         // TODO: Implement login() method.
     }
+
+    public function getRID(int $pid, int $first=0, int $lang=0, int $status=0)
+    {
+
+    }
 }

@@ -15,4 +15,6 @@ interface PlatformContract
     public function grabProblem($id);
 
     public function submit($id, $lang, $code);
+
+    public function getRID(int $pid, int $first=0, int $lang=0, int $status=0);
 }

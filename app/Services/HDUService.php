@@ -26,6 +26,9 @@ class HDUService implements PlatformContract
     /* the url for submit code*/
     private $submitUrl = 'http://acm.hdu.edu.cn/submit.php?action=submit';
 
+    /* the solution list url */
+    private $solutionUrl = 'http://acm.hdu.edu.cn/status.php?first=%d&pid=%d&user=%s&lang=%d&status=%d';
+
     /* the table for language convert */
     private $langTable = ['g++'=>'0'];
 
@@ -64,9 +67,9 @@ class HDUService implements PlatformContract
 
     public function grabProblem($id)
     {
-        $page = sprintf($this->grabUrl, $id);
+        $url = sprintf($this->grabUrl, $id);
 
-        $content = \QL\QueryList::Query($page,$this->rules,'','UTF-8','GB2312',true)->data;
+        $content = \QL\QueryList::Query($url,$this->rules,'','UTF-8','GB2312',true)->data;
 
         $info = $this->infoFormat($content);
         $info['id'] = $id;
@@ -103,9 +106,11 @@ class HDUService implements PlatformContract
 
         $data = ['check'=>0, 'problemid'=>$id, 'language'=>$this->langTable[$lang], 'usercode'=>$code];
 
-        $res = $this->client->request('POST', $this->submitUrl, ['form_params'=>$data]);
+        $this->client->request('POST', $this->submitUrl, ['form_params'=>$data]);
 
-        return $res;
+        $rid = self::getRID($id);
+
+        return $rid;
     }
 
     /**
@@ -124,5 +129,33 @@ class HDUService implements PlatformContract
         $this->client->request('POST', $this->loginUrl, ['form_params'=>$data]);
 
         $this->isLogin = true;
+    }
+
+    /**
+     * Get the run id in the Open Judge
+     *
+     * @param $pid
+     * @param $first
+     * @param $lang
+     * @param $status
+     */
+    public function getRID(int $pid, int $first=0, int $lang=0, int $status=0)
+    {
+        if ($this->isLogin === false)
+        {
+            $this->login();
+        }
+
+        $username = $this->config['user']?:"";
+
+        $url = sprintf($this->solutionUrl, $first, $pid, $username, $lang, $status);
+
+        $rules = [
+            'title'=>['td[height=22px]', 'text']
+        ];
+
+        $content = \QL\QueryList::Query($url,$rules,'','UTF-8','GB2312',true)->data;
+
+        return reset($content);
     }
 }

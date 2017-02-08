@@ -55,6 +55,11 @@ export default {
             }
         };
     },
+    mounted:function()
+    {
+        var query = this.$route.query;
+        this.solution.pid = query.pid;
+    },
     methods:
     {
         submit:function()

@@ -25,7 +25,7 @@
                                         <th scope="row">{{ problem.id }}</th>
                                         <td>{{ problem.platform }}</td>
                                         <td>{{ problem.sign }}</td>
-                                        <td>{{ problem.title }}</td>
+                                        <td><router-link :to="{ path: 'problem-detail?id=' + problem.id }">{{ problem.title }}</router-link></td>
                                     </tr>
                                 </tbody>
                             </table>

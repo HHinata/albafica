@@ -39,7 +39,8 @@ class ProblemController extends Controller
      */
     public function show($id)
     {
-
+        $problem = Problem::where('id', $id)->first();
+        return $problem;
     }
 
     /**

@@ -58,6 +58,11 @@ class HomeController extends Controller
                             "children"=>[],
                             "url"=>"#/problem-list"
                         ],
+                        [
+                            "menuName"=>"Problem",
+                            "children"=>[],
+                            "url"=>"#/problem-detail?id=1"
+                        ],
                     ]
                 ]
             ];

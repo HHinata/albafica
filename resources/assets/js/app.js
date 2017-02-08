@@ -26,6 +26,7 @@ const routes = [
     { path: '/grab', component: require('./components/platform/Grab.vue') },
     { path: '/submit', component: require('./components/platform/Submit.vue') },
     { path: '/problem-list', component: require('./components/problem/ProblemList.vue') },
+    { path: '/problem-detail', component: require('./components/problem/ProblemDetail.vue') },
 ]
 
 const router = new VueRouter({

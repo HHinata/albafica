@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Contracts\PlatformServiceContract;
 use App\Contracts\ProblemContract;
+use App\Models\Problem;
+use App\Models\Solution;
 use Illuminate\Support\Facades\Response;
 use Request;
 
@@ -47,10 +49,22 @@ class PlatformController extends Controller
         $code = Request::input('code');
         $lang = Request::input('lang');
 
-        $res = $this->plat
-            ->setPlatform('HDU')
-            ->submit($pid, $lang, $code);
+        $problem = Problem::where('id', $pid)->first();
 
-        return $res;
+        $rid = $this->plat
+            ->setPlatform($problem->platform)
+            ->submit($problem->sign, $lang, $code);
+
+        $data = [
+            'uid'=>Auth::user()->id,
+            'pid'=>$pid,
+            'rid'=>$rid,
+            'lang'=>0
+        ];
+
+        $solution = new Solution();
+        $solution->join($data);
+
+        return $rid;
     }
 }

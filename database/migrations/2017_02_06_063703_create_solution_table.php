@@ -16,10 +16,11 @@ class CreateSolutionTable extends Migration
         Schema::create('solution', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('problem_id');
-            $table->integer('time');
-            $table->integer('memory');
+            $table->integer('time')->default(0);
+            $table->integer('memory')->default(0);
             $table->integer('user_id');
-            $table->smallInteger('result');
+            $table->integer('run_id');
+            $table->smallInteger('result')->default(0);
             $table->smallInteger('language');
             $table->timestamps();
         });
