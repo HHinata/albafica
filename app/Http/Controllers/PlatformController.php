@@ -6,6 +6,7 @@ use App\Contracts\PlatformServiceContract;
 use App\Contracts\ProblemContract;
 use App\Models\Problem;
 use App\Models\Solution;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Request;
 

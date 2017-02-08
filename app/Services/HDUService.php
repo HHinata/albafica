@@ -156,6 +156,6 @@ class HDUService implements PlatformContract
 
         $content = \QL\QueryList::Query($url,$rules,'','UTF-8','GB2312',true)->data;
 
-        return reset($content);
+        return reset($content)['title'];
     }
 }

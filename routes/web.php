@@ -18,6 +18,7 @@ Route::get('/menu', 'HomeController@menu');
 
 Route::resource('user', 'UserController');
 Route::resource('problem', 'ProblemController');
+Route::resource('solution', 'SolutionController');
 
 Route::group(['prefix'=>'plat'], function ()
 {
