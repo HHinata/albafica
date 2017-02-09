@@ -19,15 +19,18 @@
                                           </option>
                                         </select>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-6">
                                         <div class="form-group">
                                             <div class="form-line">
                                                 <input type="text"  v-model='keyword.id' class="form-control" placeholder="Problem ID">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6">
                                         <button type="button" class="btn btn-primary btn-lg m-l-15 waves-effect" v-on:click="grab">GRAB</button>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6">
+                                        <button type="button" class="btn btn-primary btn-lg m-l-15 waves-effect" v-on:click="join">JOIN</button>
                                     </div>
                                 </div>
                             </form>
@@ -43,8 +46,8 @@
                             <blockquote class="m-b-25" v-if="problem.title" v-html="problem.title">
                             </blockquote>
 
-                            <h4 v-if="problem.content">Content</h4>
-                            <blockquote class="m-b-25" v-if="problem.content" v-html="problem.content">
+                            <h4 v-if="problem.description">Description</h4>
+                            <blockquote class="m-b-25" v-if="problem.description" v-html="problem.description">
                             </blockquote>
 
                             <h4 v-if="problem.input">Input</h4>
@@ -55,12 +58,12 @@
                             <blockquote class="m-b-25" v-if="problem.output" v-html="problem.output">
                             </blockquote>
 
-                            <h4 v-if="problem.sampleInput">Sample Input</h4>
-                            <blockquote class="m-b-25" v-if="problem.sampleInput" v-html="problem.sampleInput">
+                            <h4 v-if="problem.sample_input">Sample Input</h4>
+                            <blockquote class="m-b-25" v-if="problem.sample_input" v-html="problem.sample_input">
                             </blockquote>
 
-                            <h4 v-if="problem.sampleOutput">Sample Output</h4>
-                            <blockquote class="m-b-25" v-if="problem.sampleOutput" v-html="problem.sampleOutput">
+                            <h4 v-if="problem.sample_output">Sample Output</h4>
+                            <blockquote class="m-b-25" v-if="problem.sample_output" v-html="problem.sample_output">
                             </blockquote>
 
                             <h4 v-if="problem.anthor">Anthor</h4>
@@ -98,11 +101,11 @@ export default {
             problem:{
                 id:"",
                 title:"Title",
-                content:"Content",
+                description:"Description",
                 input:"Input",
                 output:"Output",
-                sampleInput:"Sample Input",
-                sampleOutput:"Sample Output",
+                sample_input:"Sample Input",
+                sample_output:"Sample Output",
                 anthor:"Anthor",
                 recommend:"Recommend",
                 source:"Source"
@@ -118,14 +121,23 @@ export default {
                 console.log(res);
                 _this.problem.id = res.data.id;
                 _this.problem.title = res.data.title;
-                _this.problem.content = res.data.content;
+                _this.problem.description = res.data.description;
                 _this.problem.input = res.data.input;
                 _this.problem.output = res.data.output;
-                _this.problem.sampleInput = res.data.sample_input;
-                _this.problem.sampleOutput = res.data.sample_output;
+                _this.problem.sample_input = res.data.sample_input;
+                _this.problem.sample_output = res.data.sample_output;
                 _this.problem.anthor = res.data.anthor;
                 _this.problem.recommend = res.data.recommend;
                 _this.problem.source = res.data.source;
+                _this.problem.platform = _this.keyword.platform;
+                _this.problem.sign = _this.keyword.id;
+                console.log(_this.problem);
+            });
+        },
+        join:function()
+        {
+            axios.post('/problem', this.problem).then(function(res){
+                console.log(res);
             });
         }
     }

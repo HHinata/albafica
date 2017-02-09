@@ -31,6 +31,15 @@ class ProblemController extends Controller
     public function store(Request $request)
     {
         //
+        $data = Request::all();
+
+        unset($data['id']);
+
+        $problem = new Problem($data);
+
+        $problem->save();
+
+        return $data;
     }
 
     /**

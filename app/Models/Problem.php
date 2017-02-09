@@ -8,4 +8,6 @@ class Problem extends Model
 {
     /* set up the table */
     protected $table = 'problem';
+
+    protected $fillable = ['platform', 'sign', 'title', 'description', 'input', 'output', 'sample_input', 'sample_output'];
 }

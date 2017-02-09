@@ -42,12 +42,31 @@ class HDUService implements PlatformContract
         'content' => ['.panel_content','html'],
     ];
 
+
+    public function __construct($config = null)
+    {
+        if (is_null($config))
+        {
+            $this->config['user'] = env('HDU_USER');
+            $this->config['pass'] = env('HDU_PASS');
+        }
+        else    $this->config = $config;
+
+        $this->client = new \GuzzleHttp\Client(['cookies' => true]);
+    }
+
+    /**
+     * Problem infomation format for front end
+     *
+     * @param array $array
+     * @return mixed
+     */
     public function infoFormat(Array $array)
     {
         $problem['title'] = reset($array)['title'];
 
         $relation=[
-          'Problem Description'=>'content',
+          'Problem Description'=>'description',
           'Input'   =>  'input',
           'Output'  =>  'output',
           'Sample Input'    =>  'sample_input',
@@ -65,6 +84,12 @@ class HDUService implements PlatformContract
         return $problem;
     }
 
+    /**
+     * Grab problem infomation
+     *
+     * @param $id
+     * @return mixed
+     */
     public function grabProblem($id)
     {
         $url = sprintf($this->grabUrl, $id);
@@ -75,18 +100,6 @@ class HDUService implements PlatformContract
         $info['id'] = $id;
 
         return $info;
-    }
-
-    public function __construct($config = null)
-    {
-        if (is_null($config))
-        {
-            $this->config['user'] = env('HDU_USER');
-            $this->config['pass'] = env('HDU_PASS');
-        }
-        else    $this->config = $config;
-
-        $this->client = new \GuzzleHttp\Client(['cookies' => true]);
     }
 
     /**

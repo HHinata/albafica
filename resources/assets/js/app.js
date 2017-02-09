@@ -27,6 +27,7 @@ const routes = [
     { path: '/submit', component: require('./components/platform/Submit.vue') },
     { path: '/problem-list', component: require('./components/problem/ProblemList.vue') },
     { path: '/problem-detail', component: require('./components/problem/ProblemDetail.vue') },
+    { path: '/solution-list', component: require('./components/solution/SolutionList.vue') },
 ]
 
 const router = new VueRouter({

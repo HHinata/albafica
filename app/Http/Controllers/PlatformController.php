@@ -34,11 +34,11 @@ class PlatformController extends Controller
     {
         $data = Request::all();
 
-        $content = $this->plat
+        $info = $this->plat
             ->setPlatform($data['platform'])
             ->grabProblem($data['id']);
 
-        return Response::Json($content);
+        return Response::Json($info);
     }
 
     /**

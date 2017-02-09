@@ -25,7 +25,7 @@ class POJService implements PlatformContract
         $problem['title'] = reset($array)['title'];
 
         $relation=[
-            'Description'=>'content',
+            'Description'=>'description',
             'Input'   =>  'input',
             'Output'  =>  'output',
             'Sample Input'    =>  'sample_input',

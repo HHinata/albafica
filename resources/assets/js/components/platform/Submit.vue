@@ -49,7 +49,7 @@ export default {
     data(){
         return {
             solution:{
-                pid:1000,
+                pid:1,
                 lang:'g++',
                 code:''
             }
@@ -58,7 +58,9 @@ export default {
     mounted:function()
     {
         var query = this.$route.query;
-        this.solution.pid = query.pid;
+        if(query.pid){
+            this.solution.pid = query.pid;
+        }
     },
     methods:
     {

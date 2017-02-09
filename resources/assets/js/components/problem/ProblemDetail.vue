@@ -15,8 +15,7 @@
                                     <p class="align-left">
                                         <b>Description</b>
                                     </p>
-                                    <div class="align-left">
-                                    {{ problem.description }}
+                                    <div class="align-left" v-html="problem.description">
                                     </div>
                                 </div>
                             </div>
@@ -27,16 +26,14 @@
                                     <p class="align-left">
                                         <b>Input</b>
                                     </p>
-                                    <div class="align-left">
-                                    {{ problem.input }}
+                                    <div class="align-left" v-html="problem.input">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="align-left">
                                         <b>OutPut</b>
                                     </p>
-                                    <div class="align-left">
-                                    {{ problem.output }}
+                                    <div class="align-left" v-html="problem.output">
                                     </div>
                                 </div>
                             </div>
@@ -47,16 +44,14 @@
                                     <p class="align-left">
                                         <b>Sample Input</b>
                                     </p>
-                                    <div class="align-left">
-                                    {{ problem.sample_input }}
+                                    <div class="align-left" v-html="problem.sample_input">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="align-left">
                                         <b>Sample OutPut</b>
                                     </p>
-                                    <div class="align-left">
-                                    {{ problem.sample_output }}
+                                    <div class="align-left" v-html="problem.sample_output">
                                     </div>
                                 </div>
                             </div>
@@ -94,8 +89,8 @@ export default {
         getProblem:function()
         {
             var _this = this;
-            axios.get('/problem', {params:{id:this.id}}).then(function(res){
-                _this.problem = res.data[0];
+            axios.get('/problem/'+this.id).then(function(res){
+                _this.problem = res.data;
             });
         }
     }
