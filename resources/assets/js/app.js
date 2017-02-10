@@ -20,6 +20,10 @@ Vue.component('searchbar', require('./components/Searchbar.vue'));
 
 Vue.use(VueRouter);
 
+Vue.filter('time', function (value) {
+    return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+})
+
 const routes = [
     { path: '/account', component: require('./components/user/Account.vue') },
     { path: '/account-list', component: require('./components/user/AccountList.vue') },
@@ -28,6 +32,9 @@ const routes = [
     { path: '/problem-list', component: require('./components/problem/ProblemList.vue') },
     { path: '/problem-detail', component: require('./components/problem/ProblemDetail.vue') },
     { path: '/solution-list', component: require('./components/solution/SolutionList.vue') },
+    { path: '/contest-detail', component: require('./components/contest/ContestDetail.vue') },
+    { path: '/contest-list', component: require('./components/contest/ContestList.vue') },
+    { path: '/contest', component: require('./components/contest/Contest.vue') },
 ]
 
 const router = new VueRouter({

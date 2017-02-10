@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContentTable extends Migration
+class CreateContestProblemTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateContentTable extends Migration
      */
     public function up()
     {
-        Schema::create('content', function (Blueprint $table) {
+        Schema::create('contest_problem', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->string('description');
-            $table->boolean('defunct');
-            $table->boolean('private');
-            $table->date('start_time');
-            $table->date('end_time');
+            $table->integer('problem_id');
+            $table->integer('contest_id');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateContentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('content');
+        Schema::dropIfExists('contest_problem');
     }
 }

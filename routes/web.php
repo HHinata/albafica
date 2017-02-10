@@ -20,6 +20,12 @@ Route::resource('user', 'UserController');
 Route::resource('problem', 'ProblemController');
 Route::resource('solution', 'SolutionController');
 
+Route::resource('contest', 'ContestController');
+Route::group(['prefix'=>'contest'], function ()
+{
+    Route::get('detail/{id}', 'ContestController@detail');
+});
+
 Route::group(['prefix'=>'plat'], function ()
 {
     Route::post('grab', 'PlatformController@grab');

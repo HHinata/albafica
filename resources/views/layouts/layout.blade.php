@@ -25,6 +25,9 @@
     <!-- Morris Chart Css-->
     <link href="{{ asset('plugins/morrisjs/morris.css') }}" rel="stylesheet" />
 
+    <!-- Bootstrap Tagsinput Css -->
+    <link href="{{ asset('plugins/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet">
+
     <!-- Bootstrap Select Css -->
     <link href="{{ asset('plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />
 
@@ -46,6 +49,9 @@
 <!-- Bootstrap Core Js -->
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}"></script>
 
+<script src="{{ asset('plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}"></script>
+<!-- Dropzone Plugin Js -->
+<script src="{{ asset('plugins/dropzone/dropzone.js') }}"></script>
 <!-- Select Plugin Js -->
 <script src="{{ asset('plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
 
@@ -64,6 +70,8 @@
 <!-- ChartJs -->
 <script src="{{ asset('plugins/chartjs/Chart.bundle.js') }}"></script>
 
+<!-- Input Mask Plugin Js -->
+<script src="{{ asset('plugins/jquery-inputmask/jquery.inputmask.bundle.js') }}"></script>
 <!-- Flot Charts Plugin Js -->
 {{--<script src="{{ asset('plugins/flot-charts/jquery.flot.js') }}"></script>--}}
 {{--<script src="{{ asset('plugins/flot-charts/jquery.flot.resize.js') }}"></script>--}}
@@ -73,6 +81,8 @@
 
 <!-- Sparkline Chart Plugin Js -->
 <script src="{{ asset('plugins/jquery-sparkline/jquery.sparkline.js') }}"></script>
+
+<script src="{{ asset('plugins/bootstrap-tagsinput/bootstrap-tagsinput.js') }}"></script>
 
 <!-- Custom Js -->
 <script src="{{ asset('js/admin.js') }}"></script>

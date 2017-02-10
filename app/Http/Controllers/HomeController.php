@@ -68,6 +68,21 @@ class HomeController extends Controller
                             "children"=>[],
                             "url"=>"#/solution-list"
                         ],
+                        [
+                            "menuName"=>"ContestList",
+                            "children"=>[],
+                            "url"=>"#/contest-list"
+                        ],
+                        [
+                            "menuName"=>"ContestDetail",
+                            "children"=>[],
+                            "url"=>"#/contest-detail"
+                        ],
+                        [
+                            "menuName"=>"Contest",
+                            "children"=>[],
+                            "url"=>"#/contest"
+                        ],
                     ]
                 ]
             ];

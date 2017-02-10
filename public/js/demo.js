@@ -100,4 +100,6 @@ function loadTracking() {
     ga('create', trackingId, 'auto');
     ga('send', 'pageview');
 }
+
+$('.col-md-6').find('.datetime').inputmask('y/m/d h:s', { placeholder: '____/__/__ __:__', alias: "datetime", hourFormat: '24' });
 //========================================================================================================
