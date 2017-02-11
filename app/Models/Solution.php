@@ -20,7 +20,7 @@ class Solution extends Model
         $this->language = $solution['lang'];
         $this->problem_id = $solution['pid'];
         $this->run_id = $solution['rid']?:"";
-
+        $this->contest_id = $solution['cid']?:0;
         $this->save();
     }
 

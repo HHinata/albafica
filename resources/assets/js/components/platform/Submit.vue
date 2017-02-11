@@ -51,16 +51,16 @@ export default {
             solution:{
                 pid:1,
                 lang:'g++',
-                code:''
+                code:'',
+                cid:0
             }
         };
     },
     mounted:function()
     {
         var query = this.$route.query;
-        if(query.pid){
-            this.solution.pid = query.pid;
-        }
+        this.solution.pid = (query.pid==undefined)?1:query.pidv;
+        this.solution.cid = (query.cid==undefined)?0:query.cid;
     },
     methods:
     {

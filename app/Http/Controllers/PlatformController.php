@@ -47,6 +47,7 @@ class PlatformController extends Controller
     public function submit()
     {
         $pid = Request::input('pid');
+        $cid = Request::input('cid');
         $code = Request::input('code');
         $lang = Request::input('lang');
 
@@ -59,6 +60,7 @@ class PlatformController extends Controller
         $data = [
             'uid'=>Auth::user()->id,
             'pid'=>$pid,
+            'cid'=>$cid,
             'rid'=>$rid,
             'lang'=>0
         ];
