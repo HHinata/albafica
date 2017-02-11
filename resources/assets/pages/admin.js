@@ -78,7 +78,7 @@ $.AdminBSB.leftSideBar = {
             var $this = $(this);
             var $content = $this.next();
 
-            if ($($this.parents('ul')[0]).hasClass('list')) {
+            if ($($this.parents('ul')).hasClass('list')) {
                 var $not = $(e.target).hasClass('menu-toggle') ? e.target : $(e.target).parents('.menu-toggle');
 
                 $.each($('.menu-toggle.toggled').not($not).next(), function (i, val) {

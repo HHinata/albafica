@@ -10,11 +10,12 @@
     - List
     - Detail
     - Submit
-  - Rating
+  - Rank
   - Status
     - List
     - Detail
 - Status
+  - List
   - Detail
 - Problem
   - List

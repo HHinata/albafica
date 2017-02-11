@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -29,63 +30,27 @@ class HomeController extends Controller
 
     public function menu()
     {
-        $menu = [
-                [
-                    "menuName"=>"Profile",
-                    "children"=>[
-                        [
-                            "menuName"=>"Account",
-                            "children"=>[],
-                            "url"=>"#/account"
-                        ],
-                        [
-                            "menuName"=>"AccountList",
-                            "children"=>[],
-                            "url"=>"#/account-list"
-                        ],
-                        [
-                            "menuName"=>"Grab",
-                            "children"=>[],
-                            "url"=>"#/grab"
-                        ],
-                        [
-                            "menuName"=>"Submit",
-                            "children"=>[],
-                            "url"=>"#/submit"
-                        ],
-                        [
-                            "menuName"=>"ProblemSet",
-                            "children"=>[],
-                            "url"=>"#/problem-list"
-                        ],
-                        [
-                            "menuName"=>"Problem",
-                            "children"=>[],
-                            "url"=>"#/problem-detail?id=1"
-                        ],
-                        [
-                            "menuName"=>"SolutionList",
-                            "children"=>[],
-                            "url"=>"#/solution-list"
-                        ],
-                        [
-                            "menuName"=>"ContestList",
-                            "children"=>[],
-                            "url"=>"#/contest-list"
-                        ],
-                        [
-                            "menuName"=>"ContestDetail",
-                            "children"=>[],
-                            "url"=>"#/contest-detail"
-                        ],
-                        [
-                            "menuName"=>"Contest",
-                            "children"=>[],
-                            "url"=>"#/contest"
-                        ],
-                    ]
-                ]
-            ];
+        $menu = [];
+        $menus = Menu::all()->toArray();
+
+        function recursion(&$menuList, &$menu, $id)
+        {
+            foreach ($menuList as &$item)
+            {
+                if (isset($item['used']) || $item['father'] != $id)  continue;
+                else
+                {
+                    $count = count($menu);
+                    $item['used'] = true;
+
+                    $menu[] = ['menuName'=>$item['title'], 'url'=>$item['url'], 'children'=>[]];
+                    recursion($menuList, $menu[$count]['children'], $item['id']);
+                }
+            }
+        }
+
+        recursion($menus, $menu, 0);
+
         return Response::json($menu);
     }
 }

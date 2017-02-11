@@ -12,4 +12,4 @@
 ## VUE模块命名规范  
 
 `VUE组件文件`根据模块进行命名，以`模块名称首字母`连`减号`再连`组件实际名称`命名
-例如： `Contest`下面的`Status`的`List`页面，则命名为`CS-List.vue`  
+例如： `Contest`下面的`Status`的`List`页面，则命名为`CS-list.vue`  
