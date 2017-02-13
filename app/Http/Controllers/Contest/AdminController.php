@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Contest;
 
 use App\Models\Contest;
 use App\Models\ContestProblem;
 use App\Models\Problem;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class ContestController extends Controller
+class AdminController extends Controller
 {
     /**
      * @return Response
@@ -47,8 +48,6 @@ class ContestController extends Controller
     public function show($id)
     {
         $contest = Contest::where('id', $id)->first();
-        $contest['start_time'] = date('Y/m/d H:i', $contest['start_time']);
-        $contest['end_time'] = date('Y/m/d H:i', $contest['end_time']);
 
         $problemList = ContestProblem::where('contest_id', $id)->get(['problem_id'])->toArray();
         $contest['problem_list'] = implode(',', array_column($problemList, 'problem_id'));
@@ -71,7 +70,6 @@ class ContestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
         $data = $request->all();
         $data['start_time'] = strtotime($data['start_time']);
         $data['end_time'] = strtotime($data['end_time']);
@@ -81,19 +79,13 @@ class ContestController extends Controller
 
         if (count($problemList) == Problem::find($problemList)->count())
         {
-            $contestProblem = new ContestProblem();
-            $contestProblem::where('contest_id', $id)->delete();
-
-            foreach ($problemList as $pid)
+            foreach ($problemList as $order=>$pid)
             {
-                ContestProblem::create(['contest_id'=>$id, 'problem_id'=>$pid]);
+                ContestProblem::updateOrCreate(['order'=>$order, 'contest_id'=>$id], ['contest_id'=>$id, 'problem_id'=>$pid, 'order'=>$order]);
             }
         }
 
-        $contest = new Contest();
-        $contest::where('id', $id)
-            ->update($data);
-
+        Contest::where('id', $id)->update($data);
         return Problem::find($problemList)->count();
     }
 
@@ -106,14 +98,4 @@ class ContestController extends Controller
         //
     }
 
-    public function detail(Request $request, $id)
-    {
-        $contest = Contest::where('id', $id)->first()->toArray();
-        $problemList = ContestProblem::where('contest_id', $id)->get(['problem_id']);
-        foreach ($problemList as $p)
-        {
-            $contest['problems'][] = Problem::where('id', $p['problem_id'])->first();
-        }
-        return $contest;
-    }
 }

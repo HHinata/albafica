@@ -4,54 +4,54 @@
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header">
-                            <h2>
-                                {{ problem.title }}
-                            </h2>
-                        </div>
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-md-12">
-                                    <p class="align-left">
-                                        <b>Description</b>
-                                    </p>
-                                    <div class="align-left" v-html="problem.description">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                    <b>Title</b>
+                                        <div class="form-line">
+                                            <input type="text"  v-model='problem.title' class="form-control">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-md-6">
-                                    <p class="align-left">
-                                        <b>Input</b>
-                                    </p>
-                                    <div class="align-left" v-html="problem.input">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                    <b>Description</b>
+                                        <div class="form-line">
+                                            <textarea rows="5" class="form-control no-resize" v-model='problem.description' placeholder="Please type what you want..."></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <p class="align-left">
-                                        <b>OutPut</b>
-                                    </p>
-                                    <div class="align-left" v-html="problem.output">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                    <b>Input</b>
+                                        <div class="form-line">
+                                            <textarea rows="2" class="form-control no-resize" v-model='problem.input' placeholder="Please type what you want..."></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-md-6">
-                                    <p class="align-left">
-                                        <b>Sample Input</b>
-                                    </p>
-                                    <div class="align-left" v-html="problem.sample_input">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                    <b>Output</b>
+                                        <div class="form-line">
+                                            <textarea rows="2" class="form-control no-resize" v-model='problem.output' placeholder="Please type what you want..."></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <p class="align-left">
-                                        <b>Sample OutPut</b>
-                                    </p>
-                                    <div class="align-left" v-html="problem.sample_output">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                    <b>Sample Input</b>
+                                        <div class="form-line">
+                                            <textarea rows="2" class="form-control no-resize" v-model='problem.sample_input' placeholder="Please type what you want..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                    <b>Sample Output</b>
+                                        <div class="form-line">
+                                            <textarea rows="2" class="form-control no-resize" v-model='problem.sample_output' placeholder="Please type what you want..."></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -80,8 +80,8 @@ export default {
         };
     },
     mounted:function(){
-        var query = this.$route.query;
-        this.id = query.id;
+        var q = this.$route.query;
+        this.id = q.id?q.id:0;
         this.getProblem();
     },
     methods:

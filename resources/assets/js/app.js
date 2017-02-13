@@ -32,7 +32,6 @@ const routes = [
     { path: '/contest/admin/list', component: require('./components/contest/admin/CA-list.vue') },
     { path: '/contest/admin/detail', component: require('./components/contest/admin/CA-detail.vue') },
 
-    { path: '/contest/problem/list', component: require('./components/contest/problem/CP-list.vue') },
     { path: '/contest/problem/detail', component: require('./components/contest/problem/CP-detail.vue') },
     { path: '/contest/problem/submit', component: require('./components/contest/problem/CP-submit.vue') },
 

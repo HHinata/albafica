@@ -12,10 +12,12 @@
                         </div>
                         <div class="body">
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
+                                <div class="progress-bar" role="progressbar"
+                                aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
                                     {{ contest.start_time | time }} - {{ contest.end_time | time }}
                                 </div>
                             </div>
+                            <nav-btn-group :cid="id"></nav-btn-group>
                         </div>
                         <div class="body table-responsive">
                             <table class="table">
@@ -26,9 +28,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="problem in contest.problems">
+                                    <tr v-for="(problem, index) in contest.problems">
                                         <th scope="row">{{ problem.id }}</th>
-                                        <td>{{ problem.title }}</td>
+                                        <td><router-link :to="{ path: '/contest/problem/detail', query:{id:id,pid:index}}">
+                                            {{ problem.title }}
+                                        </router-link></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -42,6 +46,7 @@
 
 <script>
 import axios from 'axios'
+import navBtnGroup from './part/C-nav-btn-group'
 export default {
     data(){
         return {
@@ -49,17 +54,20 @@ export default {
             contest:{}
         };
     },
+    components: {navBtnGroup},
     mounted:function(){
-        var query = this.$route.query;
-        if(query.id)    this.id = query.id;
-        this.getContesting();
+        var q = this.$route.query;
+        this.id = q.id?q.id:1;
+
+        this.__construct();
     },
     methods:
     {
-        getContesting:function()
+        __construct:function()
         {
             var _this = this;
-            axios.get('/contest/detail/'+this.id).then(function(res){
+            axios.get('/i/contest/detail/'+this.id)
+            .then(function(res){
                 _this.contest = res.data;
                 console.log(res.data);
             });

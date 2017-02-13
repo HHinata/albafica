@@ -25,10 +25,22 @@
                                         <th scope="row">{{ problem.id }}</th>
                                         <td>{{ problem.platform }}</td>
                                         <td>{{ problem.sign }}</td>
-                                        <td><router-link :to="{ path: 'problem-detail?id=' + problem.id }">{{ problem.title }}</router-link></td>
+                                        <td><router-link :to="{ path: 'detail', query:{id:problem.id}}">
+                                        {{ problem.title }}
+                                        </router-link></td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="body table-responsive">
+                            <div class="col-sm-12">
+                                <router-link type="button" class="btn btn-primary btn-lg m-l-15 waves-effect"
+                                :to="{ path: 'grab'}">
+                                Grab</router-link>
+                                <router-link type="button" class="btn btn-primary btn-lg m-l-15 waves-effect"
+                                :to="{ path: 'detail'}">
+                                Add</router-link>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -18,14 +18,16 @@
                                         <th>TITLE</th>
                                         <th>START TIME</th>
                                         <th>END TIME</th>
+                                        <th>=</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="contest in contests">
                                         <th scope="row">{{ contest.id }}</th>
-                                        <td><router-link :to="{ path: 'contest-detail?id=' + contest.id }">{{ contest.title }}</router-link></td>
+                                        <td>{{ contest.title }}</td>
                                         <td>{{ contest.start_time }}</td>
                                         <td>{{ contest.end_time }}</td>
+                                        <td><router-link :to="{ path: 'detail?id=' + contest.id }">修改</router-link></td>
                                     </tr>
                                 </tbody>
                             </table>

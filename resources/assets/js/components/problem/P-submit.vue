@@ -51,23 +51,21 @@ export default {
             solution:{
                 pid:1,
                 lang:'g++',
-                code:'',
-                cid:0
+                code:''
             }
         };
     },
     mounted:function()
     {
-        var query = this.$route.query;
-        this.solution.pid = (query.pid==undefined)?1:query.pidv;
-        this.solution.cid = (query.cid==undefined)?0:query.cid;
+        var q = this.$route.query;
+        this.solution.pid = q.pid?q.pid:1;
     },
     methods:
     {
         submit:function()
         {
             var _this = this;
-            axios.post('/plat/submit', this.solution).then(function(res){
+            axios.post('/i/problem/submit', this.solution).then(function(res){
                 console.log(res);
             });
         }

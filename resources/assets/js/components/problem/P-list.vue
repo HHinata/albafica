@@ -25,7 +25,7 @@
                                         <th scope="row">{{ problem.id }}</th>
                                         <td>{{ problem.platform }}</td>
                                         <td>{{ problem.sign }}</td>
-                                        <td><router-link :to="{ path: 'problem-detail?id=' + problem.id }">{{ problem.title }}</router-link></td>
+                                        <td><router-link :to="{ path: 'detail?id=' + problem.id }">{{ problem.title }}</router-link></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -53,7 +53,7 @@ export default {
         getProblems:function()
         {
             var _this = this;
-            axios.get('/problem').then(function(res){
+            axios.get('/i/problem/list').then(function(res){
                 _this.problems = res.data;
             });
         }

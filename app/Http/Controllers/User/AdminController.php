@@ -1,19 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-use App\Models\Solution;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
-class SolutionController extends Controller
+class AdminController extends Controller
 {
     /**
      * @return Response
      */
     public function index(Request $request)
     {
-        $solutions = Solution::all();
-        return $solutions;
+        $users = User::all();
+        return $users;
     }
 
     /**
@@ -39,8 +41,11 @@ class SolutionController extends Controller
      */
     public function show($id)
     {
-        $solution = Solution::where('id', $id)->first();
-        return $solution;
+        if ($id === 0)  $user = Auth::user();
+        else{
+            $user = User::where('id', $id)->first();
+        }
+        return $user;
     }
 
     /**

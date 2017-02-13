@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Problem;
 
 use App\Models\Problem;
 use Request;
+use App\Http\Controllers\Controller;
 
-class ProblemController extends Controller
+class AdminController extends Controller
 {
     /**
      * @return Response

@@ -10,5 +10,5 @@ class ContestProblem extends Model
     /* set up the table */
     protected $table = 'contest_problem';
 
-    protected $fillable=['contest_id', 'problem_id'];
+    protected $fillable=['contest_id', 'problem_id', 'order'];
 }

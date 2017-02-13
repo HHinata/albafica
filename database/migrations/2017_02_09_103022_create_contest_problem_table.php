@@ -17,6 +17,7 @@ class CreateContestProblemTable extends Migration
             $table->increments('id');
             $table->integer('problem_id');
             $table->integer('contest_id');
+            $table->integer('order');
             $table->timestamps();
         });
     }
