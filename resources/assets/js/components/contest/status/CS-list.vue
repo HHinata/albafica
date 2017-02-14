@@ -75,7 +75,7 @@ export default {
         __construct:function()
         {
             var _this = this;
-            axios.get('/i/solution/list').then(function(res){
+            axios.get('/i/solution/in-contest/'+this.id).then(function(res){
                 _this.solutions = res.data;
             });
             axios.get('/i/contest/detail/'+this.id).then(function(res){

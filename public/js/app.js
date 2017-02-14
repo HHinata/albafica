@@ -13216,16 +13216,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "body table-responsive"
   }, [_c('table', {
     staticClass: "table"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.solutions), function(solution) {
-    return _c('tr', [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v(_vm._s(solution.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(solution.problem_id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(solution.time))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(solution.memory))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(solution.result))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(solution.language))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(solution.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(solution.user_id))])])
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _vm._l((_vm.contest.problems), function(problem) {
+    return _c('th', [_vm._v(_vm._s(problem.id))])
+  })], 2)]), _vm._v(" "), _c('tbody', _vm._l((_vm.ranks), function(value, key, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(value.user_id))]), _vm._v(" "), _vm._l((value.result), function(item) {
+      return _c('td', [_vm._v(_vm._s(item.up) + "/" + _vm._s(item.down))])
+    })], 2)
   }))])])])])])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("PID")]), _vm._v(" "), _c('th', [_vm._v("TIME")]), _vm._v(" "), _c('th', [_vm._v("MEMERY")]), _vm._v(" "), _c('th', [_vm._v("RESULT")]), _vm._v(" "), _c('th', [_vm._v("LANGUAGE")]), _vm._v(" "), _c('th', [_vm._v("CREATE TIME")]), _vm._v(" "), _c('th', [_vm._v("USER")])])])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -13658,7 +13656,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("修改")])], 1)])
-  }))])])])])])])])
+  }))])]), _vm._v(" "), _c('div', {
+    staticClass: "body table-responsive"
+  }, [_c('div', {
+    staticClass: "col-sm-12"
+  }, [_c('router-link', {
+    staticClass: "btn btn-primary btn-lg m-l-15 waves-effect",
+    attrs: {
+      "type": "button",
+      "to": {
+        path: 'detail'
+      }
+    }
+  }, [_vm._v("\n                            Add")])], 1)])])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "header"
@@ -46278,18 +46288,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -46297,7 +46295,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             id: 1,
-            solutions: [],
+            ranks: [],
             contest: {}
         };
     },
@@ -46311,12 +46309,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         __construct: function __construct() {
             var _this = this;
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/i/solution/list').then(function (res) {
-                _this.solutions = res.data;
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/i/contest/rank/' + this.id).then(function (res) {
+                _this.ranks = res.data;
             });
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/i/contest/detail/' + this.id).then(function (res) {
                 _this.contest = res.data;
-                console.log(res.data);
             });
         }
     }
@@ -46407,7 +46404,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
         return {
-            id: 1,
+            id: 0,
             contest: {}
         };
     },
@@ -46448,6 +46445,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -46739,7 +46743,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         submit: function submit() {
             var _this = this;
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/i/problem/submit', this.solution).then(function (res) {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/i/contest/submit', this.solution).then(function (res) {
                 console.log(res);
             });
         }
@@ -46832,7 +46836,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         __construct: function __construct() {
             var _this = this;
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/i/solution/list').then(function (res) {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/i/solution/in-contest/' + this.id).then(function (res) {
                 _this.solutions = res.data;
             });
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/i/contest/detail/' + this.id).then(function (res) {
@@ -47325,7 +47329,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         grab: function grab() {
             var _this = this;
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/plat/grab', this.keyword).then(function (res) {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/d/problem/grab', this.keyword).then(function (res) {
                 console.log(res);
                 _this.problem.id = res.data.id;
                 _this.problem.title = res.data.title;
@@ -47501,7 +47505,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         getProblems: function getProblems() {
             var _this = this;
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/i/solution/list').then(function (res) {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/i/solution/in-problem').then(function (res) {
                 _this.solutions = res.data;
             });
         }

@@ -16,7 +16,7 @@ class CreateSolutionTable extends Migration
         Schema::create('solution', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('problem_id');
-            $table->integer('contest_id');
+            $table->integer('contest_id')->default(0);
             $table->integer('time')->default(0);
             $table->integer('memory')->default(0);
             $table->integer('user_id');

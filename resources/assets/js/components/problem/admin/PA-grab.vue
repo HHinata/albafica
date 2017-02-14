@@ -117,7 +117,7 @@ export default {
         grab:function()
         {
             var _this = this;
-            axios.post('/plat/grab', this.keyword).then(function(res){
+            axios.post('/d/problem/grab', this.keyword).then(function(res){
                 console.log(res);
                 _this.problem.id = res.data.id;
                 _this.problem.title = res.data.title;

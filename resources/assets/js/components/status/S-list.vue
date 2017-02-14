@@ -61,7 +61,7 @@ export default {
         getProblems:function()
         {
             var _this = this;
-            axios.get('/i/solution/list').then(function(res){
+            axios.get('/i/solution/in-problem').then(function(res){
                 _this.solutions = res.data;
             });
         }

@@ -2,12 +2,28 @@
 
 namespace App\Http\Controllers\Problem;
 
+use App\Contracts\PlatformServiceContract;
 use App\Models\Problem;
+use Illuminate\Http\Response;
 use Request;
 use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
+    /* the platform object for code judge */
+    private $plat = null;
+
+    /**
+     * Injection A platform objec
+     *
+     * PlatformController constructor.
+     * @param PlatformServiceContract $plat
+     */
+    public function __construct(PlatformServiceContract $plat)
+    {
+        $this->plat = $plat;
+    }
+
     /**
      * @return Response
      */
@@ -79,5 +95,19 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Grab problem information from Open Judge
+     */
+    public function grab()
+    {
+        $data = Request::all();
+
+        $info = $this->plat
+            ->setPlatform($data['platform'])
+            ->grabProblem($data['id']);
+
+        return $info;
     }
 }

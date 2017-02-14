@@ -75,7 +75,7 @@ import axios from 'axios'
 export default {
     data(){
         return {
-            id:1,
+            id:0,
             contest:{}
         };
     },

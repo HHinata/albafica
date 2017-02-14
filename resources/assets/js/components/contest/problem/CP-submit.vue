@@ -67,7 +67,7 @@ export default {
         submit:function()
         {
             var _this = this;
-            axios.post('/i/problem/submit', this.solution).then(function(res){
+            axios.post('/i/contest/submit', this.solution).then(function(res){
                 console.log(res);
             });
         }

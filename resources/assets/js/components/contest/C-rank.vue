@@ -23,25 +23,13 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>PID</th>
-                                        <th>TIME</th>
-                                        <th>MEMERY</th>
-                                        <th>RESULT</th>
-                                        <th>LANGUAGE</th>
-                                        <th>CREATE TIME</th>
-                                        <th>USER</th>
+                                        <th v-for="problem in contest.problems">{{problem.id}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="solution in solutions">
-                                        <th scope="row">{{ solution.id }}</th>
-                                        <td>{{ solution.problem_id }}</td>
-                                        <td>{{ solution.time }}</td>
-                                        <td>{{ solution.memory }}</td>
-                                        <td>{{ solution.result }}</td>
-                                        <td>{{ solution.language }}</td>
-                                        <td>{{ solution.created_at }}</td>
-                                        <td>{{ solution.user_id }}</td>
+                                    <tr v-for="(value, key, index) in ranks">
+                                        <td>{{value.user_id}}</td>
+                                        <td v-for="item in value.result">{{item.up}}/{{item.down}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -60,7 +48,7 @@ export default {
     data(){
         return {
             id:1,
-            solutions:[],
+            ranks:[],
             contest:{}
         };
     },
@@ -75,12 +63,11 @@ export default {
         __construct:function()
         {
             var _this = this;
-            axios.get('/i/solution/list').then(function(res){
-                _this.solutions = res.data;
+            axios.get('/i/contest/rank/'+this.id).then(function(res){
+                _this.ranks = res.data;
             });
             axios.get('/i/contest/detail/'+this.id).then(function(res){
                 _this.contest = res.data;
-                console.log(res.data);
             });
         }
     }

@@ -32,6 +32,13 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="body table-responsive">
+                            <div class="col-sm-12">
+                                <router-link type="button" class="btn btn-primary btn-lg m-l-15 waves-effect"
+                                :to="{ path: 'detail'}">
+                                Add</router-link>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

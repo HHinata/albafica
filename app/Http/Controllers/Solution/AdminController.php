@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Status;
+namespace App\Http\Controllers\Solution;
 
 use App\Models\Solution;
 use Illuminate\Http\Request;
