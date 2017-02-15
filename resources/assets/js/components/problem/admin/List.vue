@@ -37,9 +37,6 @@
                                 <router-link type="button" class="btn btn-primary btn-lg m-l-15 waves-effect"
                                 :to="{ path: 'grab'}">
                                 Grab</router-link>
-                                <router-link type="button" class="btn btn-primary btn-lg m-l-15 waves-effect"
-                                :to="{ path: 'detail'}">
-                                Add</router-link>
                             </div>
                         </div>
                     </div>

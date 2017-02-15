@@ -38,7 +38,25 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        $query = $request->all();
+        $query['start_time'] = strtotime($query['start_time']);
+        $query['end_time'] = strtotime($query['end_time']);
 
+        $problemList = explode(',', $query['problem_list']);
+        unset($query['problem_list']);
+
+        $contest = new Contest($query);
+        $contest->save();
+
+        if (count($problemList) == Problem::find($problemList)->count())
+        {
+            foreach ($problemList as $order=>$pid)
+            {
+                ContestProblem::updateOrCreate(['order'=>$order, 'contest_id'=>$contest->id], ['contest_id'=>$contest->id, 'problem_id'=>$pid, 'order'=>$order]);
+            }
+        }
+
+        return Problem::find($problemList)->count();
     }
 
     /**

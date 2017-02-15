@@ -82,13 +82,14 @@ export default {
     mounted:function(){
         var query = this.$route.query;
         if(query.id)    this.id = query.id;
-        this.getContest();
+        this.__construct();
     },
     methods:
     {
-        getContest:function()
+        __construct:function()
         {
             var _this = this;
+            if(_this.id == 0)   return;
             axios.get('/contest/'+this.id).then(function(res){
                 _this.contest = res.data;
                 $('#start-time').val(_this.contest.start_time);
@@ -96,15 +97,26 @@ export default {
                 $('#problem-list').val(_this.contest.problem_list);
             });
         },
+
         submit:function()
         {
             this.contest.start_time = $('#start-time').val();
             this.contest.end_time = $('#end-time').val();
             this.contest.problem_list = $('#problem-list').val();
             var _this = this;
-            axios.put('/contest/'+this.id, this.contest).then(function(res){
-                console.log(res.data);
-            });
+            if (_this.id)
+            {
+                axios.put('/contest/'+this.id, this.contest).then(function(res){
+                    console.log(res.data);
+                });
+            }
+            else
+            {
+                axios.post('/contest', this.contest).then(function(res){
+                    console.log(res.data);
+                });
+            }
+
         }
     }
 }

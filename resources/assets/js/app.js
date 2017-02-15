@@ -25,29 +25,29 @@ Vue.filter('time', function (value) {
 })
 
 const routes = [
-    { path: '/contest/list', component: require('./components/contest/C-list.vue') },
-    { path: '/contest/detail', component: require('./components/contest/C-detail.vue') },
-    { path: '/contest/rank', component: require('./components/contest/C-rank.vue') },
+    { path: '/contest/list', component: require('./components/contest/List.vue') },
+    { path: '/contest/detail', component: require('./components/contest/Detail.vue') },
+    { path: '/contest/rank', component: require('./components/contest/Rank.vue') },
 
-    { path: '/contest/admin/list', component: require('./components/contest/admin/CA-list.vue') },
-    { path: '/contest/admin/detail', component: require('./components/contest/admin/CA-detail.vue') },
+    { path: '/contest/admin/list', component: require('./components/contest/admin/List.vue') },
+    { path: '/contest/admin/detail', component: require('./components/contest/admin/Detail.vue') },
 
-    { path: '/contest/problem/detail', component: require('./components/contest/problem/CP-detail.vue') },
-    { path: '/contest/problem/submit', component: require('./components/contest/problem/CP-submit.vue') },
+    { path: '/contest/problem/detail', component: require('./components/contest/problem/Detail.vue') },
+    { path: '/contest/problem/submit', component: require('./components/contest/problem/Submit.vue') },
 
-    { path: '/contest/status/list', component: require('./components/contest/status/CS-list.vue') },
-    { path: '/contest/status/detail', component: require('./components/contest/status/CS-detail.vue') },
+    { path: '/contest/status/list', component: require('./components/contest/status/List.vue') },
+    { path: '/contest/status/detail', component: require('./components/contest/status/Detail.vue') },
 
-    { path: '/status/list', component: require('./components/status/S-list.vue') },
-    { path: '/status/detail', component: require('./components/status/S-detail.vue') },
+    { path: '/status/list', component: require('./components/status/List.vue') },
+    { path: '/status/detail', component: require('./components/status/Detail.vue') },
 
-    { path: '/problem/list', component: require('./components/problem/P-list.vue') },
-    { path: '/problem/detail', component: require('./components/problem/P-detail.vue') },
-    { path: '/problem/submit', component: require('./components/problem/P-submit.vue') },
+    { path: '/problem/list', component: require('./components/problem/List.vue') },
+    { path: '/problem/detail', component: require('./components/problem/Detail.vue') },
+    { path: '/problem/submit', component: require('./components/problem/Submit.vue') },
 
-    { path: '/problem/admin/grab', component: require('./components/problem/admin/PA-grab.vue') },
-    { path: '/problem/admin/detail', component: require('./components/problem/admin/PA-detail.vue') },
-    { path: '/problem/admin/list', component: require('./components/problem/admin/PA-list.vue') },
+    { path: '/problem/admin/grab', component: require('./components/problem/admin/Grab.vue') },
+    { path: '/problem/admin/detail', component: require('./components/problem/admin/Detail.vue') },
+    { path: '/problem/admin/list', component: require('./components/problem/admin/List.vue') },
 ]
 
 const router = new VueRouter({
