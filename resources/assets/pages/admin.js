@@ -40,7 +40,7 @@ $.AdminBSB.options = {
     }
 }
 
-/* Left Sidebar - Function =================================================================================================
+/* Left Sidebar - Function
  *  You can manage the left sidebar menu options
  *
  */
@@ -73,26 +73,6 @@ $.AdminBSB.leftSideBar = {
             $activeAnchors.next().show();
         });
 
-        //Collapse or Expand Menu
-        $('.menu-toggle').on('click', function (e) {
-            var $this = $(this);
-            var $content = $this.next();
-
-            if ($($this.parents('ul')).hasClass('list')) {
-                var $not = $(e.target).hasClass('menu-toggle') ? e.target : $(e.target).parents('.menu-toggle');
-
-                $.each($('.menu-toggle.toggled').not($not).next(), function (i, val) {
-                    if ($(val).is(':visible')) {
-                        $(val).prev().toggleClass('toggled');
-                        $(val).slideUp();
-                    }
-                });
-            }
-
-            $this.toggleClass('toggled');
-            $content.slideToggle(320);
-        });
-
         //Set menu height
         _this.setMenuHeight();
         _this.checkStatuForResize(true);
@@ -104,6 +84,24 @@ $.AdminBSB.leftSideBar = {
         //Set Waves
         Waves.attach('.menu .list a', ['waves-block']);
         Waves.init();
+    },
+    menuToggle:function (e) {
+        var $this = $(this);
+        var $content = $this.next();
+
+        if ($($this.parents('ul')).hasClass('list')) {
+            var $not = $(e.target).hasClass('menu-toggle') ? e.target : $(e.target).parents('.menu-toggle');
+
+            $.each($('.menu-toggle.toggled').not($not).next(), function (i, val) {
+                if ($(val).is(':visible')) {
+                    $(val).prev().toggleClass('toggled');
+                    $(val).slideUp();
+                }
+            });
+        }
+
+        $this.toggleClass('toggled');
+        $content.slideToggle(320);
     },
     setMenuHeight: function () {
         if (typeof $.fn.slimScroll != 'undefined') {
@@ -148,9 +146,8 @@ $.AdminBSB.leftSideBar = {
         return $('body').hasClass('overlay-open');
     }
 };
-//==========================================================================================================================
 
-/* Right Sidebar - Function ================================================================================================
+/* Right Sidebar - Function
  *  You can manage the right sidebar menu options
  *
  */
@@ -180,9 +177,8 @@ $.AdminBSB.rightSideBar = {
         return $('.right-sidebar').hasClass('open');
     }
 }
-//==========================================================================================================================
 
-/* Searchbar - Function ================================================================================================
+/* Searchbar - Function
  *  You can manage the search bar
  *
  */
@@ -217,9 +213,8 @@ $.AdminBSB.search = {
         $searchBar.find('input[type="text"]').val('');
     }
 }
-//==========================================================================================================================
 
-/* Navbar - Function =======================================================================================================
+/* Navbar - Function
  *  You can manage the navbar
  *
  */
@@ -247,9 +242,8 @@ $.AdminBSB.navbar = {
         });
     }
 }
-//==========================================================================================================================
 
-/* Input - Function ========================================================================================================
+/* Input - Function
  *  You can manage the inputs(also textareas) with name of class 'form-control'
  *
  */
@@ -277,9 +271,7 @@ $.AdminBSB.input = {
         });
     }
 }
-//==========================================================================================================================
-
-/* Form - Select - Function ================================================================================================
+/* Form - Select - Function
  *  You can manage the 'select' of form elements
  *
  */
@@ -288,9 +280,8 @@ $.AdminBSB.select = {
         if ($.fn.selectpicker) { $('select:not(.ms)').selectpicker(); }
     }
 }
-//==========================================================================================================================
 
-/* DropdownMenu - Function =================================================================================================
+/* DropdownMenu - Function
  *  You can manage the dropdown menu
  *
  */
@@ -366,9 +357,8 @@ $.AdminBSB.dropdownMenu = {
         });
     }
 }
-//==========================================================================================================================
 
-/* Browser - Function ======================================================================================================
+/* Browser - Function
  *  You can manage browser
  *
  */
@@ -430,7 +420,6 @@ $.AdminBSB.browser = {
         }
     }
 }
-//==========================================================================================================================
 
 $(function () {
     $.AdminBSB.browser.activate();

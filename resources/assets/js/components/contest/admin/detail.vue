@@ -28,7 +28,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <b>Start Time</b>
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -39,7 +39,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <b>End Time</b>
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -50,13 +50,29 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12">
-                                    <b>Problem List</b>
-                                    <div class="form-group demo-tagsinput-area">
+                                <div class="col-md-3">
+                                    <b>Search Problem</b>
+                                    <div class="form-group">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" id='problem-list' data-role="tagsinput">
+                                            <input type="text" class="form-control" v-model='search_id' placeholder="Problem ID">
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-primary btn-lg m-l-15 waves-effect" @click='add'>Add</button>
+                                </div>
+                                <div class="col-sm-12">
+                                    <b>Problem List</b>
+                                    <table class="table table-condensed table-bordered">
+                                        <tbody>
+                                            <tr v-for="(value, key) in contest.problemset">
+                                                <th scope="row">{{ value.id }}</th>
+                                                <td>{{ value.platform }}</td>
+                                                <td>{{ value.sign }}</td>
+                                                <td><span class="glyphicon glyphicon-minus" @click="remove(key)"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <div class="col-sm-12">
                                     <button type="button" class="btn btn-primary btn-lg m-l-15 waves-effect" v-on:click="submit">submit</button>
@@ -76,7 +92,8 @@ export default {
     data(){
         return {
             id:0,
-            contest:{}
+            contest:{},
+            search_id:''
         };
     },
     mounted:function(){
@@ -94,15 +111,12 @@ export default {
                 _this.contest = res.data;
                 $('#start-time').val(_this.contest.start_time);
                 $('#end-time').val(_this.contest.end_time);
-                $('#problem-list').val(_this.contest.problem_list);
             });
         },
-
         submit:function()
         {
             this.contest.start_time = $('#start-time').val();
             this.contest.end_time = $('#end-time').val();
-            this.contest.problem_list = $('#problem-list').val();
             var _this = this;
             if (_this.id)
             {
@@ -117,6 +131,20 @@ export default {
                 });
             }
 
+        },
+        add:function()
+        {
+            var _this = this;
+            axios.get('/problem/'+this.search_id).then(function(res){
+                if(res.data.id == _this.search_id)
+                {
+                  _this.contest.problemset.push(res.data);
+                }
+            });
+        },
+        remove:function(index)
+        {
+            this.contest.problemset.splice(index, 1);
         }
     }
 }

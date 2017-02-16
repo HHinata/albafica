@@ -67,8 +67,11 @@ class AdminController extends Controller
     {
         $contest = Contest::where('id', $id)->first();
 
-        $problemList = ContestProblem::where('contest_id', $id)->get(['problem_id'])->toArray();
-        $contest['problem_list'] = implode(',', array_column($problemList, 'problem_id'));
+        $problemSet = Contest::find($id)->problems;
+        $contest['problemset'] = $problemSet;
+        $contest['start_time'] = date('d/m/Y h:i:s', $contest['start_time']);
+        $contest['end_time'] = date('d/m/Y h:i:s', $contest['end_time']);
+
         return $contest;
     }
 
@@ -92,19 +95,21 @@ class AdminController extends Controller
         $data['start_time'] = strtotime($data['start_time']);
         $data['end_time'] = strtotime($data['end_time']);
 
-        $problemList = explode(',', $data['problem_list']);
-        unset($data['problem_list']);
+        $problemSet = $data['problemset'];
+        $problemIds = array_column($problemSet, 'id');
+        unset($data['problemset']);
 
-        if (count($problemList) == Problem::find($problemList)->count())
+        if (count($problemSet) == Problem::find($problemIds)->count())
         {
-            foreach ($problemList as $order=>$pid)
+            foreach ($problemSet as $key=>$value)
             {
-                ContestProblem::updateOrCreate(['order'=>$order, 'contest_id'=>$id], ['contest_id'=>$id, 'problem_id'=>$pid, 'order'=>$order]);
+                ContestProblem::updateOrCreate(['order'=>$key, 'contest_id'=>$id], ['contest_id'=>$id, 'problem_id'=>$value['id'], 'order'=>$key]);
             }
+            ContestProblem::where('order', '>=', count($problemSet))->delete();
         }
 
         Contest::where('id', $id)->update($data);
-        return Problem::find($problemList)->count();
+        return Problem::find($problemIds)->count();
     }
 
     /**

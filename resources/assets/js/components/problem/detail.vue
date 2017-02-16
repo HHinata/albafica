@@ -61,6 +61,7 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <router-link type="button" class="btn btn-primary btn-lg m-l-15 waves-effect" :to="{ path: 'submit?pid=' + id }">SUBMIT</router-link>
                                 </div>
+                                <button @click='hello'>Hello</button>
                             </div>
                         </div>
                     </div>
@@ -82,11 +83,11 @@ export default {
     mounted:function(){
         var query = this.$route.query;
         this.id = query.id;
-        this.getProblem();
+        this.__construct();
     },
     methods:
     {
-        getProblem:function()
+        __construct:function()
         {
             var _this = this;
             axios.get('/i/problem/detail/'+this.id).then(function(res){

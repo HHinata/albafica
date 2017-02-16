@@ -50,7 +50,6 @@
 
 <!-- Custom Js -->
 <script src="{{ asset('js/admin.js') }}"></script>
-<script src="{{ asset('js/pages/examples/sign-up.js') }}"></script>
 </body>
 
 </html>

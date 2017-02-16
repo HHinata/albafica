@@ -51,7 +51,6 @@ Route::group(['prefix'=>'d'], function ()
     });
 });
 
-
 Route::resource('user', 'User\AdminController');
 Route::resource('problem', 'Problem\AdminController');
 Route::resource('solution', 'Solution\AdminController');

@@ -10,4 +10,9 @@ class Problem extends Model
     protected $table = 'problem';
 
     protected $fillable = ['platform', 'sign', 'title', 'description', 'input', 'output', 'sample_input', 'sample_output'];
+
+    public function contests()
+    {
+        return $this->belongsToMany('App\Models\Contest')->withTimestamps();
+    }
 }

@@ -199,7 +199,7 @@
 
 var menuData = [{"menuName":"Profile","menuCode":"1","children":[{"menuName":"Account","menuCode":"","children":[]},{"menuName":"Email","menuCode":"","children":[]}]}];
 
-import menuItems from './MenuItems.vue'
+import menuItems from './menu_items.vue'
 import axios from 'axios'
 export default {
     components: {
