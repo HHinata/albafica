@@ -28,4 +28,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+
+    /**
+     * Get the solution
+     */
+    public function solution()
+    {
+        return $this->hasMany('App\Models\Solution');
+    }
 }

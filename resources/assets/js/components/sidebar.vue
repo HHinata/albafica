@@ -205,7 +205,7 @@ export default {
     components: {
         menuItems
     },
-    data() {
+    data: function() {
         return {
             menu: menuData
         }

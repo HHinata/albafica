@@ -16,6 +16,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>TITLE</th>
+                                        <th>STATUS</th>
                                         <th>START TIME</th>
                                         <th>END TIME</th>
                                     </tr>
@@ -23,7 +24,12 @@
                                 <tbody>
                                     <tr v-for="contest in contests">
                                         <th scope="row">{{ contest.id }}</th>
-                                        <td><router-link :to="{ path: 'detail?id=' + contest.id }">{{ contest.title }}</router-link></td>
+                                        <td><router-link :to="{ path: 'detail/' + contest.id }">{{ contest.title }}</router-link></td>
+                                        <td>
+                                            <span v-if='Date.parse(new Date())/1000<contest.start_time'>Pending</span>
+                                            <span v-else-if='Date.parse(new Date())/1000>contest.end_time'>Ended</span>
+                                            <span v-else>Running</span>
+                                        </td>
                                         <td>{{ contest.start_time | time }}</td>
                                         <td>{{ contest.end_time | time}}</td>
                                     </tr>
@@ -40,17 +46,17 @@
 <script>
 import axios from 'axios'
 export default {
-    data(){
+    data: function () {
         return {
             contests:[]
         };
     },
     mounted:function(){
-        this.getContests();
+        this.__construct();
     },
     methods:
     {
-        getContests:function()
+        __construct:function()
         {
             var _this = this;
             axios.get('/i/contest/list').then(function(res){

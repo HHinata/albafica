@@ -2,6 +2,10 @@
     <div class="container">
         <div class="row">
             <div class="row clearfix">
+                <div v-show="hint" class="alert alert-dismissible" :class="hint.state" role="alert" >
+                    <button type="button" class="close" @click="hint=false"><span aria-hidden="true">&times;</span></button>
+                    {{ hint.msg }}
+                </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
@@ -46,27 +50,27 @@
 <script>
 import axios from 'axios'
 export default {
-    data(){
+    data: function () {
         return {
             solution:{
                 pid:1,
                 lang:'g++',
-                code:''
-            }
+                code:'',
+            },
+            hint: false
         };
     },
-    mounted:function()
-    {
+    mounted:function () {
         var q = this.$route.query;
         this.solution.pid = q.pid?q.pid:1;
     },
-    methods:
-    {
-        submit:function()
-        {
+    methods: {
+        submit:function () {
             var _this = this;
-            axios.post('/i/problem/submit', this.solution).then(function(res){
-                console.log(res);
+            axios.post('/i/problem/submit', this.solution).then (function (res) {
+                location.href = "#/status/list";
+            }).catch(function (error) {
+              _this.hint = {state: "alert-danger", msg: "数据添加失败,请检查数据合法性"}
             });
         }
     }

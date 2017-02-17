@@ -1,8 +1,14 @@
 <template>
     <div class="container">
         <div class="row">
+
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                    <div v-show="hint" class="alert alert-dismissible" :class="hint.state" role="alert" >
+                        <button type="button" class="close" @click="hint=false"><span aria-hidden="true">&times;</span></button>
+                        {{ hint.msg }}
+                    </div>
                     <div class="card">
                         <div class="header">
                             <h2>
@@ -89,22 +95,22 @@
 <script>
 import axios from 'axios'
 export default {
-    data(){
+    data: function(){
         return {
-            id:0,
-            contest:{},
-            search_id:''
+            id: 0,
+            contest: {},
+            search_id: '',
+            hint: false
         };
     },
     mounted:function(){
-        var query = this.$route.query;
-        if(query.id)    this.id = query.id;
+        var q = this.$route.query;
+        if(q.id)    this.id = q.id;
         this.__construct();
     },
     methods:
     {
-        __construct:function()
-        {
+        __construct:function () {
             var _this = this;
             if(_this.id == 0)   return;
             axios.get('/contest/'+this.id).then(function(res){
@@ -113,37 +119,29 @@ export default {
                 $('#end-time').val(_this.contest.end_time);
             });
         },
-        submit:function()
-        {
+        submit: function () {
             this.contest.start_time = $('#start-time').val();
             this.contest.end_time = $('#end-time').val();
-            var _this = this;
-            if (_this.id)
-            {
-                axios.put('/contest/'+this.id, this.contest).then(function(res){
-                    console.log(res.data);
-                });
-            }
-            else
-            {
-                axios.post('/contest', this.contest).then(function(res){
-                    console.log(res.data);
-                });
-            }
 
+            var _this = this;
+            var url = '/contest' + (_this.id?'/'+_this.id:'')
+
+            axios.put(url, this.contest)
+            .then (function (res) {
+                _this.hint = {state: "alert-success", msg: "数据添加成功"}
+            }).catch(function (error) {
+                _this.hint = {state: "alert-danger", msg: "数据添加失败,请检查数据合法性"}
+            });
         },
-        add:function()
-        {
+        add: function () {
             var _this = this;
             axios.get('/problem/'+this.search_id).then(function(res){
-                if(res.data.id == _this.search_id)
-                {
+                if(res.data.id == _this.search_id) {
                   _this.contest.problemset.push(res.data);
                 }
             });
         },
-        remove:function(index)
-        {
+        remove: function (index) {
             this.contest.problemset.splice(index, 1);
         }
     }

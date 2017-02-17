@@ -15,7 +15,7 @@
 export default {
   name: 'menuItems',
   props: ['model'],
-  data() {
+  data: function() {
     return {
       open: false,
     }

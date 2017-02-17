@@ -12,13 +12,13 @@ class IndexController extends Controller
      */
     public function inProblem()
     {
-        $solutions = Solution::where('contest_id', 0)->get();
+        $solutions = Solution::where('contest_id', 0)->with('user')->get();
         return $solutions;
     }
 
     public function inContest($id)
     {
-        $solutions = Solution::where('contest_id', $id)->get();
+        $solutions = Solution::where('contest_id', $id)->with('user')->get();
         return $solutions;
     }
 }

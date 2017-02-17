@@ -33,7 +33,7 @@
                                         <td>{{ solution.result }}</td>
                                         <td>{{ solution.language }}</td>
                                         <td>{{ solution.created_at }}</td>
-                                        <td>{{ solution.user_id }}</td>
+                                        <td>{{ solution.user.name }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -48,7 +48,7 @@
 <script>
 import axios from 'axios'
 export default {
-    data(){
+    data: function(){
         return {
             solutions:[]
         };

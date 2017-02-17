@@ -4,25 +4,8 @@
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <header-part :cid='contest.id'></header-part>
-                        <div class="body table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>TITLE</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(problem, index) in contest.problems">
-                                        <th scope="row">{{ problem.id }}</th>
-                                        <td><router-link :to="{ path: '/contest/problem/detail', query:{id:id,pid:index}}">
-                                            {{ problem.title }}
-                                        </router-link></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <header-part :cid='id'></header-part>
+                        <router-view></router-view>
                     </div>
                 </div>
             </div>
@@ -34,27 +17,23 @@
 import axios from 'axios'
 import headerPart from './part/header'
 export default {
-    data(){
+    data: function () {
         return {
-            id:1,
-            contest:{}
+            id: 1,
+            contest: {}
         };
     },
     components: {headerPart},
-    mounted:function(){
-        var q = this.$route.query;
-        this.id = q.id?q.id:1;
+    mounted: function () {
+        this.id = this.$route.params.id;
         this.__construct();
     },
-    methods:
-    {
-        __construct:function()
-        {
+    methods: {
+        __construct: function () {
             var _this = this;
             axios.get('/i/contest/detail/'+this.id)
-            .then(function(res){
+            .then(function (res) {
                 _this.contest = res.data;
-                console.log(res.data);
             });
         }
     }

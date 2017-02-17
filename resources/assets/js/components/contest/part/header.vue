@@ -10,7 +10,7 @@
     <time-bar :start_time='contest.start_time'
               :end_time='contest.end_time'>
               </time-bar>
-    <nav-btn-group :cid="cid"></nav-btn-group>
+    <nav-btn-group :cid="contest.id"></nav-btn-group>
 </div>
 </div>
 </template>
@@ -19,21 +19,23 @@
 import axios from 'axios'
 import navBtnGroup from './nav-btn-group'
 import timeBar from './time-bar'
+
 export default {
-    data(){
+    data: function () {
         return {
             contest:{}
         };
     },
-    props:['cid'],
-    components:{navBtnGroup, timeBar},
+    props: ['cid'],
+    components: {navBtnGroup, timeBar},
     watch:{
-        cid:function()
-        {
+        cid:function () {
             var _this = this;
+            console.log(this.cid);
             axios.get('/i/contest/detail/'+this.cid)
-            .then(function(res){
+            .then(function (res) {
                 _this.contest = res.data;
+            }).catch(function (error) {
             });
         }
     }

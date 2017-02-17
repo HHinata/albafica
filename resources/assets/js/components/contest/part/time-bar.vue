@@ -10,22 +10,22 @@
 <script>
 import axios from 'axios'
 export default {
-    data(){
+    data: function () {
         return {
             now_time:0,
-            style:{
+            style: {
                 width:0
             }
         };
     },
     props:['start_time', 'end_time'],
-    mounted:function(){
+    mounted:function () {
         this.__construct();
     },
-    methods:{
-        __construct:function(){
+    methods: {
+        __construct: function () {
             var _this = this;
-            setInterval(function(){
+            setInterval(function () {
                 _this.now_time = Date.parse(new Date())/1000;
                 _this.style.width = (_this.now_time-_this.start_time)/(_this.end_time-_this.start_time)*100+"%";
             },1000);

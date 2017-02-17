@@ -61,7 +61,6 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <router-link type="button" class="btn btn-primary btn-lg m-l-15 waves-effect" :to="{ path: 'submit?pid=' + id }">SUBMIT</router-link>
                                 </div>
-                                <button @click='hello'>Hello</button>
                             </div>
                         </div>
                     </div>
@@ -74,7 +73,7 @@
 <script>
 import axios from 'axios'
 export default {
-    data(){
+    data: function(){
         return {
             id:0,
             problem:{}

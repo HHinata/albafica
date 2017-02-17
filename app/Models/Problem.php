@@ -13,6 +13,6 @@ class Problem extends Model
 
     public function contests()
     {
-        return $this->belongsToMany('App\Models\Contest')->withTimestamps();
+        return $this->belongsToMany('App\Models\Contest', 'contest_problem', 'problem_id', 'contest_id')->withTimestamps();
     }
 }

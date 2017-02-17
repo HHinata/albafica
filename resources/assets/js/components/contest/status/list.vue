@@ -1,50 +1,39 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <header-part :cid='id'></header-part>
-                        <div class="body table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>PID</th>
-                                        <th>TIME</th>
-                                        <th>MEMERY</th>
-                                        <th>RESULT</th>
-                                        <th>LANGUAGE</th>
-                                        <th>CREATE TIME</th>
-                                        <th>USER</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="solution in solutions">
-                                        <th scope="row">{{ solution.id }}</th>
-                                        <td>{{ solution.problem_id }}</td>
-                                        <td>{{ solution.time }}</td>
-                                        <td>{{ solution.memory }}</td>
-                                        <td>{{ solution.result }}</td>
-                                        <td>{{ solution.language }}</td>
-                                        <td>{{ solution.created_at }}</td>
-                                        <td>{{ solution.user_id }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="body table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>PID</th>
+                <th>TIME</th>
+                <th>MEMERY</th>
+                <th>RESULT</th>
+                <th>LANGUAGE</th>
+                <th>CREATE TIME</th>
+                <th>USER</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="solution in solutions">
+                <th scope="row">{{ solution.id }}</th>
+                <td>{{ solution.problem_id }}</td>
+                <td>{{ solution.time }}</td>
+                <td>{{ solution.memory }}</td>
+                <td>{{ solution.result }}</td>
+                <td>{{ solution.language }}</td>
+                <td>{{ solution.created_at }}</td>
+                <td>{{ solution.user.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 </template>
 
 <script>
 import axios from 'axios'
 import headerPart from '../part/header'
 export default {
-    data(){
+    data: function(){
         return {
             id:1,
             solutions:[],
