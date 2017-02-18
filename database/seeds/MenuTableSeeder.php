@@ -22,7 +22,7 @@ class MenuTableSeeder extends Seeder
         DB::table('menu')->insert(['title' => 'Contest','father' => 2,'url'=>'#/contest/admin/list']);
         DB::table('menu')->insert(['title' => 'Problem','father' => 2,'url'=>'#/problem/admin/list']);
 
-        DB::table('menu')->insert(['title' => 'Profile','father' => 3]);
-        DB::table('menu')->insert(['title' => 'Account','father' => 3]);
+        DB::table('menu')->insert(['title' => 'Profile','father' => 3,'url'=>'#/user/profile']);
+        DB::table('menu')->insert(['title' => 'Account','father' => 3,'url'=>'#/user/account']);
     }
 }

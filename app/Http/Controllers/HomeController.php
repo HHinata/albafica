@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\UserMeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -57,9 +58,12 @@ class HomeController extends Controller
 
     public function info()
     {
-        $info = Auth::user();
-
+        $info = Auth::user()->toArray();
         $info['avatar'] = env('USER_AVATAR');
+
+        $meta = UserMeta::where('user_id', $info['id'])->get()->toArray();
+
+        $info = array_merge($info, $meta);
 
         return $info;
     }
@@ -69,6 +73,6 @@ class HomeController extends Controller
         $disk = QiniuStorage::disk('qiniu');
         $key = time();
         $token = $disk->uploadToken($key);
-        return ['key'=>$key, 'token'=>$token];
+        return ['key'=>\Qiniu\base64_urlSafeEncode($key), 'uptoken'=>$token];
     }
 }
