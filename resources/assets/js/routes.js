@@ -6,12 +6,12 @@ export default [
         component: require('./components/contest/detail.vue'),
         children: [
             {
-                path: 'rank',
-                component: require('./components/contest/rank.vue')
-            },
-            {
                 path: '',
                 component: require('./components/contest/problem/list.vue')
+            },
+            {
+                path: 'rank',
+                component: require('./components/contest/rank.vue')
             },
             {
                 path: 'problem/detail',

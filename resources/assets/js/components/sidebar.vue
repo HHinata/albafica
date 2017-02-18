@@ -5,23 +5,11 @@
         <!-- User Info -->
         <div class="user-info">
             <div class="image">
-                <img src="images/user.png" width="48" height="48" alt="User" />
+                <img :src="user.avatar" width="48" height="48" alt="User" />
             </div>
             <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
-                <div class="email">john.doe@example.com</div>
-                <div class="btn-group user-helper-dropdown">
-                    <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
-                        <li role="seperator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
-                        <li role="seperator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
-                    </ul>
-                </div>
+                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user.name}}</div>
+                <div class="email">{{user.email}}</div>
             </div>
         </div>
         <div class='menu'>
@@ -196,28 +184,33 @@
 </template>
 
 <script>
-
-var menuData = [{"menuName":"Profile","menuCode":"1","children":[{"menuName":"Account","menuCode":"","children":[]},{"menuName":"Email","menuCode":"","children":[]}]}];
-
 import menuItems from './menu_items.vue'
 import axios from 'axios'
+
 export default {
     components: {
         menuItems
     },
     data: function() {
         return {
-            menu: menuData
+            menu: [],
+            user: {}
         }
     },
-    mounted:function(){
-        this.getData();
+    mounted: function () {
+        this.__construct();
     },
-    methods:{
-        getData:function(){
+    methods: {
+        __construct: function () {
             var _this = this;
-            axios.get('\menu').then(function(res){
+            axios.get('\menu')
+            .then(function (res) {
                 _this.menu = res.data;
+            });
+
+            axios.get('\info')
+            .then(function (res) {
+                _this.user = res.data;
             });
         }
     }

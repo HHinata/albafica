@@ -2,8 +2,8 @@
 <div>
 <div class="header">
     <h2>
-        Title:{{ contest.title }}
-        <small>Description:{{ contest.description }} {{contest.start_time|time}}-{{contest.end_time|time}}</small>
+        {{ contest.title }}
+        <small>{{ contest.description }} {{contest.start_time|time}}-{{contest.end_time|time}}</small>
     </h2>
 </div>
 <div class="body">

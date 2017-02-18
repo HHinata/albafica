@@ -18,6 +18,7 @@
                                         <th>PLATFORM</th>
                                         <th>SIGN</th>
                                         <th>TITLE</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -25,7 +26,10 @@
                                         <th scope="row">{{ problem.id }}</th>
                                         <td>{{ problem.platform }}</td>
                                         <td>{{ problem.sign }}</td>
-                                        <td><router-link :to="{ path: 'detail?id=' + problem.id }">{{ problem.title }}</router-link></td>
+                                        <td><router-link :to="{ path: 'detail', query:{id:problem.id} }">{{ problem.title }}</router-link></td>
+                                        <td><router-link :to="{ path: 'submit', query:{id:problem.id}}">
+                                            <span class='glyphicon glyphicon-pencil'></span>
+                                        </router-link></td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -5,13 +5,17 @@
             <tr>
                 <th>#</th>
                 <th>TITLE</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(problem, index) in contest.problems">
-                <th scope="row">{{ problem.id }}</th>
-                <td><router-link :to="{ path: 'detail', query:{pid:index}}">
+                <th scope="row">{{ index }}</th>
+                <td><router-link :to="{ path: '/contest/detail/'+id+'/problem/detail', query:{pid:index}}">
                     {{ problem.title }}
+                </router-link></td>
+                <td><router-link :to="{ path: '/contest/detail/'+id+'/problem/submit', query:{pid:index}}">
+                    <span class='glyphicon glyphicon-pencil'></span>
                 </router-link></td>
             </tr>
         </tbody>
@@ -25,8 +29,8 @@ import headerPart from '../part/header'
 export default {
     data: function(){
         return {
-            id:1,
-            contest:{}
+            id: 1,
+            contest: {}
         };
     },
     components: {headerPart},

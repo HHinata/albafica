@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
+use zgldh\QiniuStorage\QiniuStorage;
 
 class HomeController extends Controller
 {
@@ -42,15 +45,30 @@ class HomeController extends Controller
                 {
                     $count = count($menu);
                     $item['used'] = true;
-
                     $menu[] = ['menuName'=>$item['title'], 'url'=>$item['url'], 'children'=>[]];
                     recursion($menuList, $menu[$count]['children'], $item['id']);
                 }
             }
         }
-
         recursion($menus, $menu, 0);
 
-        return Response::json($menu);
+        return $menu;
+    }
+
+    public function info()
+    {
+        $info = Auth::user();
+
+        $info['avatar'] = env('USER_AVATAR');
+
+        return $info;
+    }
+
+    public function token()
+    {
+        $disk = QiniuStorage::disk('qiniu');
+        $key = time();
+        $token = $disk->uploadToken($key);
+        return ['key'=>$key, 'token'=>$token];
     }
 }

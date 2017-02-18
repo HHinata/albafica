@@ -15,6 +15,8 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 Route::get('/menu', 'HomeController@menu');
+Route::get('/info', 'HomeController@info');
+Route::get('/token', 'HomeController@token');
 
 /**
  * i - index

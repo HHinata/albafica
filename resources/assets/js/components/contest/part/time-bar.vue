@@ -1,9 +1,15 @@
 <template>
-<div class="progress">
-    <div class="progress-bar" role="progressbar"
-        aria-valuemin="0" aria-valuemax="100" v-bind:style="style">
-        {{ now_time | time }}
+<div>
+<div class='col-md-10'>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar"
+            aria-valuemin="0" aria-valuemax="100" v-bind:style="style">
+        </div>
     </div>
+</div>
+<div class='col-md-2'>
+    {{ now_time | time }}
+</div>
 </div>
 </template>
 

@@ -62,7 +62,18 @@ return [
             'region' => env('AWS_REGION'),
             'bucket' => env('AWS_BUCKET'),
         ],
-
+        'qiniu' => [
+            'driver'  => 'qiniu',
+            'domains' => [
+                'default'   => env('QINIU_DOMAIN'), //你的七牛域名
+                'https'     => '',         //你的HTTPS域名
+                'custom'    => '',                //你的自定义域名
+            ],
+            'access_key' => env('QINIU_AK'),
+            'secret_key' => env('QINIU_SK'),
+            'bucket' => env('QINIU_BUCKET'),
+            'notify_url'=> '',  //持久化处理回调地址
+        ],
     ],
 
 ];

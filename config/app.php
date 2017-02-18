@@ -184,6 +184,10 @@ return [
          * Custom Service Providers...
          */
         App\Providers\PlatformServiceProvider::class,
+        /**
+         * Qiniu file system
+         */
+        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class
     ],
 
     /*
