@@ -58,6 +58,9 @@ export default [
     {   path: '/problem/admin/grab',
         component: require('./components/problem/admin/grab.vue')
     },
+    {   path: '/problem/admin/list',
+        component: require('./components/problem/admin/list.vue')
+    },
     {   path: '/problem/admin/detail',
         component: require('./components/problem/admin/detail.vue')
     },

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="row clearfix">
                 <div v-show="hint" class="alert alert-dismissible" :class="hint.state" role="alert" >

@@ -8,4 +8,7 @@ class UserMeta extends Model
 {
     /* set up the table */
     protected $table = 'usermeta';
+
+    protected $fillable = ['user_id', 'meta_key', 'meta_value'];
+
 }

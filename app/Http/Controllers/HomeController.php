@@ -60,9 +60,10 @@ class HomeController extends Controller
     {
         $info = Auth::user()->toArray();
         $info['avatar'] = env('USER_AVATAR');
+        $info['desc'] = env('USER_DESC');
 
         $meta = UserMeta::where('user_id', $info['id'])->get()->toArray();
-
+        $meta = array_column($meta, 'meta_value', 'meta_key');
         $info = array_merge($info, $meta);
 
         return $info;
@@ -73,6 +74,6 @@ class HomeController extends Controller
         $disk = QiniuStorage::disk('qiniu');
         $key = time();
         $token = $disk->uploadToken($key);
-        return ['key'=>\Qiniu\base64_urlSafeEncode($key), 'uptoken'=>$token];
+        return ['key'=>\Qiniu\base64_urlSafeEncode($key), 'uptoken'=>$token, 'domain'=>env('QINIU_DOMAIN')];
     }
 }
