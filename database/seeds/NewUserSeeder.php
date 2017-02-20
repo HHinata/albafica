@@ -17,5 +17,11 @@ class NewUserSeeder extends Seeder
             'email' => '739609084@qq.com',
             'password' => bcrypt('123456'),
         ]);
+
+        \App\User::create([
+            'name' => 'skyfirelee',
+            'email' => '739609084@gmail.com',
+            'password' => bcrypt('123456'),
+        ]);
     }
 }

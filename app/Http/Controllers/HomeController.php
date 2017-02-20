@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Role;
 use App\Models\UserMeta;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -34,24 +36,27 @@ class HomeController extends Controller
 
     public function menu()
     {
+        $user = Auth::user();
+        $roleLevel = $user->roles()->first()->id;
+
         $menu = [];
         $menus = Menu::all()->toArray();
 
-        function recursion(&$menuList, &$menu, $id)
+        function recursion(&$menuList, &$menu, $id, $level)
         {
             foreach ($menuList as &$item)
             {
-                if (isset($item['used']) || $item['father'] != $id)  continue;
+                if (isset($item['used']) || $item['father'] != $id || $item['ability']<$level)  continue;
                 else
                 {
                     $count = count($menu);
                     $item['used'] = true;
                     $menu[] = ['menuName'=>$item['title'], 'url'=>$item['url'], 'children'=>[]];
-                    recursion($menuList, $menu[$count]['children'], $item['id']);
+                    recursion($menuList, $menu[$count]['children'], $item['id'], $level);
                 }
             }
         }
-        recursion($menus, $menu, 0);
+        recursion($menus, $menu, 0, $roleLevel);
 
         return $menu;
     }
