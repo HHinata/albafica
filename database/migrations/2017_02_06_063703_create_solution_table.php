@@ -15,14 +15,16 @@ class CreateSolutionTable extends Migration
     {
         Schema::create('solution', function (Blueprint $table) {
             $table->increments('id');
+            $table->text('code');
+            $table->string('platform');
             $table->integer('problem_id');
             $table->integer('contest_id')->default(0);
             $table->integer('time')->default(0);
             $table->integer('memory')->default(0);
             $table->integer('user_id');
-            $table->integer('run_id');
+            $table->integer('run_id')->nullable();
             $table->smallInteger('result')->default(0);
-            $table->smallInteger('language');
+            $table->smallInteger('lang');
             $table->timestamps();
         });
     }
