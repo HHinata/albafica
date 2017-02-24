@@ -12,19 +12,17 @@ require('./bootstrap');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-Vue.component('navbar', require('./components/navbar.vue'));
-Vue.component('sidebar', require('./components/sidebar.vue'));
-Vue.component('loader', require('./components/loader.vue'));
-Vue.component('searchbar', require('./components/searchbar.vue'));
+import routes from './routes'
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.css'
 
 Vue.use(VueRouter);
+Vue.use(VueMaterial);
 
+// 时间转换函数
 Vue.filter('time', function (value) {
     return new Date(parseInt(value) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
 })
-
-import routes from './routes'
 
 const router = new VueRouter({
     routes // （缩写）相当于 routes: routes

@@ -1,5 +1,5 @@
 export default [
-    {   path: '/contest/list',
+    {   path: '',
         component: require('./components/contest/list.vue')
     },
     {   path: '/contest/detail/:id',
