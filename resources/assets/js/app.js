@@ -13,11 +13,11 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 import routes from './routes'
-import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.css'
+import Element from 'element-ui'
+import 'element-ui/lib/theme-default/index.css';
 
 Vue.use(VueRouter);
-Vue.use(VueMaterial);
+Vue.use(Element)
 
 // 时间转换函数
 Vue.filter('time', function (value) {
