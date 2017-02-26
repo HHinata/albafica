@@ -1,7 +1,7 @@
 <template>
 <div style="margin-top:20px">
-    <el-table :data="status.data" style="width: 100%">
-        <el-table-column prop="id" label="#" width="100"></el-table-column>
+    <el-table :data="status.data" style="width: 100%" @cell-click="cellClick" >
+        <el-table-column prop="id" label="#" width="100" class-name="link"></el-table-column>
         <el-table-column prop="user_id" label="Who" width="100"></el-table-column>
         <el-table-column prop="problem_id" label="Problem"s></el-table-column>
         <el-table-column prop="lang" label="Lang" width="100"></el-table-column>
@@ -41,7 +41,20 @@
                 .then(function(res) {
                     _this.status = res.data;
                 });
+            },
+            cellClick: function (row, column, cell, event) {
+                if (cell.cellIndex != 0)    return;
+                window.location.hash = '/status/'+row.id;
             }
         }
     }
 </script>
+
+<style>
+    .link{
+        color: #600090;
+    }
+    .link:hover{
+        cursor: pointer;
+    }
+</style>

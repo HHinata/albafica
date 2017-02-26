@@ -4,11 +4,11 @@
         <el-row>
             <el-col :span="12" :offset="4">
                 <el-menu-item index="/">Index</el-menu-item>
-                <el-menu-item index="problem">Problem</el-menu-item>
-                <el-menu-item index="contest">Contest</el-menu-item>
-                <el-menu-item index="status">Status</el-menu-item>
-                <el-menu-item index="rank">Rank</el-menu-item>
-                <el-menu-item index="faq">F.A.Q</el-menu-item>
+                <el-menu-item index="/problem">Problem</el-menu-item>
+                <el-menu-item index="/contest">Contest</el-menu-item>
+                <el-menu-item index="/status">Status</el-menu-item>
+                <el-menu-item index="/rank">Rank</el-menu-item>
+                <el-menu-item index="/faq">F.A.Q</el-menu-item>
             </el-col>
             <el-col :span="4">
                 <el-menu-item index="login">Login</el-menu-item>
@@ -27,7 +27,7 @@
             <el-col :span="4" style="">Blog</el-col>
             <el-col :span="4" style="">Home</el-col>
         </el-row>
-    </footer>
+    </footer>/
 </div>
 </template>
 

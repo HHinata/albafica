@@ -11,4 +11,10 @@ class SolutionController extends Controller
     {
         return Solution::where("contest_id", 0)->orderBy("id", "desc")->paginate(20);
     }
+
+    public function detail(Request $request)
+    {
+        $id = $request->input('id');
+        return Solution::find($id);
+    }
 }
