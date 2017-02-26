@@ -11,16 +11,23 @@ class ProblemTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        DB::table('problem')->insert([
-            'platform' => 'HDU',
-            'sign' => '1000',
-            'title' => 'A + B Problem',
-            'description' => 'Calculate A + B.',
-            'input' => 'Each line will contain two integers A and B. Process to end of file.',
-            'output' => 'For each case, output A + B in one line.',
-            'sample_input' => '1 1',
-            'sample_output' => '2'
-        ]);
+        $platform = ['hdu', 'poj', 'hat'];
+
+        foreach (range(1, 200) as $item)
+        {
+            \App\Models\Problem::create([
+                'platform'=>$platform[array_rand($platform)],
+                'sign'=>rand(1000, 9999),
+                'title' =>  md5(time()+rand(0, 10000)),
+                'desc' =>  md5(time()+rand(0, 10000)).md5(time()+rand(0, 10000)),
+                'input' =>  md5(time()+rand(0, 10000)).md5(time()+rand(0, 10000)),
+                'output' =>  md5(time()+rand(0, 10000)).md5(time()+rand(0, 10000)),
+                'sample_input' =>  md5(time()+rand(0, 10000)).md5(time()+rand(0, 10000)),
+                'sample_output' =>  md5(time()+rand(0, 10000)).md5(time()+rand(0, 10000)),
+                'solved'    =>  rand(0, 100),
+                'submited'  =>  rand(100, 200),
+                'private'   =>  rand(0, 1)
+            ]);
+        }
     }
 }

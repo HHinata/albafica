@@ -11,12 +11,15 @@ class ContestTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        DB::table('contest')->insert([
-            'title' => 'Hello world contest',
-            'description' => 'the first Hello world contest',
-            'start_time' => "1486703541",
-            'end_time' => "1486503541"
-        ]);
+        foreach (range(1, 200) as $item)
+        {
+            \App\Models\Contest::create([
+                'title' =>  md5(time()+rand(0, 10000)),
+                'desc' =>  md5(time()+rand(0, 10000)).md5(time()+rand(0, 10000)),
+                'start_time'    =>  rand(0, 10000000),
+                'end_time'    =>  rand(0, 10000000),
+                'private'   =>  rand(0, 1)
+            ]);
+        }
     }
 }

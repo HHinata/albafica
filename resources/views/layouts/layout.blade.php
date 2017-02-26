@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -9,30 +8,56 @@
     <!-- Favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <style>
+        /* http://meyerweb.com/eric/tools/css/reset/
+           v2.0 | 20110126
+           License: none (public domain)
+        */
 
-    <!-- Bootstrap Core Css -->
-    <link href="{{ asset('plugins/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
-
-    <!-- Waves Effect Css -->
-    <link href="{{ asset('plugins/node-waves/waves.css') }}" rel="stylesheet" />
-
-    <!-- Animation Css -->
-    <link href="{{ asset('plugins/animate-css/animate.css') }}" rel="stylesheet" />
-
-    <!-- Morris Chart Css-->
-    <link href="{{ asset('plugins/morrisjs/morris.css') }}" rel="stylesheet" />
-
-    <!-- Bootstrap Select Css -->
-    <link href="{{ asset('plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />
-
-    <!-- Custom Css -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
-    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="{{ asset('css/themes/all-themes.css') }}" rel="stylesheet" />
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+        /* HTML5 display-role reset for older browsers */
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+        body {
+            line-height: 1;
+        }
+        ol, ul {
+            list-style: none;
+        }
+        blockquote, q {
+            quotes: none;
+        }
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+    </style>
 </head>
 
 <body class="theme-red">
@@ -41,43 +66,6 @@
 </div>
 <!-- Custom Js -->
 <script src="{{ mix('js/app.js') }}"></script>
-{{--<!-- Jquery Core Js -->--}}
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-<!-- Bootstrap Core Js -->
-<script src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}"></script>
-
-<script src="{{ asset('plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}"></script>
-<!-- Dropzone Plugin Js -->
-<script src="{{ asset('plugins/dropzone/dropzone.js') }}"></script>
-<!-- Select Plugin Js -->
-<script src="{{ asset('plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
-
-<!-- Slimscroll Plugin Js -->
-<script src="{{ asset('plugins/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
-
-<!-- Waves Effect Plugin Js -->
-<script src="{{ asset('plugins/node-waves/waves.js') }}"></script>
-
-<!-- Jquery CountTo Plugin Js -->
-<script src="{{ asset('plugins/jquery-countto/jquery.countTo.js') }}"></script>
-
-<!-- Morris Plugin Js -->
-<script src="{{ asset('plugins/raphael/raphael.min.js') }}"></script>
-<script src="{{ asset('plugins/morrisjs/morris.js') }}"></script>
-<!-- ChartJs -->
-<script src="{{ asset('plugins/chartjs/Chart.bundle.js') }}"></script>
-
-<!-- Input Mask Plugin Js -->
-<script src="{{ asset('plugins/jquery-inputmask/jquery.inputmask.bundle.js') }}"></script>
-
-<!-- Sparkline Chart Plugin Js -->
-<script src="{{ asset('plugins/jquery-sparkline/jquery.sparkline.js') }}"></script>
-
-<script src="{{ asset('plugins/bootstrap-tagsinput/bootstrap-tagsinput.js') }}"></script>
-
-<!-- Custom Js -->
-<script src="{{ asset('js/admin.js') }}"></script>
-<script src="{{ asset('js/custom.js') }}"></script>
 
 </body>
 
