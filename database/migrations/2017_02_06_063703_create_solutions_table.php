@@ -29,6 +29,10 @@ class CreateSolutionsTable extends Migration
             $table->integer('time')->default(0);
             $table->integer('memory')->default(0);
 
+            /**
+             * 0-g++
+             * 1-gcc
+             */
             $table->smallInteger('lang');
             $table->smallInteger('result')->default(0);
             $table->timestamps();

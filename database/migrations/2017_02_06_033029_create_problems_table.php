@@ -25,6 +25,9 @@ class CreateProblemsTable extends Migration
             $table->text('sample_input');
             $table->text('sample_output');
 
+            $table->integer('solved');
+            $table->integer('submited');
+
             $table->string('hint')->default('');
             $table->string('author')->default('');
             $table->string('source')->default('');

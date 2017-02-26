@@ -15,9 +15,11 @@ require('./bootstrap');
 import routes from './routes'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css';
+import axios from 'axios'
 
 Vue.use(VueRouter);
 Vue.use(Element)
+Vue.use(axios)
 
 // 时间转换函数
 Vue.filter('time', function (value) {

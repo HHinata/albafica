@@ -15,6 +15,8 @@ class LinkProblemTagTable extends Migration
     {
         Schema::create('problem_tag', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('problem_id');
+            $table->unsignedInteger('tag_id');
             $table->timestamps();
         });
     }
