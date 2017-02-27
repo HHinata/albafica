@@ -32,6 +32,18 @@ export default [
             {
                 path: 'status/:id',
                 component: require('./pages/status/content.vue')
+            },
+            {
+                path: 'profile',
+                component: require('./pages/profile/index.vue')
+            },
+            {
+                path: 'login',
+                component: require('./pages/enter/login.vue')
+            },
+            {
+                path: 'register',
+                component: require('./pages/enter/register.vue')
             }
         ]
     }

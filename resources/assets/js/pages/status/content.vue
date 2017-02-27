@@ -1,5 +1,5 @@
 <template>
-<div style="margin-top:20px">
+<div>
     <h3>Title</h3>
     <p>{{ status.title }}</p>
     <h3>Desc</h3>

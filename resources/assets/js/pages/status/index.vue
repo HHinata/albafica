@@ -1,5 +1,5 @@
 <template>
-<div style="margin-top:20px">
+<div>
     <el-table :data="status.data" style="width: 100%" @cell-click="cellClick" >
         <el-table-column prop="id" label="#" width="100" class-name="link"></el-table-column>
         <el-table-column prop="user_id" label="Who" width="100"></el-table-column>

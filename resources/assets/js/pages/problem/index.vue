@@ -1,5 +1,5 @@
 <template>
-<div style="margin-top:20px">
+<div>
     <el-table :data="problem.data" style="width: 100%" >
         <el-table-column prop="id" label="#" width="100">
         </el-table-column>

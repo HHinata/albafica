@@ -27,7 +27,6 @@
             },
             submit: function () {
                 var _this = this;
-                console.log(this.pid);
                 axios.post('problem/submit', { id: this.pid, code: this.code })
                 .then(function(res) {
                     _this.$message({

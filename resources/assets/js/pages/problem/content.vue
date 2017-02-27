@@ -1,5 +1,5 @@
 <template>
-<div style="margin-top:20px">
+<div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="DETAIL" name="detail">
             <detail :pid="$route.params.id"></detail>

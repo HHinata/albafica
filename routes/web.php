@@ -15,6 +15,8 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
+Route::get('info', 'HomeController@info');
+
 Route::get('problem', 'ProblemController@index');
 
 Route::get('problem/detail', 'ProblemController@detail');
