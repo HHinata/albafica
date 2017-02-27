@@ -14,6 +14,10 @@ export default [
                 component: require('./pages/problem/content.vue')
             },
             {
+                path: 'problem/submit/:id',
+                component: require('./pages/problem/submit.vue')
+            },
+            {
                 path: 'contest',
                 component: require('./pages/contest/index.vue')
             },

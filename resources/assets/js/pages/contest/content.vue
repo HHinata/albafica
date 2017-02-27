@@ -1,40 +1,44 @@
 <template>
 <div style="margin-top:20px">
-    <h3>Title</h3>
-    <p>{{ contest.title }}</p>
-    <h3>Desc</h3>
-    <p>{{ contest.desc }}</p>
-    <h3>Input</h3>
-    <p>{{ contest.input }}</p>
-    <h3>Output</h3>
-    <p>{{ contest.output }}</p>
-    <h3>Sample Input</h3>
-    <p>{{ contest.sample_input }}</p>
-    <h3>Sample Output</h3>
-    <p>{{ contest.sample_output }}</p>
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="OVERVIEW" name="overview">
+            <overview :cid="$route.params.id"></overview>
+        </el-tab-pane>
+        <el-tab-pane label="PROBLEM" name="problem">
+            <problem :pid="1"></problem>
+        </el-tab-pane>
+        <el-tab-pane label="SUBMIT" name="submit">
+            <submit :cid="$route.params.id" :pid="$route.params.id"></submits>
+        </el-tab-pane>
+    </el-tabs>
 </div>
 </template>
 
 <script>
+    import detail from './detail.vue'
+    import problem from './problem.vue'
+    import submit from './submit.vue'
     export default {
         data: function () {
             return {
-                contest: {
-                }
+                activeName: 'overview'
             };
         },
-        mounted() {
-            this.__construct();
-        },
+        components:{ 'overview': detail, 'submit': submit, 'problem': problem},
         methods: {
-            __construct: function () {
-                var _this = this;
-                axios.get('contest/detail', { params: { id: this.$route.params.id }})
-                .then(function(res) {
-                    _this.contest = res.data;
-                    console.log(_this.contest);
-                });
+            handleClick(tab, event) {
+                console.log(tab, event);
             }
         }
     }
 </script>
+
+<style>
+    .caption {
+        text-align: center;
+    }
+    .footer {
+        margin-top: 20px;
+        text-align: center;
+    }
+</style>

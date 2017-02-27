@@ -1,40 +1,40 @@
 <template>
 <div style="margin-top:20px">
-    <h3>Title</h3>
-    <p>{{ problem.title }}</p>
-    <h3>Desc</h3>
-    <p>{{ problem.desc }}</p>
-    <h3>Input</h3>
-    <p>{{ problem.input }}</p>
-    <h3>Output</h3>
-    <p>{{ problem.output }}</p>
-    <h3>Sample Input</h3>
-    <p>{{ problem.sample_input }}</p>
-    <h3>Sample Output</h3>
-    <p>{{ problem.sample_output }}</p>
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="DETAIL" name="detail">
+            <detail :pid="$route.params.id"></detail>
+        </el-tab-pane>
+        <el-tab-pane label="SUBMIT" name="submit">
+            <submit :pid="$route.params.id"></submits>
+        </el-tab-pane>
+    </el-tabs>
 </div>
 </template>
 
 <script>
+    import detail from './detail.vue'
+    import submit from './submit.vue'
     export default {
         data: function () {
             return {
-                problem: {
-                }
+                activeName: 'detail'
             };
         },
-        mounted() {
-            this.__construct();
-        },
+        components:{ 'detail': detail, 'submit': submit },
         methods: {
-            __construct: function () {
-                var _this = this;
-                axios.get('problem/detail', { params: { id: this.$route.params.id }})
-                .then(function(res) {
-                    _this.problem = res.data;
-                    console.log(_this.problem);
-                });
+            handleClick(tab, event) {
+                console.log(tab, event);
             }
         }
     }
 </script>
+
+<style>
+    .caption {
+        text-align: center;
+    }
+    .footer {
+        margin-top: 20px;
+        text-align: center;
+    }
+</style>

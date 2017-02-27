@@ -19,6 +19,8 @@ Route::get('problem', 'ProblemController@index');
 
 Route::get('problem/detail', 'ProblemController@detail');
 
+Route::post('problem/submit', 'ProblemController@submit');
+
 Route::get('solution', 'SolutionController@index');
 
 Route::get('solution/detail', 'SolutionController@detail');

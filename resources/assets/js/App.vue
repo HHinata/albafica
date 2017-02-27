@@ -27,7 +27,7 @@
             <el-col :span="4" style="">Blog</el-col>
             <el-col :span="4" style="">Home</el-col>
         </el-row>
-    </footer>/
+    </footer>
 </div>
 </template>
 

@@ -28,6 +28,9 @@ class CreateProblemsTable extends Migration
             $table->integer('solved');
             $table->integer('submited');
 
+            $table->integer('time_limit');
+            $table->integer('mem_limit');
+
             $table->string('hint')->default('');
             $table->string('author')->default('');
             $table->string('source')->default('');
