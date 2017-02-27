@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
-use App\Models\Role;
-use App\Models\UserMeta;
-use App\User;
+use App\Models\Usermeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -67,7 +65,7 @@ class HomeController extends Controller
         $info['avatar'] = env('USER_AVATAR');
         $info['desc'] = env('USER_DESC');
 
-        $meta = UserMeta::where('user_id', $info['id'])->get()->toArray();
+        $meta = Usermeta::where('user_id', $info['id'])->get()->toArray();
         $meta = array_column($meta, 'meta_value', 'meta_key');
         $info = array_merge($info, $meta);
 

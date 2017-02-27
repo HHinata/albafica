@@ -1,11 +1,16 @@
 <template>
-<div style="margin-top:20px">
+<div>
     <el-table :data="contest.data" style="width: 100%">
         <el-table-column prop="title" label="Name">
         </el-table-column>
         <el-table-column prop="start_time" width="100" label="Start">
         </el-table-column>
         <el-table-column prop="end_time" width="100" label="End">
+        </el-table-column>
+        <el-table-column label="操作" width="100">
+          <template scope="scope">
+            <el-button @click.native.prevent="handleClick(scope.$index, contest.data)" type="text" size="small">查看</el-button>
+          </template>
         </el-table-column>
     </el-table>
     <el-row type='flex' justify='center' style="margin-top: 20px">
@@ -40,7 +45,10 @@
                 .then(function(res) {
                     _this.contest = res.data;
                 });
-            }
+            },
+             handleClick: function (index, rows) {
+                 window.location.hash = '/contest/'+rows[index].id;
+             }
         }
     }
 </script>

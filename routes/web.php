@@ -15,8 +15,18 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
+Route::get('info', 'HomeController@info');
+
 Route::get('problem', 'ProblemController@index');
+
+Route::get('problem/detail', 'ProblemController@detail');
+
+Route::post('problem/submit', 'ProblemController@submit');
 
 Route::get('solution', 'SolutionController@index');
 
+Route::get('solution/detail', 'SolutionController@detail');
+
 Route::get('contest', 'ContestController@index');
+
+Route::get('contest/detail', 'ContestController@detail');

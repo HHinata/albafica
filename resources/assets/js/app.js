@@ -16,7 +16,7 @@ import routes from './routes'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css';
 import axios from 'axios'
-
+require.config({ paths: { 'vs': 'monaco-editor/min/vs' }});
 Vue.use(VueRouter);
 Vue.use(Element)
 Vue.use(axios)

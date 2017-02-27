@@ -26,6 +26,8 @@ class ProblemTableSeeder extends Seeder
                 'sample_output' =>  md5(time()+rand(0, 10000)).md5(time()+rand(0, 10000)),
                 'solved'    =>  rand(0, 100),
                 'submited'  =>  rand(100, 200),
+                'time_limit'  =>  rand(100, 200),
+                'mem_limit'  =>  rand(100, 200),
                 'private'   =>  rand(0, 1)
             ]);
         }

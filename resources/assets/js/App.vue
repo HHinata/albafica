@@ -4,21 +4,29 @@
         <el-row>
             <el-col :span="12" :offset="4">
                 <el-menu-item index="/">Index</el-menu-item>
-                <el-menu-item index="problem">Problem</el-menu-item>
-                <el-menu-item index="contest">Contest</el-menu-item>
-                <el-menu-item index="status">Status</el-menu-item>
-                <el-menu-item index="rank">Rank</el-menu-item>
-                <el-menu-item index="faq">F.A.Q</el-menu-item>
+                <el-menu-item index="/problem">Problem</el-menu-item>
+                <el-menu-item index="/contest">Contest</el-menu-item>
+                <el-menu-item index="/status">Status</el-menu-item>
+                <el-menu-item index="/rank">Rank</el-menu-item>
+                <el-menu-item index="/faq">F.A.Q</el-menu-item>
             </el-col>
-            <el-col :span="4">
-                <el-menu-item index="login">Login</el-menu-item>
-                <el-menu-item index="register">Register</el-menu-item>
+            <el-col v-if="info.name" :span="4">
+                <el-submenu index="2">
+                    <template slot="title">{{ info.name }}</template>
+                    <el-menu-item index="/profile">Profile</el-menu-item>
+                    <el-menu-item index="/" @click='logout'>Logout</el-menu-item>
+                </el-submenu>
             </el-col>
+            <el-col v-else :span="4">
+                <el-menu-item index="/login">Login</el-menu-item>
+                <el-menu-item index="/register">Register</el-menu-item>
+            </el-col>
+
         </el-row>
     </el-menu>
     <el-row>
-        <el-col :span="16" :offset="4">
-            <router-view></router-view>
+        <el-col :span="16" :offset="4" style='margin-top: 50px'>
+            <router-view v-on:login='login'></router-view>
         </el-col>
     </el-row>
     <footer>
@@ -33,8 +41,45 @@
 
 <script>
     export default {
+        data: function () {
+            return {
+                info: {}
+            };
+        },
         mounted() {
-            console.log('Component mounted.')
+            var _this = this;
+            axios.get('info')
+            .then(function(res) {
+                _this.info = res.data;
+            })
+            .catch(function (error) {
+            });
+        },
+        methods: {
+            'login': function(msg) {
+                if( msg ) {
+                    var _this = this;
+                    axios.get('info')
+                    .then(function(res) {
+                        _this.info = res.data;
+                    })
+                    .catch(function (error) {
+                    });
+                }
+            },
+            'logout': function() {
+                var _this = this;
+                axios.post('/logout')
+                .then(function(res) {
+                    _this.info = {};
+                    _this.$message({
+                        message: '账号退出成功',
+                        type: 'success'
+                    });
+                })
+                .catch(function (error) {
+                });
+            }
         }
     }
 </script>
