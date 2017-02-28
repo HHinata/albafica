@@ -29,4 +29,6 @@ Route::get('solution/detail', 'SolutionController@detail');
 
 Route::get('contest', 'ContestController@index');
 
+Route::get('contest/problem', 'ContestController@problem');
+
 Route::get('contest/detail', 'ContestController@detail');
