@@ -11,7 +11,7 @@ class ContestTableSeeder extends Seeder
      */
     public function run()
     {
-        foreach (range(1, 200) as $item)
+        foreach (range(1, 50) as $item)
         {
             \App\Models\Contest::create([
                 'title' =>  md5(time()+rand(0, 10000)),

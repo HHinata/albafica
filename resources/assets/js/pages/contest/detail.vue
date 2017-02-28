@@ -11,6 +11,18 @@
             </el-table-column>
             <el-table-column prop="title" label="Title">
             </el-table-column>
+            <el-table-column prop="submited" label="Submited" width="180">
+            </el-table-column>
+            <el-table-column prop="solved" label="Solved" width="180">
+            </el-table-column>
+            <el-table-column prop="solved" label="Solved" width="180">
+            </el-table-column>
+            <el-table-column label="Op" width="180">
+                <template scope="scope">
+                    <el-button @click.native.prevent="show(scope.$index)"  type="text" size="small">查看</el-button>
+                    <el-button @click.native.prevent="submit(scope.$index)"  type="text" size="small">提交</el-button>
+                </template>
+            </el-table-column>
         </el-table>
     </div>
 </div>
@@ -37,6 +49,12 @@
                     _this.contest = res.data;
                     console.log(_this.contest);
                 });
+            },
+            show: function (index) {
+                this.$emit('show', index);
+            },
+            submit: function (index) {
+                this.$emit('submit', index);
             }
         },
         watch: {

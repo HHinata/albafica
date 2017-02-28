@@ -16,7 +16,7 @@ class ContestController extends Controller
     public function detail(Request $request)
     {
        $id = $request->input('id');
-       $problemList = ContestProblem::where('contest_id', $id)->with('Problem')->get()->toArray();
+       $problemList = ContestProblem::where('contest_id', $id)->orderBy('order')->with('Problem')->get()->toArray();
        $contest = Contest::find($id)->toArray();
 
        array_walk($problemList, function (&$value){
@@ -26,6 +26,14 @@ class ContestController extends Controller
        $contest['problem_list'] = $problemList;
        // 联表得到所有的问题信息,包括id,标题
        return $contest;
+    }
+
+    public function problem(Request $request)
+    {
+        $id = $request->input('id');
+        $cid = $request->input('cid');
+        $problem = ContestProblem::where('contest_id', $cid)->where('order', $id)->with('Problem')->first()->toArray();
+        return $problem['problem'];
     }
 
     public function rank(Request $request)

@@ -13,7 +13,7 @@ class StatueTableSeeder extends Seeder
     {
         $platform = ['hdu', 'poj', 'hat'];
 
-        foreach (range(1, 200) as $item)
+        foreach (range(1, 100) as $item)
         {
             \App\Models\Solution::create([
                 'platform'=>$platform[array_rand($platform)],

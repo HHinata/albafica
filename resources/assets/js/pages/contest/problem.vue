@@ -28,28 +28,25 @@
                 }
             };
         },
-        props: ['pid'],
+        props: ['pid', 'cid'],
         mounted() {
             this.__construct();
         },
         methods: {
             __construct: function () {
-                console.log(this.pid);
                 var _this = this;
-                axios.get('problem/detail', { params: { id: this.pid }})
+                axios.get('contest/problem', { params: { id: this.pid, cid: this.cid }})
                 .then(function(res) {
                     _this.problem = res.data;
-                    console.log(_this.problem);
                 });
             }
         },
         watch: {
             pid: function () {
                 var _this = this;
-                axios.get('problem/detail', { params: { id: this.pid }})
+                axios.get('contest/problem', { params: { id: this.pid, cid: this.cid }})
                 .then(function(res) {
                     _this.problem = res.data;
-                    console.log(_this.problem);
                 });
             }
         }
