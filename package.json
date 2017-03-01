@@ -23,6 +23,9 @@
     "element-ui": "^1.2.1",
     "vue-material": "^0.7.1",
     "vue-monaco-editor": "^0.0.19",
-    "vue-router": "^2.2.0"
+    "vue-quill-editor": "^1.1.1",
+    "vue-router": "^2.2.0",
+    "vue2-editor": "^1.1.12",
+    "vueditor": "^0.2.4"
   }
 }

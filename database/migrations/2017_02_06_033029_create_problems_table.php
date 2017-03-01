@@ -25,8 +25,8 @@ class CreateProblemsTable extends Migration
             $table->text('sample_input');
             $table->text('sample_output');
 
-            $table->integer('solved');
-            $table->integer('submited');
+            $table->integer('solved')->default(0);
+            $table->integer('submited')->default(0);
 
             $table->integer('time_limit');
             $table->integer('mem_limit');

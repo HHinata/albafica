@@ -30,12 +30,30 @@ export default [
                 component: require('./pages/status/index.vue')
             },
             {
+                path: 'rank',
+                component: require('./pages/rank/index.vue')
+            },
+            {
                 path: 'status/:id',
                 component: require('./pages/status/content.vue')
             },
             {
                 path: 'profile',
-                component: require('./pages/profile/index.vue')
+                component: require('./pages/profile/index.vue'),
+                children:[
+                    {
+                        path: 'contest',
+                        component: require('./pages/profile/contest.vue'),
+                    },
+                    {
+                        path: 'problem',
+                        component: require('./pages/profile/problem.vue'),
+                    },
+                    {
+                        path: 'new-problem',
+                        component: require('./pages/profile/new-problem.vue'),
+                    },
+                ]
             },
             {
                 path: 'login',

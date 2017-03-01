@@ -19,6 +19,14 @@ Route::get('info', 'HomeController@info');
 
 Route::get('problem', 'ProblemController@index');
 
+Route::get('rank', 'UserController@rank');
+
+Route::get('menu', 'HomeController@menu');
+
+Route::post('problem', 'ProblemController@store');
+
+Route::get('problem/crawler', 'ProblemController@crawler');
+
 Route::get('problem/detail', 'ProblemController@detail');
 
 Route::post('problem/submit', 'ProblemController@submit');

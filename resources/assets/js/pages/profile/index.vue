@@ -1,28 +1,35 @@
 <template>
-<el-row class="tac">
-  <el-col :span="4">
-    <el-menu mode="vertical" default-active="1" class="el-menu-vertical-demo">
-      <el-menu-item-group title="分组一">
-        <el-menu-item index="1"><i class="el-icon-message"></i>导航一</el-menu-item>
-        <el-menu-item index="2"><i class="el-icon-message"></i>导航二</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="分组二">
-        <el-menu-item index="3"><i class="el-icon-message"></i>导航三</el-menu-item>
-        <el-menu-item index="4"><i class="el-icon-message"></i>导航四</el-menu-item>
-      </el-menu-item-group>
-    </el-menu>
-  </el-col>
-</el-row>
+    <el-row :gutter="20" class="tac">
+        <el-col :span="4">
+            <el-menu mode="vertical" default-active="1" class="el-menu-vertical-demo" :router="true">
+                <el-menu-item-group v-for="(menu, name) in menus" :title="name">
+                    <el-menu-item v-for="(v, k) in menu" :index="v.href"><i :class="v.icon"></i>{{ v.name }}</el-menu-item>
+                </el-menu-item-group>
+            </el-menu>
+        </el-col>
+        <el-col :span="20">
+            <router-view></router-view>
+        </el-col>
+    </el-row>
 </template>
 <script>
-  export default {
-    methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      }
+    export default {
+        data: function () {
+            return {
+                menus:[]
+            };
+        },
+        mounted: function () {
+            this.__construct();
+        },
+        methods: {
+            __construct: function() {
+                var _this = this;
+                axios.get('menu')
+                .then(function (res) {
+                    _this.menus = res.data;
+                });
+            }
+        }
     }
-  }
 </script>
