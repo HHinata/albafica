@@ -34,29 +34,20 @@ class HomeController extends Controller
 
     public function menu()
     {
-        $user = Auth::user();
-        $roleLevel = $user->roles()->first()->id;
+        $menuList = Menu::get()->toArray();
 
-        $menu = [];
-        $menus = Menu::all()->toArray();
+        $menuJson = [];
 
-        function recursion(&$menuList, &$menu, $id, $level)
+        foreach ($menuList as $menu)
         {
-            foreach ($menuList as &$item)
-            {
-                if (isset($item['used']) || $item['father'] != $id || $item['ability']<$level)  continue;
-                else
-                {
-                    $count = count($menu);
-                    $item['used'] = true;
-                    $menu[] = ['menuName'=>$item['title'], 'url'=>$item['url'], 'children'=>[]];
-                    recursion($menuList, $menu[$count]['children'], $item['id'], $level);
-                }
-            }
-        }
-        recursion($menus, $menu, 0, $roleLevel);
+            $class = $menu['class'];
+            if (isset($menuJson[$class]) == false)
+                $menuJson[$class] = [];
 
-        return $menu;
+            $menuJson[$class][] = $menu;
+        }
+
+        return $menuJson;
     }
 
     public function info()

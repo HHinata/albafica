@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
          $this->call(ContestTableSeeder::class);
          $this->call(StatueTableSeeder::class);
          $this->call(ContestProblemTableSeeder::class);
+         $this->call(MenuTableSeeder::class);
     }
 }

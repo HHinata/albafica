@@ -12,7 +12,7 @@ class ContestProblemTableSeeder extends Seeder
     public function run()
     {
         \App\Models\ContestProblem::create([
-            'problem_id'=>rand(0, 50),
+            'problem_id'=>rand(1, 50),
             'contest_id'=>1,
             'order'=>1,
             'submited'=>rand(100, 200),
@@ -20,7 +20,7 @@ class ContestProblemTableSeeder extends Seeder
         ]);
 
         \App\Models\ContestProblem::create([
-            'problem_id'=>rand(0, 50),
+            'problem_id'=>rand(1, 50),
             'contest_id'=>1,
             'order'=>2,
             'submited'=>rand(100, 200),
@@ -28,9 +28,9 @@ class ContestProblemTableSeeder extends Seeder
         ]);
 
         \App\Models\ContestProblem::create([
-            'problem_id'=>rand(0, 50),
+            'problem_id'=>rand(1, 50),
             'contest_id'=>1,
-            'order'=>3,
+            'order'=>0,
             'submited'=>rand(100, 200),
             'solved'=>rand(0, 100)
         ]);
