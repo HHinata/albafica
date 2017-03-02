@@ -5,7 +5,7 @@
     </div>
     <div class='content'>
         <h3>Desc</h3>
-            <blockquote>{{ contest.desc }}</blockquote>
+            <blockquote v-html="contest.desc"></blockquote>
         <el-table :data="contest.problem_list" stripe style="width: 100%">
             <el-table-column prop="order" label="#" width="180">
             </el-table-column>
@@ -42,12 +42,10 @@
         },
         methods: {
             __construct: function () {
-                console.log(this.cid);
                 var _this = this;
                 axios.get('contest/detail', { params: { id: this.cid }})
                 .then(function(res) {
                     _this.contest = res.data;
-                    console.log(_this.contest);
                 });
             },
             show: function (index) {

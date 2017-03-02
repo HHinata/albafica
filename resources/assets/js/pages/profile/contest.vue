@@ -9,7 +9,7 @@
             </el-table-column>
             <el-table-column label="操作" width="100">
                 <template scope="scope">
-                    <el-button @click.native.prevent="handleClick(scope.$index, contest.data)" type="text" size="small">查看</el-button>
+                    <el-button @click.native.prevent="handleClick(scope.$index, contest.data)" type="text" size="small">编辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -47,7 +47,7 @@
                     });
             },
             handleClick: function (index, rows) {
-                window.location.hash = '/contest/'+rows[index].id;
+                window.location.hash = 'profile/contest/'+rows[index].id;
             }
         }
     }

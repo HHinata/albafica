@@ -42,8 +42,20 @@ export default [
                 component: require('./pages/profile/index.vue'),
                 children:[
                     {
+                        path: '',
+                        component: require('./pages/profile/info.vue'),
+                    },
+                    {
                         path: 'contest',
                         component: require('./pages/profile/contest.vue'),
+                    },
+                    {
+                        path: 'contest/:id',
+                        component: require('./pages/profile/detail-contest.vue'),
+                    },
+                    {
+                        path: 'problem/:id',
+                        component: require('./pages/profile/detail-problem.vue'),
                     },
                     {
                         path: 'problem',
@@ -52,6 +64,10 @@ export default [
                     {
                         path: 'new-problem',
                         component: require('./pages/profile/new-problem.vue'),
+                    },
+                    {
+                        path: 'new-contest',
+                        component: require('./pages/profile/new-contest.vue'),
                     },
                 ]
             },

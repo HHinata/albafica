@@ -54,6 +54,7 @@
         data () {
             return {
                 problem:{
+                    title: 'This is title input box',
                     description: '<b>This is descript input box</b>',
                     input: '<b>This is input input box</b>',
                     output: '<b>This is output input box</b>',
@@ -81,7 +82,7 @@
             },
             submit: function () {
                 var _this = this;
-                axios.post("problem", _this.problem)
+                axios.put("problem", _this.problem)
                     .then(function (res) {
                         _this.$message({
                             message: '恭喜你，题目添加成功',

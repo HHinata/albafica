@@ -18,6 +18,7 @@ class LinkContestProblemTable extends Migration
             $table->unsignedInteger('problem_id');
             $table->unsignedInteger('contest_id');
             $table->integer('order');
+            $table->string('alias')->nullable();
             $table->integer('submited')->default(0);
             $table->integer('solved')->default(0);
             $table->timestamps();
