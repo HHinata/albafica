@@ -18,6 +18,7 @@ Route::get('/', 'HomeController@index');
 Route::get('info', 'HomeController@info');
 Route::get('rank', 'UserController@rank');
 Route::get('menu', 'HomeController@menu');
+Route::get('token', 'HomeController@token');
 
 Route::get('problem', 'ProblemController@index');
 Route::get('problem/rack', 'ProblemController@rack');

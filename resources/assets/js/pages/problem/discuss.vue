@@ -8,6 +8,23 @@
         <p v-html="item.content"></p>
     </div>
     <div>
+        <div id="toolbar">
+            <input type="file" @change='upload' style='display: none !important;'>
+            <!-- Add font size dropdown -->
+            <select class="ql-size">
+                <option value="small"></option>
+                <!-- Note a missing, thus falsy value, is used to reset to default -->
+                <option selected></option>
+                <option value="large"></option>
+                <option value="huge"></option>
+            </select>
+            <!-- Add a bold button -->
+            <button class="ql-bold"></button>
+            <!-- Add subscript and superscript buttons -->
+            <button class="ql-script" value="sub"></button>
+            <button class="ql-script" value="super"></button>
+            <button @click="upclick"><i class="el-icon-upload"></i></button>
+        </div>
         <quill-editor v-model="comment" :config="editorOption"></quill-editor>
         <el-button @click="commentTo">Comment</el-button>
     </div>
@@ -15,6 +32,7 @@
 </template>
 
 <script>
+    import Uploader from 'qiniu-web-uploader'
     export default {
         data: function () {
             return {
@@ -23,7 +41,9 @@
                 comment: "",
                 editorOption: {
                     theme: 'snow',
-                    modules: { toolbar: this.$refs.toolbar }
+                    modules: {
+                        toolbar: '#toolbar'
+                    }
                 },
             };
         },
@@ -42,6 +62,28 @@
                     .then(function (res) {
                         _this.comments = res.data;
                     });
+            },
+            upclick: function (event) {
+                this.$el.querySelector('input[type=file]').click();
+            },
+            upload: function(event) {
+                var _this = this;
+                axios.get('/token').then(function(res){
+                    let uptoken = res.data;
+                    let file = event.target.files[0];
+                    let uploader = new Uploader(file, uptoken);
+                    uploader.on('progress', e => {
+                        console.log(uploader.percent); //加载进度
+                        console.log(uploader.offset); //字节
+                    });
+                    uploader.on('complete', e => {
+                        var img = 'http://'+uptoken.domain+'/'+uploader.imgRes.key;
+                        _this.comment += '<img src="'+img+'"/>';
+                    });
+                    uploader.upload().then(imgRes => {
+                            console.log(imgRes);
+                    });
+                });
             },
             commentTo: function () {
                 var _this = this;

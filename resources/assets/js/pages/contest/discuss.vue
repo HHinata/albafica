@@ -15,6 +15,7 @@
 </template>
 
 <script>
+
     export default {
         data: function () {
             return {
@@ -22,8 +23,7 @@
                 comments: [],
                 comment: "",
                 editorOption: {
-                    theme: 'snow',
-                    modules: { toolbar: this.$refs.toolbar }
+                    theme: 'snow'
                 },
             };
         },

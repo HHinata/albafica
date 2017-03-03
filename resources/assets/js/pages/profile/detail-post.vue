@@ -50,7 +50,6 @@
                 ],
                 editorOption: {
                     theme: 'snow',
-                    modules: { toolbar: this.$refs.toolbar },
                     height: '100px'
                 },
             }

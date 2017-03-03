@@ -89,8 +89,7 @@
                 ],
                 problem_tmp: "",
                 editorOption: {
-                    theme: 'snow',
-                    modules: { toolbar: this.$refs.toolbar }
+                    theme: 'snow'
                 },
             }
         },
