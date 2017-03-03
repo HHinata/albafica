@@ -19,7 +19,7 @@
                 <blockquote>{{ problem.sample_output }}<b>asdf</b></blockquote>
         </div>
     </div>
-    <div v-if-else>
+    <div v-else>
         <h1>There not have Problems</h1>
     </div>
 </div>

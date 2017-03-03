@@ -14,7 +14,7 @@ class MenuTableSeeder extends Seeder
         \App\Models\Menu::create(
             [
                 'name'=>'个人空间',
-                'href'=>'index'
+                'href'=>'/profile/index'
             ]
         );
         \App\Models\Menu::create(
@@ -43,6 +43,18 @@ class MenuTableSeeder extends Seeder
                 'name'=>'添加比赛',
                 'class' =>  'Manage',
                 'href'=>'/profile/new-contest'
+            ]
+        );
+        \App\Models\Menu::create(
+            [
+                'name'=>'添加文章',
+                'href'=>'/profile/new-post'
+            ]
+        );
+        \App\Models\Menu::create(
+            [
+                'name'=>'文章管理',
+                'href'=>'/profile/post'
             ]
         );
     }

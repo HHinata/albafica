@@ -19,6 +19,11 @@ class ProblemController extends Controller
         return Problem::where("private", 0)->paginate(20, ['id', 'title', 'solved', 'submited']);
     }
 
+    public function rack()
+    {
+        return Problem::paginate(20, ['id', 'title', 'solved', 'submited']);
+    }
+
     /**
      * 题目详情
      *

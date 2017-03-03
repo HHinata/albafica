@@ -25,15 +25,30 @@
         </el-row>
     </el-menu>
     <el-row>
-        <el-col :span="16" :offset="4" style='margin-top: 50px'>
+        <el-col :span="16" :offset="4" style='margin-top: 50px; min-height: 700px'>
             <router-view v-on:login='login'></router-view>
         </el-col>
     </el-row>
     <footer>
         <el-row type='flex' align='middle' style="min-height:100px; vertical-align:middle">
-            <el-col :span="8" :offset="4" style="">Albafica</el-col>
-            <el-col :span="4" style="">Blog</el-col>
-            <el-col :span="4" style="">Home</el-col>
+            <el-col :span="8" :offset="4" style="">
+                <a href="/#/">
+                    <img src="http://okeyqynvd.bkt.clouddn.com/footer-logo.png"/>
+                </a>
+            </el-col>
+            <el-col :span="4" style="">
+                <dl>
+                    <li><a href="/#/">Home</a></li>
+                    <li><a href="/#/problem">ProblemSet</a></li>
+                    <li><a href="/#/contest">Contest</a></li>
+                    <li><a href="/#/rank">Rank</a></li>
+                </dl>
+            </el-col>
+            <el-col :span="4" style="">
+                <dl>
+                    <li><a href="http://skyfire-lee.github.io/">Blog</a></li>
+                </dl>
+            </el-col>
         </el-row>
     </footer>
 </div>
@@ -89,5 +104,20 @@ footer{
     background:#324157;
     color:#bfcbd9;
     margin-top:50px
+}
+
+footer .el-col{
+    margin-top: 50px;
+    margin-bottom: 20px;
+    min-height: 100px;
+}
+
+li a{
+    color: #d4d4d4;
+    text-decoration: none;
+}
+
+li a:hover{
+    text-decoration: none;
 }
 </style>
