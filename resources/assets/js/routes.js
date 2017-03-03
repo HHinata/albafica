@@ -34,6 +34,10 @@ export default [
                 component: require('./pages/rank/index.vue')
             },
             {
+                path: 'post/:id',
+                component: require('./pages/post/index.vue')
+            },
+            {
                 path: 'status/:id',
                 component: require('./pages/status/content.vue')
             },
@@ -44,6 +48,22 @@ export default [
                     {
                         path: '',
                         component: require('./pages/profile/info.vue'),
+                    },
+                    {
+                        path: 'index',
+                        component: require('./pages/profile/info.vue'),
+                    },
+                    {
+                        path: 'post',
+                        component: require('./pages/profile/post.vue'),
+                    },
+                    {
+                        path: 'new-post',
+                        component: require('./pages/profile/new-post.vue'),
+                    },
+                    {
+                        path: 'post/:id',
+                        component: require('./pages/profile/detail-post.vue'),
                     },
                     {
                         path: 'contest',

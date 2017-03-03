@@ -67,8 +67,7 @@
                 },
 
                 editorOption: {
-                    theme: 'snow',
-                    modules: { toolbar: this.$refs.toolbar }
+                    theme: 'snow'
                 },
             }
         },

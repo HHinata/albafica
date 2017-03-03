@@ -34,12 +34,10 @@
         },
         methods: {
             __construct: function () {
-                console.log(this.pid);
                 var _this = this;
                 axios.get('problem/detail', { params: { id: this.pid }})
                 .then(function(res) {
                     _this.problem = res.data;
-                    console.log(_this.problem);
                 });
             }
         },

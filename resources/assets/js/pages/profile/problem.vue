@@ -46,7 +46,7 @@
             },
             updateProblem: function (val) {
                 var _this = this;
-                axios.get('problem', {params: {page: val}})
+                axios.get('problem/rack', {params: {page: val}})
                     .then(function (res) {
                         _this.problem = res.data;
                     });

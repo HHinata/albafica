@@ -18,6 +18,11 @@ class ContestController extends Controller
         return Contest::where("private", 0)->paginate(20, ['id', 'title', 'start_time', 'end_time']);
     }
 
+    public function rack()
+    {
+        return Contest::paginate(20, ['id', 'title', 'start_time', 'end_time']);
+    }
+
     /**
      * 新增比赛
      */

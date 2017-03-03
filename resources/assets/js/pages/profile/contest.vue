@@ -41,7 +41,7 @@
             },
             updateContest: function (val) {
                 var _this = this;
-                axios.get('contest', { params: { page: val }})
+                axios.get('contest/rack', { params: { page: val }})
                     .then(function(res) {
                         _this.contest = res.data;
                     });
