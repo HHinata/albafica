@@ -22,6 +22,7 @@ Route::get('token', 'HomeController@token');
 
 Route::get('problem', 'ProblemController@index');
 Route::get('problem/rack', 'ProblemController@rack');
+Route::get('problem/tags', 'ProblemController@tags');
 Route::get('problem/show', 'ProblemController@show');
 Route::get('problem/crawler', 'ProblemController@crawler');
 Route::get('problem/detail', 'ProblemController@detail');

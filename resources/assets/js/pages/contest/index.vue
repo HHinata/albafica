@@ -3,9 +3,11 @@
     <el-table :data="contest.data" style="width: 100%">
         <el-table-column prop="title" label="Name">
         </el-table-column>
-        <el-table-column prop="start_time" width="100" label="Start">
+        <el-table-column prop="start_time" :formatter="time" width="250" label="Start">
         </el-table-column>
-        <el-table-column prop="end_time" width="100" label="End">
+        <el-table-column prop="end_time" :formatter="time" width="250" label="End">
+        </el-table-column>
+        <el-table-column label="Status" :formatter="calStatus" width="80">
         </el-table-column>
         <el-table-column label="操作" width="100">
           <template scope="scope">
@@ -25,7 +27,8 @@
         data: function () {
             return {
                 contest: {
-                    data: []
+                    data: [],
+                    timestamp: 0
                 }
             };
         },
@@ -35,6 +38,7 @@
         methods: {
             __construct: function () {
                 this.updateContest(1);
+                this.timestamp = Date.parse(new Date());
             },
             handleCurrentChange: function (val) {
                 this.updateContest(val);
@@ -46,9 +50,15 @@
                     _this.contest = res.data;
                 });
             },
-             handleClick: function (index, rows) {
-                 window.location.hash = '/contest/'+rows[index].id;
-             }
+            handleClick: function (index, rows) {
+                window.location.hash = '/contest/'+rows[index].id;
+            },
+            time: function (row, column) {
+                return new Date(parseInt(row[column.property]) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+            },
+            calStatus: function (row, column) {
+                return row.start_time>this.timestamp?"Scheduled":(row.end_time>this.timestamp?"Running":"Ended");
+            }
         }
     }
 </script>

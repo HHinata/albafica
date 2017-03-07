@@ -13,6 +13,9 @@
         <el-tab-pane label="DISCUSS" name="discuss">
             <discuss :cid="cid"></discuss>
         </el-tab-pane>
+        <el-tab-pane label="RANK" name="rank">
+            <rank :cid="cid"></rank>
+        </el-tab-pane>
     </el-tabs>
 </div>
 </template>
@@ -22,6 +25,8 @@
     import problem from './problem.vue'
     import submit from './submit.vue'
     import discuss from './discuss.vue'
+    import rank from './rank.vue'
+
     export default {
         data: function () {
             return {
@@ -30,7 +35,7 @@
                 cid: this.$route.params.id
             };
         },
-        components:{ 'overview': detail, 'submit': submit, 'problem': problem, 'discuss':discuss },
+        components:{ 'overview': detail, 'submit': submit, 'problem': problem, 'discuss':discuss, 'rank':rank },
         methods: {
             handleClick: function(tab, event) {
                 console.log(tab, event);
