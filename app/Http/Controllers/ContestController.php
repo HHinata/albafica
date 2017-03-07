@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contest;
 use App\Models\ContestProblem;
 use App\Models\Problem;
+use App\Models\Solution;
 use Illuminate\Http\Request;
 
 class ContestController extends Controller
@@ -119,6 +120,44 @@ class ContestController extends Controller
     public function rank(Request $request)
     {
         //TODO: 比赛的rank榜
+        $rank = [];
+        $contestId = $request->input('id');
+
+        $solutions = Solution::where('contest_id', $contestId);
+        $contest = Contest::find($contestId);
+
+        foreach ($solutions as $solution)
+        {
+            $index = array_search($solution['user_id'], array_column($rank, 'user_id'));
+            if ($index === false)
+            {
+                $rank[] = ['user_id'=>$solution['user_id'], 'list'=>[]];
+                $index = count($rank);
+            }
+            $pid = $solution['problem_id'];
+            $pIndex = array_search($pid,array_column($rank[$index]['list'], 'pid'));
+
+            if ($pIndex === false)
+            {
+                $rank[$index]['list'] = ['pid'=>$pid, 'solved'=>0, 'submited'=>0];
+                $pIndex = count($rank[$index]['list']);
+            }
+
+            if ($solution['result'] == 0)
+            {
+                $rank[$index]['list'][$pIndex]['solved']++;
+            }
+            else    $rank[$index]['list'][$pIndex]['submited']++;
+        }
+
+        foreach ($rank as $item)
+        {
+            array_walk($item['list'], function (&$value){
+
+            });
+        }
+
+        return $rank;
     }
 
     public function submit(Request $request)

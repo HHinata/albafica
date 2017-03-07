@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('avatar')->default("http://okeyqynvd.bkt.clouddn.com/avatar-1487383952.png");
             $table->integer('rating')->default(0);
             $table->rememberToken();
             $table->timestamps();
