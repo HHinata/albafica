@@ -8,9 +8,17 @@
         <el-col :span="5"><el-input-number v-model="problem.time_limit"></el-input-number></el-col>
         <el-col :span="2"><b>Memory:</b></el-col>
         <el-col :span="5"><el-input-number v-model="problem.mem_limit"></el-input-number></el-col>
-        <el-col :span="24">
+        <el-col :span="12">
             <h3>Title</h3>
             <el-input v-model="problem.title" placeholder="请输入内容"></el-input>
+        </el-col>
+        <el-col :span="12">
+            <h3>Tags:</h3>
+            <el-select v-model="problem.tags" multiple filterable
+                       allow-create id="tag" placeholder="请选择文章标签" style="width: 100%">
+                <el-option v-for="item in options" :label="item.label" :value="item.value">
+                </el-option>
+            </el-select>
         </el-col>
         <el-col :span="24">
             <h3>Descript</h3>
@@ -45,18 +53,19 @@
             return {
                 problem:{
                     id: 0,
-                    title: 'This is title input box',
-                    desc: '<b>This is descript input box</b>',
-                    input: '<b>This is input input box</b>',
-                    output: '<b>This is output input box</b>',
-                    sample_input: '<b>This is sample-input input box</b>',
-                    sample_output: '<b>This is sample-output input box</b>',
-                    time_limit: 1000,
-                    mem_limit: 65536,
+                    title: '',
+                    desc: '',
+                    input: '',
+                    output: '',
+                    sample_input: '',
+                    sample_output: '',
+                    time_limit: 0,
+                    mem_limit: 0,
                     platform: '',
                     sign: '',
+                    tags: [],
                 },
-
+                options: [],
                 editorOption: {
                     theme: 'snow'
                 },
@@ -72,6 +81,10 @@
                 axios.get("problem/show", {params: {id: this.id}})
                     .then(function (res) {
                         _this.problem = res.data;
+                    });
+                axios.get("problem/tags")
+                    .then(function (res) {
+                        _this.options = res.data;
                     });
             },
             submit: function () {

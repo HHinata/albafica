@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "element-ui": "^1.2.1",
+    "vue-highlight.js": "^1.0.4",
+    "vue-highlightjs": "^1.1.0",
     "vue-material": "^0.7.1",
     "vue-monaco-editor": "^0.0.19",
     "vue-quill-editor": "^1.1.1",

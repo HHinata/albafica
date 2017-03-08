@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contest;
-use App\Models\ContestProblem;
 use App\Models\Problem;
 use App\Models\Solution;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ContestController extends Controller
 {
@@ -33,22 +33,22 @@ class ContestController extends Controller
         $contest->desc = $request->input('description');
         $contest->title = $request->input('title');
         $contest->private = $request->input('private');
+
         $timeRange = $request->input('time');
         $contest->start_time = strtotime($timeRange[0]);
         $contest->end_time = strtotime($timeRange[1]);
+
         if ($contest->save())
         {
+            $problemData = [];
             $problemList = $request->input('problems');
             foreach ($problemList as $key=>$problem)
             {
-                $data['order'] = $key;
-                if (isset($problem['alias']))
-                    $data['alias'] = $problem['alias'];
-                $data['problem_id'] = $problem['id'];
-                $data['contest_id'] = $contest->id;
-                ContestProblem::updateOrCreate(['contest_id'=>$contest->id, 'order'=>$key], $data);
+                $item['order'] = $key;
+                if (isset($problem['alias']))   $item['alias'] = $problem['alias'];
+                $problemData[$problem['id']] = $item;
             }
-            ContestProblem::where('contest_id', $contest->id)->where('order', '>', count($problemList))->delete();
+            $contest->problems()->sync($problemData);
         }
         return $contest->id;
     }
@@ -62,22 +62,22 @@ class ContestController extends Controller
         $contest->desc = $request->input('desc');
         $contest->title = $request->input('title');
         $contest->private = $request->input('private');
+
         $timeRange = $request->input('time');
         $contest->start_time = strtotime($timeRange[0]);
         $contest->end_time = strtotime($timeRange[1]);
+
         if ($contest->save())
         {
+            $problemData = [];
             $problemList = $request->input('problems');
             foreach ($problemList as $key=>$problem)
             {
-                $data['order'] = $key;
-                if (isset($problem['alias']))
-                    $data['alias'] = $problem['alias'];
-                $data['problem_id'] = $problem['id'];
-                $data['contest_id'] = $contest->id;
-                ContestProblem::updateOrCreate(['contest_id'=>$contest->id, 'order'=>$key], $data);
+                $item['order'] = $key;
+                if (isset($problem['alias']))   $item['alias'] = $problem['alias'];
+                $problemData[$problem['id']] = $item;
             }
-            ContestProblem::where('contest_id', $contest->id)->where('order', '>=', count($problemList))->delete();
+            $contest->problems()->sync($problemData);
         }
         return $contest->id;
     }
@@ -91,14 +91,7 @@ class ContestController extends Controller
     public function detail(Request $request)
     {
        $id = $request->input('id');
-       $problemList = ContestProblem::where('contest_id', $id)->orderBy('order')->with('Problem')->get()->toArray();
-       $contest = Contest::find($id)->toArray();
-
-       array_walk($problemList, function (&$value){
-            $value['problem']['order'] = $value['order'];
-            $value = $value['problem'];
-       });
-       $contest['problem_list'] = $problemList;
+       $contest = Contest::with('problems')->find($id);
        // 联表得到所有的问题信息,包括id,标题
        return $contest;
     }
@@ -113,8 +106,8 @@ class ContestController extends Controller
     {
         $id = $request->input('id');
         $cid = $request->input('cid');
-        $problem = ContestProblem::where('contest_id', $cid)->where('order', $id)->with('Problem')->first()->toArray();
-        return $problem['problem'];
+        $problem = Contest::find($cid)->problems()->wherePivot('order', $id)->first()->toArray();
+        return $problem;
     }
 
     public function rank(Request $request)
@@ -166,33 +159,24 @@ class ContestController extends Controller
         $solution = new Solution();
         $solution->user_id = Auth::user()->id;
         $solution->lang = $request->input('lang');
-        $solution->contest_id = $request->input('contest_id');
+        $solution->contest_id = $request->input('cid');
         $solution->code = $request->input('code');
 
-        $order = $request->input('id');
-        $contestProblem = ContestProblem::where('contest_id', $solution->contest_id)->where('order', $order)->first();
+        $order = $request->input('pid');
+        $problem = Contest::find($solution->contest_id)->problems()->wherePivot('order', $order)->first();
 
-        $solution->problem_id = $contestProblem->problem_id;
-
-        $problem = Problem::find($solution->problem_id);
+        $solution->problem_id = $problem->id;
         $solution->platform = $problem->platform;
         $solution->sign = $problem->sign;
+        $solution->save();
 
-        return  [$solution->save()];
+        return $solution->id;
     }
 
     public function show(Request $request)
     {
         $id = $request->input('id');
-        $problemList = ContestProblem::where('contest_id', $id)->orderBy('order')->with('Problem')->get()->toArray();
-        $contest = Contest::find($id)->toArray();
-
-        array_walk($problemList, function (&$value){
-            $value['problem']['order'] = $value['order'];
-            $value['problem']['alias'] = $value['alias'];
-            $value = $value['problem'];
-        });
-        $contest['problems'] = $problemList;
+        $contest = Contest::with('problems')->find($id);
         $contest['time'] = [date("Y-m-d\TH:i:s\Z", $contest['start_time']), date("Y-m-d\TH:i:s\Z", $contest['end_time'])];
         // 联表得到所有的问题信息,包括id,标题
         return $contest;

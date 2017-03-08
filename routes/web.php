@@ -43,6 +43,7 @@ Route::get('contest/problem', 'ContestController@problem');
 
 Route::put('contest', 'ContestController@store');
 Route::post('contest', 'ContestController@update');
+Route::post('contest/submit', 'ContestController@submit');
 
 Route::get('post', 'PostController@index');
 Route::get('post/detail', 'PostController@detail');

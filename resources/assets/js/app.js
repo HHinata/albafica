@@ -17,7 +17,10 @@ import routes from './routes'
 import Element from 'element-ui'
 import VueQuillEditor from 'vue-quill-editor'
 import 'element-ui/lib/theme-default/index.css';
+import VueHighlightJS from 'vue-highlight.js';
+import 'highlight.js/styles/default.css';
 
+Vue.use(VueHighlightJS)
 Vue.use(VueQuillEditor)
 Vue.use(VueRouter);
 Vue.use(Element)
