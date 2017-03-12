@@ -20,16 +20,11 @@
             };
         },
         mounted: function () {
-            this.__construct();
-        },
-        methods: {
-            __construct: function() {
-                var _this = this;
-                axios.get('menu')
+            var _this = this;
+            axios.get('menu')
                 .then(function (res) {
                     _this.menus = res.data;
                 });
-            }
         }
     }
 </script>

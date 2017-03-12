@@ -5,6 +5,11 @@
             </el-table-column>
             <el-table-column prop="title" label="Title">
             </el-table-column>
+            <el-table-column>
+                <template scope="scope">
+                    <el-tag v-for="item in problem.data[scope.$index].tags">{{ item.name }}</el-tag>
+                </template>
+            </el-table-column>
             <el-table-column prop="solved" width="150" label="Solved">
             </el-table-column>
             <el-table-column prop="submited" width="150" label="Submited">
@@ -35,12 +40,9 @@
             };
         },
         mounted() {
-            this.__construct();
+            this.updateProblem(1);
         },
         methods: {
-            __construct: function () {
-                this.updateProblem(1);
-            },
             handleCurrentChange: function (val) {
                 this.updateProblem(val);
             },
@@ -57,3 +59,8 @@
         }
     }
 </script>
+<style>
+    .el-tag{
+        margin-right: 10px;
+    }
+</style>

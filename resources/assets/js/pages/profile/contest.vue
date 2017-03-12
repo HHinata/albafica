@@ -30,12 +30,9 @@
             };
         },
         mounted() {
-            this.__construct();
+            this.updateContest(1);
         },
         methods: {
-            __construct: function () {
-                this.updateContest(1);
-            },
             handleCurrentChange: function (val) {
                 this.updateContest(val);
             },

@@ -1,8 +1,19 @@
 <template>
 <div>
     <article>
-        <header><h3>{{ post.title }}</h3></header>
+        <header>
+            <h1>{{ post.title }}</h1>
+            <p>
+                <b>Author:</b><span>{{post.user.name}}</span>
+                <b>Create:</b><span>{{post.created_at}}</span>
+                <b>Update:</b><span>{{post.updated_at}}</span>
+            </p>
+        </header>
+        <hr>
         <section v-html="post.content"></section>
+        <p>
+            <el-tag v-for="item in post.tags">{{ item.name }}</el-tag>
+        </p>
     </article>
     <div class="comment" v-for="item in comments">
         <p class="username">{{item.user.name}}</p>
@@ -19,7 +30,9 @@
     export default {
         data: function(){
             return {
-                post: {},
+                post: {
+                    user:{}
+                },
                 comments: [],
                 comment: "",
                 editorOption: {
@@ -28,20 +41,17 @@
             };
         },
         mounted() {
-            this.__construct();
+            var _this = this;
+            axios.get('post/detail', {params:{id:this.$route.params.id}})
+                .then(function (res) {
+                    _this.post = res.data;
+                });
+            axios.get('comment', {params:{id:this.$route.params.id, type:"post"}})
+                .then(function (res) {
+                    _this.comments = res.data;
+                });
         },
         methods: {
-            __construct: function () {
-                var _this = this;
-                axios.get('post/detail', {params:{id:this.$route.params.id}})
-                    .then(function (res) {
-                        _this.post = res.data;
-                    });
-                axios.get('comment', {params:{id:this.$route.params.id, type:"post"}})
-                    .then(function (res) {
-                        _this.comments = res.data;
-                    });
-            },
             commentTo: function () {
                 var _this = this;
                 var obj = {type:"post", id: this.post.id, content: this.comment};

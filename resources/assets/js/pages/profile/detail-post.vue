@@ -56,16 +56,13 @@
         },
         mounted: function() {
             this.id = this.$route.params.id;
-            this.__construct();
+            var _this = this;
+            axios.get("post/show", {params: {id: this.id}})
+                .then(function (res) {
+                    _this.post = res.data;
+                });
         },
         methods: {
-            __construct: function () {
-                var _this = this;
-                axios.get("post/show", {params: {id: this.id}})
-                    .then(function (res) {
-                        _this.post = res.data;
-                    });
-            },
             submit: function () {
                 var _this = this;
                 axios.post("post", _this.post)

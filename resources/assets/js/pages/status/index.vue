@@ -26,12 +26,9 @@
             };
         },
         mounted() {
-            this.__construct();
+            this.updateStatus(1);
         },
         methods: {
-            __construct: function () {
-                this.updateStatus(1);
-            },
             handleCurrentChange: function (val) {
                 this.updateStatus(val);
             },

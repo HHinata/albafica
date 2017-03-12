@@ -82,7 +82,7 @@
         },
         mounted: function () {
             var _this = this;
-            axios.get("problem/tags")
+            axios.get("tags")
                 .then(function (res) {
                     _this.options = res.data;
                 });
@@ -93,6 +93,7 @@
                 axios.get("problem/crawler", { params:{plat:this.problem.platform, sign: this.problem.sign} })
                     .then(function (res) {
                         _this.problem = res.data;
+                        _this.problem.tags = [];
                     });
             },
             submit: function () {
@@ -104,9 +105,6 @@
                             type: 'success'
                         });
                     });
-            },
-            remoteMethod: function (query) {
-                
             }
         }
     }

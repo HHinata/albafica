@@ -30,16 +30,11 @@
         },
         props: ['pid'],
         mounted() {
-            this.__construct();
-        },
-        methods: {
-            __construct: function () {
-                var _this = this;
-                axios.get('problem/detail', { params: { id: this.pid }})
+            var _this = this;
+            axios.get('problem/detail', { params: { id: this.pid }})
                 .then(function(res) {
                     _this.problem = res.data;
                 });
-            }
         },
         watch: {
             pid: function () {

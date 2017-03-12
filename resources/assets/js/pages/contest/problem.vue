@@ -35,16 +35,11 @@
         },
         props: ['pid', 'cid'],
         mounted() {
-            this.__construct();
-        },
-        methods: {
-            __construct: function () {
-                var _this = this;
-                axios.get('contest/problem', { params: { id: this.pid, cid: this.cid }})
+            var _this = this;
+            axios.get('contest/problem', { params: { id: this.pid, cid: this.cid }})
                 .then(function(res) {
                     _this.problem = res.data;
                 });
-            }
         },
         watch: {
             pid: function () {

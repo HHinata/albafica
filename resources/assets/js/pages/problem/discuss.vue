@@ -56,20 +56,17 @@
         },
         props: ['pid'],
         mounted: function(){
-            this.__construct();
+            var _this = this;
+            axios.get('problem/detail', { params: { id: this.pid }})
+                .then(function(res) {
+                    _this.problem = res.data;
+                });
+            axios.get('comment', {params:{id:this.pid, type:"prob"}})
+                .then(function (res) {
+                    _this.comments = res.data;
+                });
         },
         methods: {
-            __construct: function () {
-                var _this = this;
-                axios.get('problem/detail', { params: { id: this.pid }})
-                    .then(function(res) {
-                        _this.problem = res.data;
-                    });
-                axios.get('comment', {params:{id:this.pid, type:"prob"}})
-                    .then(function (res) {
-                        _this.comments = res.data;
-                    });
-            },
             upclick: function (event) {
                 this.$el.querySelector('input[type=file]').click();
             },

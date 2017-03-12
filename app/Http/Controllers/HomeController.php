@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Tag;
 use App\Models\Usermeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,15 +53,7 @@ class HomeController extends Controller
 
     public function info()
     {
-        $info = Auth::user()->toArray();
-        $info['avatar'] = env('USER_AVATAR');
-        $info['desc'] = env('USER_DESC');
-
-        $meta = Usermeta::where('user_id', $info['id'])->get()->toArray();
-        $meta = array_column($meta, 'meta_value', 'meta_key');
-        $info = array_merge($info, $meta);
-
-        return $info;
+        return Auth::user();
     }
 
     public function token()
@@ -69,5 +62,15 @@ class HomeController extends Controller
         $key = time();
         $token = $disk->uploadToken($key);
         return ['key'=>\Qiniu\base64_urlSafeEncode($key), 'uptoken'=>$token, 'domain'=>env('QINIU_DOMAIN')];
+    }
+
+    public function tags()
+    {
+        $tags = Tag::all()->toArray();
+        foreach ($tags as &$tag)
+        {
+            $tag = ['value'=>$tag['id'], 'label'=>$tag['name']];
+        }
+        return $tags;
     }
 }

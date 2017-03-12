@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Problem;
-use App\Models\ProblemTag;
 use App\Models\Solution;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -18,7 +17,7 @@ class ProblemController extends Controller
      */
     public function index()
     {
-        return Problem::where("private", 0)->paginate(20, ['id', 'title', 'solved', 'submited']);
+        return Problem::where("private", 0)->with('tags')->paginate(20, ['id', 'title', 'solved', 'submited']);
     }
 
     public function rack()
@@ -93,7 +92,7 @@ class ProblemController extends Controller
         $problem->sign = $request->input('sign');
 
         $problem->title = $request->input('title');
-        $problem->desc = $request->input('desc');
+        $problem->desc = $request->input('description');
         $problem->input = $request->input('input');
         $problem->output = $request->input('output');
 
@@ -106,7 +105,7 @@ class ProblemController extends Controller
         if ($problem->save())
         {
             $tags = $request->input('tags');
-            foreach ($tags as $tag)
+            foreach ($tags as &$tag)
             {
                 if (is_string($tag))
                 {
@@ -115,11 +114,11 @@ class ProblemController extends Controller
                     $tagObj->save();
                     $tag = $tagObj->id;
                 }
-                ProblemTag::updateOrCreate(['problem_id'=>$problem->id, 'tag_id'=>$tag], ['problem_id'=>$problem->id, 'tag_id'=>$tag]);
             }
+            $problem->tags()->sync($tags);
         }
 
-        return [];
+        return $problem->id;
     }
 
     public function update(Request $request)
@@ -140,7 +139,23 @@ class ProblemController extends Controller
         $problem->time_limit = $request->input('time_limit');
         $problem->mem_limit = $request->input('mem_limit');
 
-        return [$problem->save()];
+        if ($problem->save())
+        {
+            $tags = $request->input('tags');
+            foreach ($tags as &$tag)
+            {
+                if (is_string($tag))
+                {
+                    $tagObj = new Tag();
+                    $tagObj->name = $tag;
+                    $tagObj->save();
+                    $tag = $tagObj->id;
+                }
+            }
+            $problem->tags()->sync($tags);
+        }
+
+        return $problem->id;
     }
 
     /**
@@ -162,16 +177,9 @@ class ProblemController extends Controller
     public function show(Request $request)
     {
         $id = $request->input('id');
-        return Problem::find($id);
+        $problem = Problem::with('tags')->find($id)->toArray();
+        $problem['tags'] = array_column($problem['tags'], 'id');
+        return $problem;
     }
 
-    public function tags()
-    {
-        $tags = Tag::all()->toArray();
-        foreach ($tags as &$tag)
-        {
-            $tag = ['value'=>$tag['id'], 'label'=>$tag['name']];
-        }
-        return $tags;
-    }
 }
