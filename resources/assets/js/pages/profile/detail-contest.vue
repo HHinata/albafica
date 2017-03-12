@@ -96,16 +96,13 @@
         },
         mounted: function() {
             this.id = this.$route.params.id;
-            this.__construct();
+            var _this = this;
+            axios.get("contest/show", {params: {id: this.id}})
+                .then(function (res) {
+                    _this.contest = res.data;
+                });
         },
         methods: {
-            __construct: function () {
-                var _this = this;
-                axios.get("contest/show", {params: {id: this.id}})
-                    .then(function (res) {
-                        _this.contest = res.data;
-                    });
-            },
             handleSelect:　function (item) {
                 this.contest.problems.push(item);
             },

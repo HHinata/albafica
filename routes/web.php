@@ -18,11 +18,11 @@ Route::get('/', 'HomeController@index');
 Route::get('info', 'HomeController@info');
 Route::get('rank', 'UserController@rank');
 Route::get('menu', 'HomeController@menu');
+Route::get('tags', 'HomeController@tags');
 Route::get('token', 'HomeController@token');
 
 Route::get('problem', 'ProblemController@index');
 Route::get('problem/rack', 'ProblemController@rack');
-Route::get('problem/tags', 'ProblemController@tags');
 Route::get('problem/show', 'ProblemController@show');
 Route::get('problem/crawler', 'ProblemController@crawler');
 Route::get('problem/detail', 'ProblemController@detail');
@@ -55,3 +55,5 @@ Route::post('post', 'PostController@update');
 
 Route::get('comment', 'CommentController@index');
 Route::put('comment', 'CommentController@store');
+
+Route::post('user', 'UserController@update');

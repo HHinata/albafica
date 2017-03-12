@@ -40,12 +40,9 @@
             };
         },
         mounted() {
-            this.__construct();
+            this.updateProblem(1);
         },
         methods: {
-            __construct: function () {
-                this.updateProblem(1);
-            },
             handleCurrentChange: function (val) {
                 this.updateProblem(val);
             },

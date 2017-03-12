@@ -57,5 +57,11 @@ class MenuTableSeeder extends Seeder
                 'href'=>'/profile/post'
             ]
         );
+        \App\Models\Menu::create(
+            [
+                'name'=>'个人设置',
+                'href'=>'/profile/setting'
+            ]
+        );
     }
 }

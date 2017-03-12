@@ -1,8 +1,19 @@
 <template>
 <div>
     <article v-for="post in posts.data">
-        <header><h3>{{ post.title }}</h3></header>
+        <hr>
+        <header>
+            <h3>{{ post.title }}</h3>
+            <p>
+                <b>Author:</b><span>{{post.user.name}}</span>
+                <b>Create:</b><span>{{post.created_at}}</span>
+                <b>Update:</b><span>{{post.updated_at}}</span>
+            </p>
+        </header>
         <section v-html="post.content.substr(0, 800) + '...'"></section>
+        <p>
+            <el-tag v-for="item in post.tags">{{ item.name }}</el-tag>
+        </p>
         <div><el-button @click="read(post.id)">Read More</el-button></div>
     </article>
 </div>
@@ -12,20 +23,19 @@
     export default {
         data: function(){
             return {
-              posts:[]
+              posts:[
+                  {user:{}}
+              ]
             };
         },
         mounted() {
-            this.__construct();
+            var _this = this;
+            axios.get('post')
+                .then(function (res) {
+                    _this.posts = res.data;
+                });
         },
         methods: {
-            __construct: function () {
-                var _this = this;
-                axios.get('post')
-                    .then(function (res) {
-                        _this.posts = res.data;
-                    });
-            },
             read: function (index) {
                 window.location.hash = '/post/' + index;
             }

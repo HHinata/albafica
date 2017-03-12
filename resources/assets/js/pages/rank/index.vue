@@ -33,12 +33,9 @@
             };
         },
         mounted() {
-            this.__construct();
+            this.updateRank(1);
         },
         methods: {
-            __construct: function () {
-                this.updateRank(1);
-            },
             handleCurrentChange: function (val) {
                 this.updateRank(val);
             },

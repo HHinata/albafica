@@ -14,16 +14,11 @@
             };
         },
         mounted() {
-            this.__construct();
-        },
-        methods: {
-            __construct: function () {
-                var _this = this;
-                axios.get('solution/detail', { params: { id: this.$route.params.id }})
+            var _this = this;
+            axios.get('solution/detail', { params: { id: this.$route.params.id }})
                 .then(function(res) {
                     _this.status = res.data;
                 });
-            }
         }
     }
 </script>

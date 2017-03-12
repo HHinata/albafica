@@ -33,13 +33,10 @@
             };
         },
         mounted() {
-            this.__construct();
+            this.updateContest(1);
+            this.timestamp = Date.parse(new Date());
         },
         methods: {
-            __construct: function () {
-                this.updateContest(1);
-                this.timestamp = Date.parse(new Date());
-            },
             handleCurrentChange: function (val) {
                 this.updateContest(val);
             },

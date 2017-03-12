@@ -92,7 +92,7 @@ class ProblemController extends Controller
         $problem->sign = $request->input('sign');
 
         $problem->title = $request->input('title');
-        $problem->desc = $request->input('desc');
+        $problem->desc = $request->input('description');
         $problem->input = $request->input('input');
         $problem->output = $request->input('output');
 
@@ -118,7 +118,7 @@ class ProblemController extends Controller
             $problem->tags()->sync($tags);
         }
 
-        return [];
+        return $problem->id;
     }
 
     public function update(Request $request)
@@ -182,13 +182,4 @@ class ProblemController extends Controller
         return $problem;
     }
 
-    public function tags()
-    {
-        $tags = Tag::all()->toArray();
-        foreach ($tags as &$tag)
-        {
-            $tag = ['value'=>$tag['id'], 'label'=>$tag['name']];
-        }
-        return $tags;
-    }
 }

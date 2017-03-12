@@ -82,7 +82,7 @@
         },
         mounted: function () {
             var _this = this;
-            axios.get("problem/tags")
+            axios.get("tags")
                 .then(function (res) {
                     _this.options = res.data;
                 });

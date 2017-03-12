@@ -36,20 +36,17 @@
         },
         props: ['cid'],
         mounted: function(){
-            this.__construct();
+            var _this = this;
+            axios.get('contest/detail', { params: { id: this.cid }})
+                .then(function(res) {
+                    _this.contest = res.data;
+                });
+            axios.get('comment', {params:{id:this.cid, type:"cont"}})
+                .then(function (res) {
+                    _this.comments = res.data;
+                });
         },
         methods: {
-            __construct: function () {
-                var _this = this;
-                axios.get('contest/detail', { params: { id: this.cid }})
-                    .then(function(res) {
-                        _this.contest = res.data;
-                    });
-                axios.get('comment', {params:{id:this.cid, type:"cont"}})
-                    .then(function (res) {
-                        _this.comments = res.data;
-                    });
-            },
             commentTo: function () {
                 var _this = this;
                 var obj = {type:"cont", id: this.cid, content: this.comment};

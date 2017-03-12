@@ -89,6 +89,10 @@ export default [
                         path: 'new-contest',
                         component: require('./pages/profile/new-contest.vue'),
                     },
+                    {
+                        path: 'setting',
+                        component: require('./pages/profile/setting.vue'),
+                    },
                 ]
             },
             {

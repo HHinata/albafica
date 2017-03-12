@@ -73,20 +73,17 @@
         },
         mounted: function() {
             this.id = this.$route.params.id;
-            this.__construct();
+            var _this = this;
+            axios.get("problem/show", {params: {id: this.id}})
+                .then(function (res) {
+                    _this.problem = res.data;
+                });
+            axios.get("problem/tags")
+                .then(function (res) {
+                    _this.options = res.data;
+                });
         },
         methods: {
-            __construct: function () {
-                var _this = this;
-                axios.get("problem/show", {params: {id: this.id}})
-                    .then(function (res) {
-                        _this.problem = res.data;
-                    });
-                axios.get("problem/tags")
-                    .then(function (res) {
-                        _this.options = res.data;
-                    });
-            },
             submit: function () {
                 var _this = this;
                 axios.post("problem", _this.problem)
