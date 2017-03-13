@@ -11,17 +11,23 @@ class PostController extends Controller
 {
     public function index()
     {
-        return Post::where("private", 0)->with('user')->with('tags')->paginate(20);
+        return Post::withCount(['users'=>function($query){
+            $uid = Auth::user()?Auth::user()->id:0;
+            $query->where('user_id', $uid);
+        }])->where("private", 0)->with('user')->with('tags')->paginate(20);
     }
 
     public function show(Request $request)
     {
-        return Post::find($request->input('id'));
+        return Post::with('tags')->find($request->input('id'));
     }
 
     public function detail(Request $request)
     {
-        return Post::with('user')->with('tags')->find($request->input('id'));
+        return Post::withCount(['users'=>function($query){
+            $uid = Auth::user()?Auth::user()->id:0;
+            $query->where('user_id', $uid);
+        }])->with('user')->with('tags')->find($request->input('id'));
     }
 
     public function rack()
@@ -80,5 +86,17 @@ class PostController extends Controller
         }
 
         return $post->id;
+    }
+
+    public function star(Request $request)
+    {
+        if (Auth::user())
+        {
+            $uid = Auth::user()->id;
+            $post = Post::has('users')->find($request->input('id'));
+            if ($post)  Post::find($request->input('id'))->users()->detach($uid);
+            else    Post::find($request->input('id'))->users()->sync([$uid]);
+            return $post;
+        }
     }
 }

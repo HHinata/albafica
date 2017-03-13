@@ -36,9 +36,7 @@ class HomeController extends Controller
     public function menu()
     {
         $menuList = Menu::get()->toArray();
-
         $menuJson = [];
-
         foreach ($menuList as $menu)
         {
             $class = $menu['class'];
@@ -47,13 +45,17 @@ class HomeController extends Controller
 
             $menuJson[$class][] = $menu;
         }
-
         return $menuJson;
     }
 
     public function info()
     {
         return Auth::user();
+    }
+
+    public function tag()
+    {
+        return Tag::find(1)->posts;
     }
 
     public function token()

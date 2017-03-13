@@ -20,14 +20,16 @@ Route::get('rank', 'UserController@rank');
 Route::get('menu', 'HomeController@menu');
 Route::get('tags', 'HomeController@tags');
 Route::get('token', 'HomeController@token');
+Route::get('tag', 'HomeController@tag');
 
 Route::get('problem', 'ProblemController@index');
 Route::get('problem/rack', 'ProblemController@rack');
 Route::get('problem/show', 'ProblemController@show');
-Route::get('problem/crawler', 'ProblemController@crawler');
-Route::get('problem/detail', 'ProblemController@detail');
 Route::get('problem/seek', 'ProblemController@seek');
+Route::get('problem/detail', 'ProblemController@detail');
+Route::get('problem/crawler', 'ProblemController@crawler');
 
+Route::post('problem/star', 'ProblemController@star');
 Route::put('problem', 'ProblemController@store');
 Route::post('problem', 'ProblemController@update');
 Route::post('problem/submit', 'ProblemController@submit');
@@ -50,10 +52,13 @@ Route::get('post/detail', 'PostController@detail');
 Route::get('post/rack', 'PostController@rack');
 Route::get('post/show', 'PostController@show');
 
+Route::post('post/star', 'PostController@star');
 Route::put('post', 'PostController@store');
 Route::post('post', 'PostController@update');
 
 Route::get('comment', 'CommentController@index');
 Route::put('comment', 'CommentController@store');
 
+Route::get('user/info', 'UserController@info');
 Route::post('user', 'UserController@update');
+Route::post('user/star', 'UserController@star');

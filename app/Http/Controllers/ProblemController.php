@@ -6,6 +6,7 @@ use App\Models\Problem;
 use App\Models\Solution;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProblemController extends Controller
 {
@@ -33,8 +34,10 @@ class ProblemController extends Controller
      */
     public function detail(Request $request)
     {
-        $id = $request->input('id');
-        return Problem::find($id);
+        return Problem::withCount(['users'=>function($query){
+            $uid = Auth::user()?Auth::user()->id:0;
+            $query->where('user_id', $uid);
+        }])->find($request->input('id'));
     }
 
     /**
@@ -180,6 +183,18 @@ class ProblemController extends Controller
         $problem = Problem::with('tags')->find($id)->toArray();
         $problem['tags'] = array_column($problem['tags'], 'id');
         return $problem;
+    }
+
+    public function star(Request $request)
+    {
+        if (Auth::user())
+        {
+            $uid = Auth::user()->id;
+            $problem = Problem::has('users')->find($request->input('id'));
+            if ($problem)  Problem::find($request->input('id'))->users()->detach($uid);
+            else    Problem::find($request->input('id'))->users()->sync([$uid]);
+            return $problem;
+        }
     }
 
 }

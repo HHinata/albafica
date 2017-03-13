@@ -2,8 +2,8 @@
 <div>
     <el-table :data="status.data" style="width: 100%" @cell-click="cellClick" >
         <el-table-column prop="id" label="#" width="100" class-name="link"></el-table-column>
-        <el-table-column prop="user_id" label="Who" width="100"></el-table-column>
-        <el-table-column prop="problem_id" label="Problem"s></el-table-column>
+        <el-table-column prop="user.name" label="Who" width="100"></el-table-column>
+        <el-table-column prop="problem.title" label="Problem"s></el-table-column>
         <el-table-column prop="lang" label="Lang" width="100"></el-table-column>
         <el-table-column prop="result" label="Result"></el-table-column>
         <el-table-column prop="time" width="100" label="Time"></el-table-column>

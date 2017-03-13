@@ -47,7 +47,7 @@
                     });
             },
             handleClick: function (index, rows) {
-                window.location.hash = '/rank/' + rows[index].id;
+                window.location.hash = '/home/' + rows[index].name;
             }
         }
     }

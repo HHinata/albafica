@@ -7,6 +7,9 @@
         <el-tab-pane label="PROBLEM" name="problem">
             <problem :pid="pid" :cid="cid"></problem>
         </el-tab-pane>
+        <el-tab-pane label="STATUS" name="status">
+            <status :cid="cid"></status>
+        </el-tab-pane>
         <el-tab-pane label="SUBMIT" name="submit">
             <submit :cid="cid" :pid="pid"></submit>
         </el-tab-pane>
@@ -26,6 +29,7 @@
     import submit from './submit.vue'
     import discuss from './discuss.vue'
     import rank from './rank.vue'
+    import status from './status.vue'
 
     export default {
         data: function () {
@@ -35,7 +39,7 @@
                 cid: this.$route.params.id
             };
         },
-        components:{ 'overview': detail, 'submit': submit, 'problem': problem, 'discuss':discuss, 'rank':rank },
+        components:{ 'overview': detail, submit, problem, discuss, rank, status},
         methods: {
             handleClick: function(tab, event) {
                 console.log(tab, event);

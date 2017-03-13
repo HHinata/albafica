@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class='caption'>
-      <h2>{{ problem.title }}</h2>
+      <h2>{{ problem.title }}<span><i @click="starOn" v-bind:style="[problem.users_count>0?starStyle:'']" class="el-icon-star-on"></i></span></h2>
       <p>time limit per test: {{ problem.time_limit }} second</p>
       <p>memory limit per test: {{ problem.mem_limit }} megabytes</p>
     </div>
@@ -25,7 +25,8 @@
         data: function () {
             return {
                 problem: {
-                }
+                },
+                starStyle:{color:'blue'}
             };
         },
         props: ['pid'],
@@ -35,6 +36,15 @@
                 .then(function(res) {
                     _this.problem = res.data;
                 });
+        },
+        methods: {
+            starOn: function() {
+                var _this = this;
+                axios.post('problem/star', {id: this.problem.id})
+                    .then(function (res) {
+                        _this.problem.users_count ^= 1;
+                    });
+            }
         },
         watch: {
             pid: function () {
