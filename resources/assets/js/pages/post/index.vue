@@ -4,9 +4,10 @@
         <header>
             <h1>{{ post.title }}</h1>
             <p>
-                <b>Author:</b><span>{{post.user.name}}</span>
-                <b>Create:</b><span>{{post.created_at}}</span>
-                <b>Update:</b><span>{{post.updated_at}}</span>
+                <span><b>Author : </b>{{post.user.name}}</span>
+                <span><b>Create : </b>{{post.created_at}}</span>
+                <span><b>Update : </b>{{post.updated_at}}</span>
+                <span><i @click="starOn" v-bind:style="[post.users_count>0?starStyle:'']" class="el-icon-star-on"></i></span>
             </p>
         </header>
         <hr>
@@ -38,6 +39,7 @@
                 editorOption: {
                     theme: 'snow'
                 },
+                starStyle:{color:'blue'}
             };
         },
         mounted() {
@@ -57,7 +59,6 @@
                 var obj = {type:"post", id: this.post.id, content: this.comment};
                 axios.put('comment', obj)
                     .then(function (res) {
-                        console.log(res.data);
                         _this.comments.push(res.data);
                         _this.$message({
                             message: '恭喜你，评论成功',
@@ -69,6 +70,13 @@
                         type: 'error'
                     });
                 });
+            },
+            starOn: function() {
+                var _this = this;
+                axios.post('post/star', {id: this.post.id})
+                    .then(function (res) {
+                        _this.post.users_count ^= 1;
+                    });
             }
         }
     }

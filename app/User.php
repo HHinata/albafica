@@ -36,4 +36,25 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Solution');
     }
+
+    public function problems()
+    {
+        return $this->morphedByMany('App\Models\Problem', 'object', 'user_links', 'user_id');
+    }
+
+    public function posts()
+    {
+        return $this->morphedByMany('App\Models\Post', 'object', 'user_links', 'user_id');
+    }
+
+    public function followers()
+    {
+        return $this->morphToMany('App\User', 'object', 'user_links', 'object_id', 'user_id');
+    }
+
+    public function followings()
+    {
+        return $this->morphedByMany('App\User', 'object', 'user_links', 'user_id');
+    }
+
 }

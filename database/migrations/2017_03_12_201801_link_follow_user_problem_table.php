@@ -15,6 +15,8 @@ class LinkFollowUserProblemTable extends Migration
     {
         Schema::create('user_follow_problem', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('problem_id');
             $table->timestamps();
         });
     }

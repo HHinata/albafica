@@ -78,7 +78,7 @@
                 .then(function (res) {
                     _this.problem = res.data;
                 });
-            axios.get("problem/tags")
+            axios.get("tags")
                 .then(function (res) {
                     _this.options = res.data;
                 });

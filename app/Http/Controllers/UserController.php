@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function rank()
     {
-        return User::orderBy("rating")->paginate(20);
+        return User::orderBy("rating", "desc")->paginate(20);
     }
 
     public function update(Request $request)
@@ -22,6 +22,28 @@ class UserController extends Controller
         $user->sex = $request->input('sex');
         $user->info = $request->input('info');
         $user->avatar = $request->input('avatar');
-        return [$user->save()];
+        $user->save();
+        return $user->id;
+    }
+
+    public function info(Request $request)
+    {
+        $user = User::withCount(['followers'=>function($query)use($request){
+            $uid = Auth::user()?Auth::user()->id:0;
+            $query->where('user_id', $uid);
+        }])->with(['posts', 'problems', 'followers', 'followings'])->where('name', $request->input('name'))->first();
+        return $user;
+    }
+
+    public function star(Request $request)
+    {
+        if (Auth::user())
+        {
+            $uid = Auth::user()->id;
+            $user = User::has('followers')->find($request->input('id'));
+            if ($user)  User::find($request->input('id'))->followers()->detach($uid);
+            else    User::find($request->input('id'))->followers()->sync([$uid]);
+            return $user;
+        }
     }
 }

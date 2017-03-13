@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 
 class SolutionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Solution::where("contest_id", 0)->orderBy("id", "desc")->paginate(20);
+        $cid = $request->input('cid', 0);
+        return Solution::with(['user', 'problem'])->where("contest_id", $cid)->orderBy("id", "desc")->paginate(20);
     }
 
     public function detail(Request $request)

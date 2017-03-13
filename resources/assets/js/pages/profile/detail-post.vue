@@ -8,7 +8,18 @@
                 <h3>Title</h3>
                 <el-input v-model="post.title" placeholder="请输入内容"></el-input>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
+                <h3>Tags:</h3>
+                <el-select v-model="post.tags" multiple filterable
+                           allow-create id="tag" placeholder="请选择文章标签" style="width: 100%">
+                    <el-option
+                            v-for="item in tag_options"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-col>
+            <el-col :span="6">
                 <h3>Status</h3>
                 <el-select v-model="post.private" placeholder="请选择">
                     <el-option
@@ -37,6 +48,7 @@
                     title: '',
                     content: '',
                     private: 1,
+                    tags:[]
                 },
                 options:[
                     {
@@ -48,6 +60,7 @@
                         label: "Public"
                     }
                 ],
+                tag_options: [],
                 editorOption: {
                     theme: 'snow',
                     height: '100px'
@@ -60,6 +73,10 @@
             axios.get("post/show", {params: {id: this.id}})
                 .then(function (res) {
                     _this.post = res.data;
+                });
+            axios.get("tags")
+                .then(function (res) {
+                    _this.tag_options = res.data;
                 });
         },
         methods: {

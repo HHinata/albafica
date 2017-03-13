@@ -96,6 +96,10 @@ export default [
                 ]
             },
             {
+                path: 'home/:name',
+                component: require('./pages/home/index.vue')
+            },
+            {
                 path: 'login',
                 component: require('./pages/enter/login.vue')
             },

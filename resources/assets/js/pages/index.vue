@@ -3,11 +3,11 @@
     <article v-for="post in posts.data">
         <hr>
         <header>
-            <h3>{{ post.title }}</h3>
+            <h3 @click="read(post.id)">{{ post.title }}</h3>
             <p>
-                <b>Author:</b><span>{{post.user.name}}</span>
-                <b>Create:</b><span>{{post.created_at}}</span>
-                <b>Update:</b><span>{{post.updated_at}}</span>
+                <span><b>Author : </b>{{post.user.name}}</span>
+                <span><b>Create : </b>{{post.created_at}}</span>
+                <span><b>Update : </b>{{post.updated_at}}</span>
             </p>
         </header>
         <section v-html="post.content.substr(0, 800) + '...'"></section>

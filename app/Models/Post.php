@@ -13,6 +13,11 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\Models\Tag', 'post_tag', 'post_id', 'tag_id');
+        return $this->morphToMany('App\Models\Tag', 'object', 'tag_links', 'object_id', 'tag_id');
+    }
+
+    public function users()
+    {
+        return $this->morphToMany('App\User', 'object', 'user_links', 'object_id', 'user_id');
     }
 }
