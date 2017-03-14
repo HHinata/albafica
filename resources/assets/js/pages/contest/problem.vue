@@ -8,15 +8,15 @@
         </div>
         <div class='content'>
             <h3>Desc</h3>
-                <blockquote>{{ problem.desc }}</blockquote>
+                <blockquote v-html="problem.desc"></blockquote>
             <h3>Input</h3>
-                <blockquote>{{ problem.input }}</blockquote>
+                <blockquote v-html="problem.input"></blockquote>
             <h3>Output</h3>
-                <blockquote>{{ problem.output }}</blockquote>
+                <blockquote v-html="problem.output"></blockquote>
             <h3>Sample Input</h3>
-                <blockquote>{{ problem.sample_input }}</blockquote>
+                <blockquote v-html="problem.sample_input"></blockquote>
             <h3>Sample Output</h3>
-                <blockquote>{{ problem.sample_output }}<b>asdf</b></blockquote>
+                <blockquote v-html="problem.sample_output"></blockquote>
         </div>
     </div>
     <div v-else>

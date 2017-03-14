@@ -60,7 +60,13 @@ class ProblemController extends Controller
         $solution->platform = $problem->platform;
         $solution->sign = $problem->sign;
 
-        return  [$solution->save()];
+        if ($solution->save())
+        {
+            $problem->submited++;
+            $problem->save();
+        }
+
+        return  [];
     }
 
     /**

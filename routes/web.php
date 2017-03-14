@@ -40,6 +40,7 @@ Route::get('solution/detail', 'SolutionController@detail');
 Route::get('contest', 'ContestController@index');
 Route::get('contest/rack', 'ContestController@rack');
 Route::get('contest/show', 'ContestController@show');
+Route::get('contest/rank', 'ContestController@rank');
 Route::get('contest/detail', 'ContestController@detail');
 Route::get('contest/problem', 'ContestController@problem');
 

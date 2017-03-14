@@ -10,10 +10,9 @@
         </el-row>
         <hr>
         <el-row :gutter="20">
-            <el-col :span="6" class="info"><h3>Accepted</h3><small>123</small></el-col>
-            <el-col :span="6" class="info"><h3>Submited</h3><small>123</small></el-col>
-            <el-col :span="6" class="info"><h3>Posts</h3><small>123</small></el-col>
-            <el-col :span="6" class="info"></el-col>
+            <el-col :span="8" class="info"><h3>Accepted</h3><small>{{info.solved}}</small></el-col>
+            <el-col :span="8" class="info"><h3>Submited</h3><small>{{info.solved}}</small></el-col>
+            <el-col :span="8" class="info"><h3>Posted</h3><small>{{info.solved}}</small></el-col>
         </el-row>
         <hr>
         <el-row :gutter="20">

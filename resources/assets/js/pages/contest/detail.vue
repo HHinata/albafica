@@ -15,7 +15,7 @@
         <h3>Desc</h3>
         <blockquote v-html="contest.desc"></blockquote>
         <el-table :data="contest.problems" stripe style="width: 100%">
-            <el-table-column prop="order" label="#" width="180">
+            <el-table-column type="index" label="#" width="180">
             </el-table-column>
             <el-table-column prop="title" label="Title">
             </el-table-column>

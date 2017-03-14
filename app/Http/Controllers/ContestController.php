@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contest;
 use App\Models\Problem;
 use App\Models\Solution;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -116,41 +117,35 @@ class ContestController extends Controller
         $rank = [];
         $contestId = $request->input('id');
 
-        $solutions = Solution::where('contest_id', $contestId);
+        $solutions = Solution::with('user')->where('contest_id', $contestId)->where('result', '>', 0)->orderBy('result')->get()->toArray();
+
         $contest = Contest::find($contestId);
+        $problems = $contest->problems;
+        $users = array_column($solutions, 'user');
+        foreach ($users as $user)
+        {
+            $rank[$user['id']] = ['time'=>0, 'name'=>$user['name']];
+            foreach ($problems as $problem)
+            {
+                $rank[$user['id']]['info'][$problem['id']] = ['submited'=>0, 'solved'=>0];
+            }
+        }
 
         foreach ($solutions as $solution)
         {
-            $index = array_search($solution['user_id'], array_column($rank, 'user_id'));
-            if ($index === false)
+            if ($solution['result'] === 1)
             {
-                $rank[] = ['user_id'=>$solution['user_id'], 'list'=>[]];
-                $index = count($rank);
+                $rank[$solution['user_id']]['time'] = intval((strtotime($solution['created_at']) - $contest['start_time'])/60);
+                $rank[$solution['user_id']]['info'][$solution['problem_id']]['solved'] = 1;
             }
-            $pid = $solution['problem_id'];
-            $pIndex = array_search($pid,array_column($rank[$index]['list'], 'pid'));
-
-            if ($pIndex === false)
+            else
             {
-                $rank[$index]['list'] = ['pid'=>$pid, 'solved'=>0, 'submited'=>0];
-                $pIndex = count($rank[$index]['list']);
+                if ($rank[$solution['user_id']]['time'])    $rank[$solution['user_id']]['time'] += 20;
+                $rank[$solution['user_id']]['info'][$solution['problem_id']]['submited'] += 1;
             }
-
-            if ($solution['result'] == 0)
-            {
-                $rank[$index]['list'][$pIndex]['solved']++;
-            }
-            else    $rank[$index]['list'][$pIndex]['submited']++;
         }
 
-        foreach ($rank as $item)
-        {
-            array_walk($item['list'], function (&$value){
-
-            });
-        }
-
-        return $rank;
+        return ['problems'=>$problems, 'rank'=>$rank];
     }
 
     public function submit(Request $request)

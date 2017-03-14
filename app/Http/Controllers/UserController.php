@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\Solution;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +33,10 @@ class UserController extends Controller
         $user = User::withCount(['followers'=>function($query)use($request){
             $uid = Auth::user()?Auth::user()->id:0;
             $query->where('user_id', $uid);
-        }])->with(['posts', 'problems', 'followers', 'followings'])->where('name', $request->input('name'))->first();
+        }])->with(['posts', 'problems', 'followers', 'followings'])->where('name', $request->input('name', Auth::user()->name))->first();
+        $user->solved = Solution::where('user_id', $user->id)->where('result', 1)->count();
+        $user->submited = Solution::where('user_id', $user->id)->count();
+        $user->posted = Post::where('user_id', $user->id)->count();
         return $user;
     }
 

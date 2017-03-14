@@ -21,7 +21,7 @@ class CreateSolutionsTable extends Migration
             $table->integer('problem_id');
 
             $table->integer('user_id');
-            $table->integer('run_id')->nullable();
+            $table->integer('run_id')->default(0);
             $table->integer('contest_id')->default(0);
 
             $table->text('code');

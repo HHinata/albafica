@@ -14,10 +14,9 @@
             </el-form>
         </el-col>
         <el-col :span="24">
-            <editor v-model="code" @init="editorInit();" lang="html" theme="chrome" width="100%" height="600"></editor>
+            <editor v-model="code" @init="editorInit();" lang="cpp" theme="chrome" width="100%" height="600"></editor>
         </el-col>
     </el-row>
-x
     <div class='footer'>
         <el-button type="primary" @click="submit">提交</el-button>
     </div>
@@ -51,6 +50,7 @@ x
         methods: {
             editorInit:function () {
                 require('vue2-ace-editor/node_modules/brace/mode/html');
+                require('vue2-ace-editor/node_modules/brace/mode/c_cpp');
                 require('vue2-ace-editor/node_modules/brace/mode/javascript');
                 require('vue2-ace-editor/node_modules/brace/mode/less');
                 require('vue2-ace-editor/node_modules/brace/theme/chrome');
