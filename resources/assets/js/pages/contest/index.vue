@@ -7,7 +7,7 @@
         </el-table-column>
         <el-table-column prop="end_time" :formatter="time" width="250" label="End">
         </el-table-column>
-        <el-table-column label="Status" :formatter="calStatus" width="80">
+        <el-table-column label="Status" :formatter="calStatus" width="100">
         </el-table-column>
         <el-table-column label="操作" width="100">
           <template scope="scope">
@@ -34,7 +34,7 @@
         },
         mounted() {
             this.updateContest(1);
-            this.timestamp = Date.parse(new Date());
+            this.timestamp = Date.parse(new Date())/1000;
         },
         methods: {
             handleCurrentChange: function (val) {

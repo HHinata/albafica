@@ -3,9 +3,9 @@
         <el-table :data="contest.data" style="width: 100%">
             <el-table-column prop="title" label="Name">
             </el-table-column>
-            <el-table-column prop="start_time" width="100" label="Start">
+            <el-table-column prop="start_time" :formatter="time" width="300" label="Start">
             </el-table-column>
-            <el-table-column prop="end_time" width="100" label="End">
+            <el-table-column prop="end_time" :formatter="time" width="300" label="End">
             </el-table-column>
             <el-table-column label="操作" width="100">
                 <template scope="scope">
@@ -45,7 +45,10 @@
             },
             handleClick: function (index, rows) {
                 window.location.hash = 'profile/contest/'+rows[index].id;
-            }
+            },
+            time: function (row, column) {
+                return new Date(parseInt(row[column.property]) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+            },
         }
     }
 </script>
