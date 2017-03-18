@@ -11,6 +11,7 @@ class PlatformServiceProvider extends ServiceProvider
 
     private $platforms = [
             'HDU' =>\App\Services\HDUService::class,
+            'POJ' =>\App\Services\POJService::class,
         ];
 
     /**

@@ -8,7 +8,5 @@
 namespace App\Contracts;
 interface PlatformContract
 {
-    public function infoFormat(Array $array);
-
-    public function grabProblem($id);
+    public function grab($id);
 }

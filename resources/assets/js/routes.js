@@ -14,6 +14,10 @@ export default [
                 component: require('./pages/problem/content.vue')
             },
             {
+                path: 'blog',
+                component: require('./pages/post/index.vue'),
+            },
+            {
                 path: 'problem/submit/:id',
                 component: require('./pages/problem/submit.vue')
             },
@@ -35,7 +39,7 @@ export default [
             },
             {
                 path: 'post/:id',
-                component: require('./pages/post/index.vue')
+                component: require('./pages/post/content.vue')
             },
             {
                 path: 'status/:id',

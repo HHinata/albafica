@@ -18,7 +18,8 @@ class ProblemController extends Controller
      */
     public function index()
     {
-        return Problem::where("private", 0)->with('tags')->paginate(20, ['id', 'title', 'solved', 'submited']);
+        return Problem::where("private", 0)->with('tags')
+            ->paginate(20, ['id', 'title', 'solved', 'submited']);
     }
 
     public function rack()
@@ -80,7 +81,7 @@ class ProblemController extends Controller
         $platform = $request->input('plat');
         $sign = $request->input('sign');
 
-        $problem = app()->make(strtoupper($platform))->grabProblem($sign);
+        $problem = app()->make(strtoupper($platform))->grab($sign);
         $problem['platform'] = $platform;
         $problem['sign'] = $sign;
 

@@ -17,7 +17,7 @@ class ContestController extends Controller
      */
     public function index()
     {
-        return Contest::where("private", 0)->paginate(20, ['id', 'title', 'start_time', 'end_time']);
+        return Contest::where("private", 0)->paginate(20, ['id', 'title', 'start_time', 'end_time', 'private']);
     }
 
     public function rack()
@@ -175,6 +175,11 @@ class ContestController extends Controller
         $contest['time'] = [date("Y-m-d\TH:i:s\Z", $contest['start_time']), date("Y-m-d\TH:i:s\Z", $contest['end_time'])];
         // 联表得到所有的问题信息,包括id,标题
         return $contest;
+    }
+
+    public function checkPass()
+    {
+
     }
 
 }

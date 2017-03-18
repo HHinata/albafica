@@ -48,6 +48,10 @@
                 });
             },
             handleClick: function (index, rows) {
+                if(rows[index].private == true)
+                {
+
+                }
                 window.location.hash = '/contest/'+rows[index].id;
             },
             time: function (row, column) {
