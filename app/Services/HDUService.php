@@ -11,15 +11,19 @@ use App\Contracts\PlatformContract;
 
 class HDUService implements PlatformContract
 {
+    use JudgeTrait;
+
     /* the url for grab problem infomation */
-    private $grabUrl = 'http://acm.hdu.edu.cn/showproblem.php?pid=%d';
+    protected $grabUrl = 'http://acm.hdu.edu.cn/showproblem.php?pid=%d';
 
     /* the rule for grab problem information */
-    private $rules = [
+    protected $rules = [
         'title'=>['h1', 'text'],
         'head' => ['.panel_title','text'],
         'content' => ['.panel_content','html'],
     ];
+
+    protected $grabMethod = "query_list";
 
     /**
      * Problem infomation format for front end
@@ -27,7 +31,7 @@ class HDUService implements PlatformContract
      * @param array $array
      * @return mixed
      */
-    public function infoFormat(Array $array)
+    public function format(Array $array)
     {
         $problem['title'] = reset($array)['title'];
 
@@ -56,15 +60,8 @@ class HDUService implements PlatformContract
      * @param $id
      * @return mixed
      */
-    public function grabProblem($id)
+    public function grab($id)
     {
-        $url = sprintf($this->grabUrl, $id);
-
-        $content = \QL\QueryList::Query($url,$this->rules,'','UTF-8','GB2312',true)->data;
-
-        $info = $this->infoFormat($content);
-        $info['id'] = $id;
-
-        return $info;
+        return $this->format($this->pick($id));
     }
 }

@@ -36,14 +36,12 @@
             return {
                 activeName: 'overview',
                 pid: 0,
-                cid: this.$route.params.id
+                cid: this.$route.params.id,
+                visible: false
             };
         },
         components:{ 'overview': detail, submit, problem, discuss, rank, status},
         methods: {
-            handleClick: function(tab, event) {
-                console.log(tab, event);
-            },
             show: function (index) {
                 this.activeName = 'problem';
                 this.pid = index;

@@ -7,6 +7,7 @@
                 <el-menu-item index="/problem">Problem</el-menu-item>
                 <el-menu-item index="/contest">Contest</el-menu-item>
                 <el-menu-item index="/status">Status</el-menu-item>
+                <el-menu-item index="/blog">Blog</el-menu-item>
                 <el-menu-item index="/rank">Rank</el-menu-item>
                 <el-menu-item index="/faq">F.A.Q</el-menu-item>
             </el-col>
