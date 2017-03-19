@@ -49,8 +49,31 @@
 <div id="app">
     @yield('content')
 </div>
-<!-- Custom Js -->
-<script src="{{ mix('js/app.js') }}"></script>
+
+<script src="js/sonic.js"></script>
+<script src="js/lazyload.js"></script>
+
+<script>
+    var square = new Sonic({
+        width: document.body.scrollWidth,
+        height: 400,
+        fillColor: '#000',
+        path: [
+            ['line', 10, 10, 90, 10],
+            ['line', 90, 10, 90, 90],
+            ['line', 90, 90, 10, 90],
+            ['line', 10, 90, 10, 10]
+        ]
+    });
+
+    square.play();
+    document.body.appendChild(square.canvas);
+
+    LazyLoad.js("{{ mix('js/app.js') }}", function () {
+        square.stop();
+        document.body.removeChild(square.canvas);
+    });
+</script>
 
 </body>
 
