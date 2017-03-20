@@ -37,6 +37,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Solution');
     }
 
+    public function message()
+    {
+        return $this->hasMany('App\Models\Message');
+    }
+
     public function problems()
     {
         return $this->morphedByMany('App\Models\Problem', 'object', 'user_links', 'user_id');
@@ -57,4 +62,8 @@ class User extends Authenticatable
         return $this->morphedByMany('App\User', 'object', 'user_links', 'user_id');
     }
 
+    public function teams()
+    {
+        return $this->belongsToMany('App\Models\Team', 'team_user', 'user_id', 'id');
+    }
 }

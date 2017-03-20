@@ -19,7 +19,10 @@ class PostController extends Controller
 
     public function show(Request $request)
     {
-        return Post::with('tags')->find($request->input('id'));
+        $id = $request->input('id');
+        $post = Post::with('tags')->find($id)->toArray();
+        $post['tags'] = array_column($post['tags'], 'id');
+        return $post;
     }
 
     public function detail(Request $request)

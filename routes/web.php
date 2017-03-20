@@ -36,6 +36,7 @@ Route::post('problem/submit', 'ProblemController@submit');
 
 Route::get('solution', 'SolutionController@index');
 Route::get('solution/detail', 'SolutionController@detail');
+Route::post('solution/callback', 'SolutionController@callback');
 
 Route::get('contest', 'ContestController@index');
 Route::get('contest/rack', 'ContestController@rack');
@@ -56,6 +57,13 @@ Route::get('post/show', 'PostController@show');
 Route::post('post/star', 'PostController@star');
 Route::put('post', 'PostController@store');
 Route::post('post', 'PostController@update');
+
+Route::put('team', 'TeamController@store');
+Route::post('team/apply', 'TeamController@apply');
+Route::get('team/show', 'TeamController@show');
+Route::get('team', 'TeamController@index');
+Route::get('team/rack', 'TeamController@rack');
+Route::get('team/test', 'TeamController@test');
 
 Route::get('comment', 'CommentController@index');
 Route::put('comment', 'CommentController@store');

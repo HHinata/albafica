@@ -1,21 +1,27 @@
 <template>
-    <div>
-        <el-table :data="post.data" style="width: 100%">
-            <el-table-column prop="id" label="#">
-            </el-table-column>
-            <el-table-column prop="title" label="Name">
-            </el-table-column>
-            <el-table-column label="操作" width="100">
-                <template scope="scope">
-                    <el-button @click.native.prevent="handleClick(scope.$index, post.data)" type="text" size="small">编辑</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-        <el-row type='flex' justify='center' style="margin-top: 20px">
-            <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :total="post.total" :page-size="post.per_page">
-            </el-pagination>
-        </el-row>
-    </div>
+    <el-row>
+        <el-col :span="18">
+            <h2>文章管理</h2>
+        </el-col>
+        <el-col :span="6">
+            <el-button type="success" @click="newPost">添加文章</el-button>
+        </el-col>
+        <el-col :span="24">
+            <el-table :data="post.data" style="width: 100%">
+                <el-table-column prop="id" label="#">
+                </el-table-column>
+                <el-table-column prop="title" label="Name">
+                </el-table-column>
+                <el-table-column label="操作" width="100">
+                    <template scope="scope">
+                        <el-button @click.native.prevent="handleClick(scope.$index, post.data)" type="text" size="small">编辑</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-col>
+        <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :total="post.total" :page-size="post.per_page">
+        </el-pagination>
+    </el-row>
 </template>
 
 <script>
@@ -43,6 +49,9 @@
             },
             handleClick: function (index, rows) {
                 window.location.hash = 'profile/post/'+rows[index].id;
+            },
+            newPost: function () {
+                window.location.hash = 'profile/new-post';
             }
         }
     }

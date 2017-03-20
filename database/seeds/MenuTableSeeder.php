@@ -33,26 +33,6 @@ class MenuTableSeeder extends Seeder
         );
         \App\Models\Menu::create(
             [
-                'name'=>'添加题目',
-                'class' =>  'Manage',
-                'href'=>'/profile/new-problem'
-            ]
-        );
-        \App\Models\Menu::create(
-            [
-                'name'=>'添加比赛',
-                'class' =>  'Manage',
-                'href'=>'/profile/new-contest'
-            ]
-        );
-        \App\Models\Menu::create(
-            [
-                'name'=>'添加文章',
-                'href'=>'/profile/new-post'
-            ]
-        );
-        \App\Models\Menu::create(
-            [
                 'name'=>'文章管理',
                 'href'=>'/profile/post'
             ]

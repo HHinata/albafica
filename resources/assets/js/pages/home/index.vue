@@ -70,15 +70,5 @@
     }
 </script>
 <style>
-    .comment p{
-        line-height: 16px;
-    }
 
-    .comment{
-        border-top: 1px solid #e5e9ef;
-    }
-
-    .username{
-        color: #d4d4d4;
-    }
 </style>

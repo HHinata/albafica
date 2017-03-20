@@ -1,5 +1,12 @@
 <template>
-    <div>
+    <el-row>
+    <el-col :span="18">
+        <h2>比赛管理</h2>
+    </el-col>
+    <el-col :span="6">
+        <el-button type="success" @click="newContest">添加比赛</el-button>
+    </el-col>
+    <el-col :span="24">
         <el-table :data="contest.data" style="width: 100%">
             <el-table-column prop="title" label="Name">
             </el-table-column>
@@ -13,11 +20,10 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-row type='flex' justify='center' style="margin-top: 20px">
+    </el-col>
             <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :total="contest.total" :page-size="contest.per_page">
             </el-pagination>
         </el-row>
-    </div>
 </template>
 
 <script>
@@ -49,6 +55,9 @@
             time: function (row, column) {
                 return new Date(parseInt(row[column.property]) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
             },
+            newContest: function () {
+                window.location.hash = 'profile/new-contest';
+            }
         }
     }
 </script>

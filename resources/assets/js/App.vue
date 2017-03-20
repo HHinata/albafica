@@ -3,12 +3,13 @@
     <el-menu theme="dark" class="el-menu-demo" mode="horizontal" :router="true">
         <el-row>
             <el-col :span="12" :offset="4">
-                <el-menu-item index="/">Index</el-menu-item>
-                <el-menu-item index="/problem">Problem</el-menu-item>
-                <el-menu-item index="/contest">Contest</el-menu-item>
-                <el-menu-item index="/status">Status</el-menu-item>
-                <el-menu-item index="/blog">Blog</el-menu-item>
-                <el-menu-item index="/rank">Rank</el-menu-item>
+                <el-menu-item index="/">首页<i>index</i></el-menu-item>
+                <el-menu-item index="/problem">题目<i>problem</i></el-menu-item>
+                <el-menu-item index="/contest">比赛<i>contest</i></el-menu-item>
+                <el-menu-item index="/status">状态<i>status</i></el-menu-item>
+                <el-menu-item index="/blog">博客<i>blog</i></el-menu-item>
+                <el-menu-item index="/team">团队<i>team</i></el-menu-item>
+                <el-menu-item index="/rank">排行榜<i>rank</i></el-menu-item>
                 <el-menu-item index="/faq">F.A.Q</el-menu-item>
             </el-col>
             <el-col v-if="info.name" :span="4">

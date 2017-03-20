@@ -34,6 +34,10 @@ export default [
                 component: require('./pages/status/index.vue')
             },
             {
+                path: 'team',
+                component: require('./pages/team/index.vue')
+            },
+            {
                 path: 'rank',
                 component: require('./pages/rank/index.vue')
             },
@@ -44,6 +48,10 @@ export default [
             {
                 path: 'status/:id',
                 component: require('./pages/status/content.vue')
+            },
+            {
+                path: 'team/:id',
+                component: require('./pages/team/content.vue')
             },
             {
                 path: 'profile',
@@ -70,6 +78,10 @@ export default [
                         component: require('./pages/profile/detail-post.vue'),
                     },
                     {
+                        path: 'team/:id',
+                        component: require('./pages/profile/detail-team.vue'),
+                    },
+                    {
                         path: 'contest',
                         component: require('./pages/profile/contest.vue'),
                     },
@@ -82,6 +94,10 @@ export default [
                         component: require('./pages/profile/detail-problem.vue'),
                     },
                     {
+                        path: 'team',
+                        component: require('./pages/profile/team.vue'),
+                    },
+                    {
                         path: 'problem',
                         component: require('./pages/profile/problem.vue'),
                     },
@@ -92,6 +108,10 @@ export default [
                     {
                         path: 'new-contest',
                         component: require('./pages/profile/new-contest.vue'),
+                    },
+                    {
+                        path: 'new-team',
+                        component: require('./pages/profile/new-team.vue'),
                     },
                     {
                         path: 'setting',
