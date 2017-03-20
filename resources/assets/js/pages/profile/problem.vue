@@ -1,5 +1,12 @@
 <template>
-    <div>
+    <el-row>
+        <el-col :span="18">
+            <h2>问题管理</h2>
+        </el-col>
+        <el-col :span="6">
+            <el-button type="success" @click="newProblem">添加问题</el-button>
+        </el-col>
+        <el-col :span="24">
         <el-table :data="problem.data" style="width: 100%">
             <el-table-column prop="id" label="#" width="100">
             </el-table-column>
@@ -16,13 +23,11 @@
                     </el-button>
                 </template>
             </el-table-column>
-        </el-table>
-        <el-row type='flex' justify='center' style="margin-top: 20px">
+        </el-table></el-col>
             <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :total="problem.total"
                            :page-size="problem.per_page">
             </el-pagination>
         </el-row>
-    </div>
 </template>
 
 <script>
@@ -50,6 +55,9 @@
             },
             handleClick: function (index, rows) {
                 window.location.hash = '/profile/problem/' + rows[index].id;
+            },
+            newProblem: function () {
+                window.location.hash = 'profile/new-problem';
             }
         }
     }

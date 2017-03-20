@@ -1,21 +1,20 @@
 <template>
 <div>
     <div class='caption'>
-      <h2>{{ problem.title }}<span><i @click="starOn" v-bind:style="[problem.users_count>0?starStyle:'']" class="el-icon-star-on"></i></span></h2>
-      <p>time limit per test: {{ problem.time_limit }} second</p>
-      <p>memory limit per test: {{ problem.mem_limit }} megabytes</p>
+      <h2>{{problem.id}}.{{ problem.title }}</h2>
+      <p>Time limit per test: {{ problem.time_limit }} second</p>
+      <p>Memory limit per test: {{ problem.mem_limit }} megabytes</p>
     </div>
-    <div class='content'>
-        <h3>Desc</h3>
-            <blockquote v-html="problem.desc"></blockquote>
+    <div class='pro-content'>
+        <div v-html="problem.desc"></div>
         <h3>Input</h3>
-            <blockquote v-html="problem.input"></blockquote>
+            <div v-html="problem.input"></div>
         <h3>Output</h3>
-            <blockquote v-html="problem.output"></blockquote>
+            <div v-html="problem.output"></div>
         <h3>Sample Input</h3>
-            <blockquote v-html="problem.sample_input"></blockquote>
+            <div v-html="problem.sample_input"></div>
         <h3>Sample Output</h3>
-            <blockquote v-html="problem.sample_output"><b>asdf</b></blockquote>
+            <div v-html="problem.sample_output"><b>asdf</b></div>
     </div>
 </div>
 </template>
@@ -63,8 +62,11 @@
     .caption {
         text-align: center;
     }
-    .footer {
-        margin-top: 20px;
-        text-align: center;
+
+    .pro-content, .caption p{
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 1em;
+        line-height: 1.4em;
     }
+
 </style>

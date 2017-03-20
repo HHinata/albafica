@@ -1,40 +1,30 @@
 <template>
 <div>
     <article>
-        <header><h3>{{ problem.title }}</h3></header>
+        <header><h1>{{problem.id}}.{{ problem.title }}</h1></header>
     </article>
+
     <div class="comment" v-for="item in comments">
         <el-row>
-            <el-col :span="2" style="line-height: 80px; text-align: center">
-                <img :src="item.user.avatar" style="width: 60px;vertical-align: middle; border-radius: 50%"/>
+            <el-col :span="2">
+                <img width="80%" :src="item.user.avatar" style="border-radius:50%">
             </el-col>
-            <el-col :span="22">
-                <p class="username">{{item.user.name}}</p>
+            <el-col :span="21">
+                <p><b>{{item.user.name}}</b>@<i>{{item.created_at}}</i></p>
                 <p v-html="item.content"></p>
             </el-col>
         </el-row>
     </div>
-    <div>
-        <div id="toolbar">
-            <input type="file" @change='upload' style='display: none !important;'>
-            <!-- Add font size dropdown -->
-            <select class="ql-size">
-                <option value="small"></option>
-                <!-- Note a missing, thus falsy value, is used to reset to default -->
-                <option selected></option>
-                <option value="large"></option>
-                <option value="huge"></option>
-            </select>
-            <!-- Add a bold button -->
-            <button class="ql-bold"></button>
-            <!-- Add subscript and superscript buttons -->
-            <button class="ql-script" value="sub"></button>
-            <button class="ql-script" value="super"></button>
-            <button @click="upclick"><i class="el-icon-upload"></i></button>
-        </div>
-        <quill-editor v-model="comment" :config="editorOption"></quill-editor>
-        <el-button @click="commentTo">Comment</el-button>
-    </div>
+
+    <el-row>
+        <el-col :span="20">
+            <el-input v-model="comment" placeholder="请输入内容"></el-input>
+        </el-col>
+        <el-col :span="2">
+            <el-button @click="commentTo">评论</el-button>
+        </el-col>
+    </el-row>
+
 </div>
 </template>
 
@@ -45,13 +35,7 @@
             return {
                 problem: {},
                 comments: [],
-                comment: "",
-                editorOption: {
-                    theme: 'snow',
-                    modules: {
-                        toolbar: '#toolbar'
-                    }
-                },
+                comment: ""
             };
         },
         props: ['pid'],
@@ -67,32 +51,9 @@
                 });
         },
         methods: {
-            upclick: function (event) {
-                this.$el.querySelector('input[type=file]').click();
-            },
-            upload: function(event) {
-                var _this = this;
-                axios.get('/token').then(function(res){
-                    let uptoken = res.data;
-                    let file = event.target.files[0];
-                    let uploader = new Uploader(file, uptoken);
-                    uploader.on('progress', e => {
-                        console.log(uploader.percent); //加载进度
-                        console.log(uploader.offset); //字节
-                    });
-                    uploader.on('complete', e => {
-                        var img = 'http://'+uptoken.domain+'/'+uploader.imgRes.key;
-                        _this.comment += '<img src="'+img+'"/>';
-                    });
-                    uploader.upload().then(imgRes => {
-                            console.log(imgRes);
-                    });
-                });
-            },
             commentTo: function () {
                 var _this = this;
-                var obj = {type:"prob", id: this.pid, content: this.comment};
-                axios.put('comment', obj)
+                axios.put('comment', {type:"prob", id: this.pid, content: this.comment})
                     .then(function (res) {
                         _this.comments.push(res.data);
                         _this.$message({

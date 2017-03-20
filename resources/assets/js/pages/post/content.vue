@@ -2,28 +2,43 @@
 <div>
     <article>
         <header>
-            <h1>{{ post.title }}</h1>
+            <h1 class="title">{{ post.title }}</h1>
             <p>
-                <span><b>Author : </b>{{post.user.name}}</span>
-                <span><b>Create : </b>{{post.created_at}}</span>
-                <span><b>Update : </b>{{post.updated_at}}</span>
+                <span>By: <i>{{post.user.name}}</i>,<i>{{post.created_at}}</i></span>
                 <span><i @click="starOn" v-bind:style="[post.users_count>0?starStyle:'']" class="el-icon-star-on"></i></span>
             </p>
         </header>
         <hr>
-        <section v-html="post.content"></section>
+        <section class="post-section" v-html="post.content"></section>
         <p>
             <el-tag v-for="item in post.tags">{{ item.name }}</el-tag>
         </p>
+        <div class="info-bar">
+            <div class="info-left-bar"><a @click="read(post.id)">Read More</a></div>
+            <div class="info-right-bar"><span>By: <i>{{post.user.name}}</i>,<i>{{post.created_at}}</i></span></div>
+        </div>
     </article>
+
     <div class="comment" v-for="item in comments">
-        <p class="username">{{item.user.name}}</p>
-        <p v-html="item.content"></p>
+        <el-row>
+            <el-col :span="2">
+                <img width="80%" :src="item.user.avatar" style="border-radius:50%">
+            </el-col>
+            <el-col :span="21">
+                <p><b>{{item.user.name}}</b>@<i>{{item.created_at}}</i></p>
+                <p v-html="item.content"></p>
+            </el-col>
+        </el-row>
     </div>
-    <div>
-        <quill-editor v-model="comment" :config="editorOption"></quill-editor>
-        <el-button @click="commentTo">Comment</el-button>
-    </div>
+
+    <el-row>
+        <el-col :span="20">
+            <el-input v-model="comment" placeholder="请输入内容"></el-input>
+        </el-col>
+        <el-col :span="2">
+            <el-button @click="commentTo">评论</el-button>
+        </el-col>
+    </el-row>
 </div>
 </template>
 
@@ -36,9 +51,6 @@
                 },
                 comments: [],
                 comment: "",
-                editorOption: {
-                    theme: 'snow'
-                },
                 starStyle:{color:'blue'}
             };
         },
@@ -56,8 +68,7 @@
         methods: {
             commentTo: function () {
                 var _this = this;
-                var obj = {type:"post", id: this.post.id, content: this.comment};
-                axios.put('comment', obj)
+                axios.put('comment', {type:"post", id: this.post.id, content: this.comment})
                     .then(function (res) {
                         _this.comments.push(res.data);
                         _this.$message({
@@ -82,15 +93,20 @@
     }
 </script>
 <style>
-    .comment p{
-        line-height: 16px;
+
+    .post-section{
+        border-left: 4px solid rgb(185, 185, 185);
+        padding-left: 10px;
+        font-size: 1em;
+        line-height: 1.4em;
+        font-family: verdana,arial,sans-serif;
+    }
+
+    .info-bar{
+        margin-bottom: 40px;
     }
 
     .comment{
-        border-top: 1px solid #e5e9ef;
-    }
-
-    .username{
-        color: #d4d4d4;
+        margin-bottom: 20px;
     }
 </style>

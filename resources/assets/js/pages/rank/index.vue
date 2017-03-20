@@ -5,6 +5,8 @@
             </el-table-column>
             <el-table-column prop="name" label="Name">
             </el-table-column>
+            <el-table-column prop="info" label="">
+            </el-table-column>
             <el-table-column prop="rating" label="Rating">
             </el-table-column>
             <el-table-column label="操作" width="100">

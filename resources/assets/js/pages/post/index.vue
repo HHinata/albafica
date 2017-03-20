@@ -1,20 +1,20 @@
 <template>
 <div>
-    <article v-for="post in posts.data">
-        <hr>
+    <article class="home-article" v-for="post in posts.data">
         <header>
-            <h3 @click="read(post.id)">{{ post.title }}</h3>
+            <h2 class="title" @click="read(post.id)">{{ post.title }}</h2>
             <p>
-                <span><b>Author : </b>{{post.user.name}}</span>
-                <span><b>Create : </b>{{post.created_at}}</span>
-                <span><b>Update : </b>{{post.updated_at}}</span>
+                <span>By: <i>{{post.user.name}}</i>,<i>{{post.created_at}}</i></span>
             </p>
         </header>
-        <section v-html="post.content.substr(0, 800) + '...'"></section>
+        <section class="home-section" v-html="post.content.substr(0, 800) + '...'"></section>
         <p>
             <el-tag v-for="item in post.tags">{{ item.name }}</el-tag>
         </p>
-        <div><el-button @click="read(post.id)">Read More</el-button></div>
+        <div class="info-bar">
+            <div class="info-left-bar"><a @click="read(post.id)">Read More</a></div>
+            <div class="info-right-bar"><span>By: <i>{{post.user.name}}</i>,<i>{{post.created_at}}</i></span></div>
+        </div>
     </article>
 </div>
 </template>

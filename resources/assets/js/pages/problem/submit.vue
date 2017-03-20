@@ -17,7 +17,6 @@
             <editor v-model="code" @init="editorInit();" lang="html" theme="chrome" width="100%" height="600"></editor>
         </el-col>
     </el-row>
-    x
     <div class='footer'>
         <el-button type="primary" @click="submit">提交</el-button>
     </div>
@@ -29,7 +28,7 @@
         data: function () {
             return {
                 code: '// Type away! \n',
-                lang: '',
+                lang: 1,
                 options:[
                     {
                         value: 1,

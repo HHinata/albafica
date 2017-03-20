@@ -33,7 +33,7 @@ class UserController extends Controller
         $user = User::withCount(['followers'=>function($query)use($request){
             $uid = Auth::user()?Auth::user()->id:0;
             $query->where('user_id', $uid);
-        }])->with(['posts', 'problems', 'followers', 'followings'])->where('name', $request->input('name', Auth::user()->name))->first();
+        }])->with(['posts', 'problems', 'followers', 'followings', 'solution', 'teams'])->where('name', $request->input('name', Auth::user()->name))->first();
 
         $user->solved = Solution::where('user_id', $user->id)->where('result', 1)->count();
         $user->submited = Solution::where('user_id', $user->id)->count();

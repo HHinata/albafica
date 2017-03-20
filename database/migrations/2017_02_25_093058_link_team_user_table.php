@@ -17,6 +17,7 @@ class LinkTeamUserTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('team_id');
             $table->unsignedInteger('user_id');
+            $table->smallInteger('role');
             $table->timestamps();
         });
     }
