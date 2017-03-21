@@ -1,6 +1,6 @@
 <template>
 <div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs v-model="activeName">
         <el-tab-pane label="OVERVIEW" name="overview">
             <overview :cid="$route.params.id" v-on:show='show' v-on:submit='submit' ></overview>
         </el-tab-pane>

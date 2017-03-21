@@ -8,33 +8,112 @@
                 <h1>{{info.name}} <i @click="starOn" v-bind:style="[info.followers_count>0?starStyle:'']" class="el-icon-star-on"></i></span></h1><small>{{info.info}}</small>
             </el-col>
         </el-row>
-        <hr>
+        <el-col :span="24" style="margin-top: 30px ">
+            <el-carousel trigger="click" height="150px">
+                <el-carousel-item>
+                    <h3>{{ info.solved }} Accepted</h3>
+                </el-carousel-item>
+                <el-carousel-item>
+                    <h3>{{info.solved}} Submited</h3>
+                </el-carousel-item>
+                <el-carousel-item>
+                    <h3>{{ info.solved }} Posted</h3>
+                </el-carousel-item>
+            </el-carousel>
+        </el-col>
         <el-row :gutter="20">
-            <el-col :span="8" class="info"><h3>Accepted</h3><small>{{info.solved}}</small></el-col>
-            <el-col :span="8" class="info"><h3>Submited</h3><small>{{info.solved}}</small></el-col>
-            <el-col :span="8" class="info"><h3>Posted</h3><small>{{info.solved}}</small></el-col>
-        </el-row>
-        <hr>
-        <el-row :gutter="20">
-            <el-col :span="6"><h3>Post</h3>
-                <ul>
-                    <li v-for="post in info.posts">{{post.title}}</li>
-                </ul>
+            <el-col :span="12">
+                <div class="info-content">
+
+                    <div class="article">
+                        <h3>文章 <a style="float:right" class="more" href="">更多</a></h3>
+                    </div>
+                    <el-table
+                            :data="info.posts"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="title"
+                                label="名称">
+                        </el-table-column>
+                        <el-table-column
+                                prop="created_at"
+                                label="创建时间"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="updated_at"
+                                label="更新时间"
+                                width="180">
+                        </el-table-column>
+                    </el-table>
+                </div>
+                <div class="info-content">
+
+                    <div class="status">
+                        <h3>提交状态 <a style="float:right" class="more" href="">更多</a></h3>
+                    </div>
+                    <el-table
+                            :data="info.solution"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="user_id"
+                                label="用户">
+                        </el-table-column>
+                        <el-table-column
+                                prop="lang"
+                                label="语言"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="result"
+                                label="结果"
+                                width="180">
+                        </el-table-column>
+                    </el-table>
+                </div>
             </el-col>
-            <el-col :span="6"><h3>Problem</h3>
-                <ul>
-                    <li v-for="problem in info.problems">{{problem.title}}</li>
-                </ul>
-            </el-col>
-            <el-col :span="6"><h3>Follower</h3>
-                <ul>
-                    <li v-for="follower in info.followers">{{follower.name}}</li>
-                </ul>
-            </el-col>
-            <el-col :span="6"><h3>Following</h3>
-                <ul>
-                    <li v-for="following in info.followings">{{following.name}}</li>
-                </ul>
+            <el-col :span="12">
+                <div class="info-content">
+                    <div class="article">
+                        <h3>关注者 <a style="float:right" class="more" href="">更多</a></h3>
+                    </div>
+                    <el-table
+                            :data="info.followers"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="name"
+                                label="名称"
+                                width="80">
+                        </el-table-column>
+                        <el-table-column
+                                prop="email"
+                                label="邮箱"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="info"
+                                label="简介">
+                        </el-table-column>
+                    </el-table>
+                </div>
+                <div class="info-content">
+                    <div class="status">
+                        <h3>团队 <a style="float:right" class="more" href="">更多</a></h3>
+                    </div>
+                    <el-table
+                            :data="info.teams"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="name"
+                                label="名称"
+                                width="80">
+                        </el-table-column>
+                        <el-table-column
+                                prop="desc"
+                                label="描述">
+                        </el-table-column>
+                    </el-table>
+                </div>
             </el-col>
         </el-row>
     </div>

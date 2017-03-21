@@ -22,36 +22,97 @@
                 </el-carousel>
             </el-col>
             <el-col :span="12">
+                <div class="info-content">
+
                 <div class="article">
                     <h3>文章 <a style="float:right" class="more" href="">更多</a></h3>
                 </div>
-                <ul>
-                    <li v-for="post in info.posts">{{post.title}}</li>
-                </ul>
-            </el-col>
-            <el-col :span="12">
+                    <el-table
+                            :data="info.posts"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="title"
+                                label="名称">
+                        </el-table-column>
+                        <el-table-column
+                                prop="created_at"
+                                label="创建时间"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="updated_at"
+                                label="更新时间"
+                                width="180">
+                        </el-table-column>
+                    </el-table>
+                </div>
+                <div class="info-content">
+
                 <div class="status">
                     <h3>提交状态 <a style="float:right" class="more" href="">更多</a></h3>
                 </div>
-                <ul>
-                    <li v-for="status in info.solution">{{status.problem_id}}</li>
-                </ul>
+                    <el-table
+                            :data="info.solution"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="user_id"
+                                label="用户">
+                        </el-table-column>
+                        <el-table-column
+                                prop="lang"
+                                label="语言"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="result"
+                                label="结果"
+                                width="180">
+                        </el-table-column>
+                    </el-table>
+                </div>
             </el-col>
             <el-col :span="12">
-                <div class="article">
-                    <h3>关注者 <a style="float:right" class="more" href="">更多</a></h3>
+                <div class="info-content">
+                    <div class="article">
+                        <h3>关注者 <a style="float:right" class="more" href="">更多</a></h3>
+                    </div>
+                    <el-table
+                            :data="info.followers"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="name"
+                                label="名称"
+                                width="80">
+                        </el-table-column>
+                        <el-table-column
+                                prop="email"
+                                label="邮箱"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="info"
+                                label="简介">
+                        </el-table-column>
+                    </el-table>
                 </div>
-                <ul>
-                    <li v-for="user in info.followers">{{user.name}}</li>
-                </ul>
-            </el-col>
-            <el-col :span="12">
-                <div class="status">
-                    <h3>团队 <a style="float:right" class="more" href="">更多</a></h3>
+                <div class="info-content">
+                    <div class="status">
+                        <h3>团队 <a style="float:right" class="more" href="">更多</a></h3>
+                    </div>
+                    <el-table
+                            :data="info.teams"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="name"
+                                label="名称"
+                                width="80">
+                        </el-table-column>
+                        <el-table-column
+                                prop="desc"
+                                label="描述">
+                        </el-table-column>
+                    </el-table>
                 </div>
-                <ul>
-                    <li v-for="team in info.teams">{{team.name}}</li>
-                </ul>
             </el-col>
         </el-row>
     </div>
@@ -105,5 +166,9 @@
 
     .el-carousel__item:nth-child(2n+1) {
         background-color: #d3dce6;
+    }
+
+    .info-content{
+        min-height: 300px;
     }
 </style>

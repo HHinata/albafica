@@ -62,6 +62,10 @@ export default [
                         component: require('./pages/profile/info.vue'),
                     },
                     {
+                        path: 'message',
+                        component: require('./pages/profile/message.vue'),
+                    },
+                    {
                         path: 'index',
                         component: require('./pages/profile/info.vue'),
                     },
