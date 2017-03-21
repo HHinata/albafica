@@ -17,6 +17,7 @@
                     <template slot="title">{{ info.name }}</template>
                     <el-menu-item :index="'/home/'+info.name">Home</el-menu-item>
                     <el-menu-item index="/profile">Profile</el-menu-item>
+                    <el-menu-item index="/profile/message">Message</el-menu-item>
                     <el-menu-item index="/" @click='logout'>Logout</el-menu-item>
                 </el-submenu>
             </el-col>

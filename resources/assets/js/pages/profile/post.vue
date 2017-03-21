@@ -19,8 +19,9 @@
                 </el-table-column>
             </el-table>
         </el-col>
+        <el-col :span="24" style="text-align: center">
         <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :total="post.total" :page-size="post.per_page">
-        </el-pagination>
+        </el-pagination></el-col>
     </el-row>
 </template>
 

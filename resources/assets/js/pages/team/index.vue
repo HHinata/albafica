@@ -2,16 +2,16 @@
     <el-row>
         <el-col :span="3" v-for="item in team.data">
             <el-card :body-style="{ padding: '0px' }">
-                <img src="http://element.eleme.io/static/hamburger.50e4091.png" class="image">
+                <img :src="item.avatar" class="image">
                 <div style="padding: 14px;">
-                    <span>{{item.name}}</span>
+                    <span @click="handleClick(item.id)">{{item.name}}</span>
                     <div class="clearfix">
                         <time class="time">{{item.desc}}</time>
                     </div>
                 </div>
             </el-card>
         </el-col>
-        <el-col :span="24">
+        <el-col :span="24" style="text-align: center">
         <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :total="team.total" :page-size="team.per_page">
         </el-pagination>
         </el-col>
@@ -42,8 +42,8 @@
                         _this.team = res.data;
                     });
             },
-            handleClick: function (index, rows) {
-                window.location.hash = '/team/'+rows[index].id;
+            handleClick: function (index) {
+                window.location.hash = '/team/'+index;
 
             }
         }

@@ -19,8 +19,10 @@
                 </el-table-column>
             </el-table>
         </el-col>
-        <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :total="team.total" :page-size="team.per_page">
-        </el-pagination>
+        <el-col :span="24" style="text-align: center">
+            <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :total="team.total" :page-size="team.per_page">
+            </el-pagination>
+        </el-col>
     </el-row>
 </template>
 

@@ -9,12 +9,12 @@ class TeamController extends Controller
 {
     public function index()
     {
-        return Team::paginate(20, ['id', 'name', 'desc']);
+        return Team::paginate(20, ['id', 'name', 'avatar', 'desc']);
     }
 
     public function rack()
     {
-        return Team::paginate(20, ['id', 'name', 'desc']);
+        return Team::paginate(20, ['id', 'name', 'avatar', 'desc']);
     }
 
     public function store(Request $request)

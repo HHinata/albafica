@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use App\Models\Solution;
 use App\User;
 use Illuminate\Http\Request;
@@ -37,6 +38,8 @@ class SolutionController extends Controller
                 $user = User::find($solution->user_id);
                 $user->rating += $solution->problem_id;
                 $user->save();
+
+                Message::send($solution->user_id, 'Status is OK', 'Status is OK..........');
             }
         }
     }

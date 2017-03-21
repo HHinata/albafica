@@ -68,6 +68,8 @@ Route::get('team/test', 'TeamController@test');
 Route::get('comment', 'CommentController@index');
 Route::put('comment', 'CommentController@store');
 
+Route::get('message', 'MessageController@index');
+
 Route::get('user/info', 'UserController@info');
 Route::post('user', 'UserController@update');
 Route::post('user/star', 'UserController@star');
