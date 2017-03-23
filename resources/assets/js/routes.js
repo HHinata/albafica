@@ -106,6 +106,10 @@ export default [
                         component: require('./pages/profile/problem.vue'),
                     },
                     {
+                        path: 'notice',
+                        component: require('./pages/profile/notice.vue'),
+                    },
+                    {
                         path: 'new-problem',
                         component: require('./pages/profile/new-problem.vue'),
                     },

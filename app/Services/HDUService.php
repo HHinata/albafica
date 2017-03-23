@@ -13,17 +13,20 @@ class HDUService implements PlatformContract
 {
     use JudgeTrait;
 
-    /* the url for grab problem infomation */
-    protected $grabUrl = 'http://acm.hdu.edu.cn/showproblem.php?pid=%d';
+    function __construct()
+    {
+        /* the url for grab problem infomation */
+        $this->grabUrl = 'http://acm.hdu.edu.cn/showproblem.php?pid=%d';
 
-    /* the rule for grab problem information */
-    protected $rules = [
-        'title'=>['h1', 'text'],
-        'head' => ['.panel_title','text'],
-        'content' => ['.panel_content','html'],
-    ];
+        /* the rule for grab problem information */
+        $this->rules = [
+            'title'=>['h1', 'text'],
+            'head' => ['.panel_title','text'],
+            'content' => ['.panel_content','html'],
+        ];
 
-    protected $grabMethod = "query_list";
+        $this->grabMethod = "query_list";
+    }
 
     /**
      * Problem infomation format for front end
@@ -50,7 +53,6 @@ class HDUService implements PlatformContract
         {
             $problem[$relation[$item['head']]] = $item['content'];
         }
-
         return $problem;
     }
 

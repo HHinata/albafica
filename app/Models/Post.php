@@ -20,4 +20,9 @@ class Post extends Model
     {
         return $this->morphToMany('App\User', 'object', 'user_links', 'object_id', 'user_id');
     }
+
+    public function comments()
+    {
+        return $this->morphToMany('App\Models\Comment', 'object', 'comment_links', 'object_id', 'comment_id');
+    }
 }

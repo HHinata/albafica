@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -30,12 +31,22 @@ class PostController extends Controller
         return Post::withCount(['users'=>function($query){
             $uid = Auth::user()?Auth::user()->id:0;
             $query->where('user_id', $uid);
-        }])->with('user')->with('tags')->find($request->input('id'));
+        }])->with(['user', 'tags', 'comments'])->find($request->input('id'));
     }
 
     public function rack()
     {
         return Post::paginate(20, ['id', 'title']);
+    }
+
+    public function seek(Request $request)
+    {
+        $query = $request->input('query');
+        $postList = Post::where('title', 'like', "%$query%")->get(['id', 'title'])->toArray();
+        array_walk($postList, function(&$value){
+            $value['value'] = $value['title'];
+        });
+        return $postList;
     }
 
     public function store(Request $request)
@@ -101,5 +112,21 @@ class PostController extends Controller
             else    Post::find($request->input('id'))->users()->sync([$uid]);
             return $post;
         }
+    }
+
+    public function comment(Request $request)
+    {
+        $post = Post::find($request->input('id'));
+        $comment = new Comment();
+        $comment->content = $request->input('content');
+        $comment->user_id = Auth::user()->id;
+        $comment->save();
+        $post->comments()->save($comment);
+        return $comment;
+    }
+
+    public function speech(Request $request)
+    {
+        return Post::with("comments")->find($request->input('id'));
     }
 }

@@ -17,7 +17,7 @@ class CreateTeamsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('desc');
-            $table->string('avatar');
+            $table->string('avatar')->default("http://okeyqynvd.bkt.clouddn.com/avatar-1487383952.png");
             $table->timestamps();
         });
     }

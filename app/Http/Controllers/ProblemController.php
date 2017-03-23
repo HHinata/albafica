@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Problem;
 use App\Models\Solution;
 use App\Models\Tag;
@@ -202,6 +203,22 @@ class ProblemController extends Controller
             else    Problem::find($request->input('id'))->users()->sync([$uid]);
             return $problem;
         }
+    }
+
+    public function comment(Request $request)
+    {
+        $problem = Problem::find($request->input('id'));
+        $comment = new Comment();
+        $comment->content = $request->input('content');
+        $comment->user_id = Auth::user()->id;
+        $comment->save();
+        $problem->comments()->save($comment);
+        return $comment;
+    }
+
+    public function speech(Request $request)
+    {
+        return Problem::with("comments")->find($request->input('id'));
     }
 
 }

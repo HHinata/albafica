@@ -14,4 +14,9 @@ class Contest extends Model
     {
         return $this->belongsToMany('App\Models\Problem', 'contest_problem', 'contest_id', 'problem_id');
     }
+
+    public function comments()
+    {
+        return $this->morphToMany('App\Models\Comment', 'object', 'comment_links', 'object_id', 'comment_id');
+    }
 }

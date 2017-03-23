@@ -16,7 +16,7 @@
                     placeholder="选择时间范围">
             </el-date-picker>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="6">
             <h3>Status</h3>
             <el-select v-model="contest.private" placeholder="请选择">
                 <el-option
@@ -25,6 +25,20 @@
                         :value="item.value">
                 </el-option>
             </el-select>
+        </el-col>
+        <el-col :span="6">
+            <h3>-</h3>
+            <div v-if="contest.private==1">
+                <el-autocomplete
+                        v-model="contest.team.value"
+                        :fetch-suggestions="queryTeamSearchAsync"
+                        @select="handleTeamSelect"
+                        placeholder="请输入团队信息">
+                </el-autocomplete>
+            </div>
+            <div v-if="contest.private==2">
+                <el-input v-model="contest.password" placeholder="请输入内容"></el-input>
+            </div>
         </el-col>
         <el-col :span="24">
             <h3>Descript</h3>
@@ -74,16 +88,22 @@
                     title: 'This is title input box',
                     description: '<b>This is descript input box</b>',
                     time: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-                    private: true,
+                    private: 0,
+                    password: "",
+                    team: {value:""},
                     problems: []
                 },
                 options:[
                     {
-                        value: true,
-                        label: "Private"
+                        value: 2,
+                        label: "Password"
                     },
                     {
-                        value: false,
+                        value: 1,
+                        label: "Team"
+                    },
+                    {
+                        value: 0,
                         label: "Public"
                     }
                 ],
@@ -96,6 +116,9 @@
         methods: {
             handleSelect:　function (item) {
                 this.contest.problems.push(item);
+            },
+            handleTeamSelect:　function (item) {
+                this.contest.team = item;
             },
             remove: function (index, rows) {
                 rows.splice(index, 1);
@@ -113,6 +136,13 @@
             querySearchAsync(queryString, cb) {
                 var _this = this;
                 axios.get("problem/seek", {params: {query: queryString}})
+                    .then(function (res) {
+                        cb(res.data);
+                    });
+            },
+            queryTeamSearchAsync(queryString, cb) {
+                var _this = this;
+                axios.get("team/seek", {params: {query: queryString}})
                     .then(function (res) {
                         cb(res.data);
                     });

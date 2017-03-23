@@ -19,6 +19,25 @@ class MenuTableSeeder extends Seeder
         );
         \App\Models\Menu::create(
             [
+                'name'=>'消息中心',
+                'href'=>'/profile/message'
+            ]
+        );
+        \App\Models\Menu::create(
+            [
+                'name'=>'公告设置',
+                'class' =>  'Manage',
+                'href'=>'/profile/notice'
+            ]
+        );
+        \App\Models\Menu::create(
+            [
+                'name'=>'团队管理',
+                'href'=>'/profile/team'
+            ]
+        );
+        \App\Models\Menu::create(
+            [
                 'name'=>'题库管理',
                 'class' =>  'Manage',
                 'href'=>'/profile/problem'
