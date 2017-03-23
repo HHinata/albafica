@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Contest;
 use App\Models\Problem;
 use App\Models\Solution;
+use App\Models\Team;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +37,14 @@ class ContestController extends Controller
         $contest->title = $request->input('title');
         $contest->private = $request->input('private');
 
+        switch ($contest->private)
+        {
+            case 1: $contest->team_id = $request->input('team')['id'];
+                break;
+            case 2: $contest->password = $request->input('password');
+                break;
+        }
+
         $timeRange = $request->input('time');
         $contest->start_time = strtotime($timeRange[0]);
         $contest->end_time = strtotime($timeRange[1]);
@@ -63,6 +73,14 @@ class ContestController extends Controller
         $contest->desc = $request->input('desc');
         $contest->title = $request->input('title');
         $contest->private = $request->input('private');
+
+        switch ($contest->private)
+        {
+            case 1: $contest->team_id = $request->input('team')['id'];
+                break;
+            case 2: $contest->password = $request->input('password');
+                break;
+        }
 
         $timeRange = $request->input('time');
         $contest->start_time = strtotime($timeRange[0]);
@@ -174,12 +192,33 @@ class ContestController extends Controller
         $contest = Contest::with('problems')->find($id);
         $contest['time'] = [date("Y-m-d\TH:i:s\Z", $contest['start_time']), date("Y-m-d\TH:i:s\Z", $contest['end_time'])];
         // 联表得到所有的问题信息,包括id,标题
+        if ($contest->private == 1)
+        {
+            $team = Team::find($contest->team_id)->toArray();
+            $contest->team = ['id'=>$team['id'], 'value'=>$team['name']];
+        }
         return $contest;
     }
 
     public function checkPass()
     {
 
+    }
+
+    public function comment(Request $request)
+    {
+        $contest = Contest::find($request->input('id'));
+        $comment = new Comment();
+        $comment->content = $request->input('content');
+        $comment->user_id = Auth::user()->id;
+        $comment->save();
+        $contest->comments()->save($comment);
+        return $comment;
+    }
+
+    public function speech(Request $request)
+    {
+        return Contest::with("comments")->find($request->input('id'));
     }
 
 }

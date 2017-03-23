@@ -4,13 +4,13 @@
         <header><h1>{{problem.id}}.{{ problem.title }}</h1></header>
     </article>
 
-    <div class="comment" v-for="item in comments">
+    <div class="comment" v-for="item in problem.comments">
         <el-row>
             <el-col :span="2">
-                <img width="80%" :src="item.user.avatar" style="border-radius:50%">
+                <!--<img width="80%" :src="item.user.avatar" style="border-radius:50%">-->
             </el-col>
             <el-col :span="21">
-                <p><b>{{item.user.name}}</b>@<i>{{item.created_at}}</i></p>
+                <!--<p><b>{{item.user.name}}</b>@<i>{{item.created_at}}</i></p>-->
                 <p v-html="item.content"></p>
             </el-col>
         </el-row>
@@ -33,29 +33,24 @@
     export default {
         data: function () {
             return {
-                problem: {},
-                comments: [],
+                problem: {comments: [],},
                 comment: ""
             };
         },
         props: ['pid'],
         mounted: function(){
             var _this = this;
-            axios.get('problem/detail', { params: { id: this.pid }})
+            axios.get('problem/speech', { params: { id: this.pid }})
                 .then(function(res) {
                     _this.problem = res.data;
-                });
-            axios.get('comment', {params:{id:this.pid, type:"prob"}})
-                .then(function (res) {
-                    _this.comments = res.data;
                 });
         },
         methods: {
             commentTo: function () {
                 var _this = this;
-                axios.put('comment', {type:"prob", id: this.pid, content: this.comment})
+                axios.put('problem/comment', {id: this.pid, content: this.comment})
                     .then(function (res) {
-                        _this.comments.push(res.data);
+                        _this.problem.comments.push(res.data);
                         _this.$message({
                             message: '恭喜你，评论成功',
                             type: 'success'

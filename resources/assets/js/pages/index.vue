@@ -1,19 +1,18 @@
 <template>
 <div>
-    <article class="home-article" v-for="post in posts.data">
+    <article class="home-article" v-for="notice in notices">
         <header>
-            <h2 class="title" @click="read(post.id)">{{ post.title }}</h2>
+            <h2 class="title" @click="read(notice.post.id)">{{ notice.post.title }}</h2>
             <p>
-                <span>By: <i>{{post.user.name}}</i>,<i>{{post.created_at}}</i></span>
+                <span>By: <i>{{notice.post.created_at}}</i></span>
             </p>
         </header>
-        <section class="home-section" v-html="post.content.substr(0, 800) + '...'"></section>
+        <section class="home-section" v-html="notice.post.content"></section>
         <p>
-            <el-tag v-for="item in post.tags">{{ item.name }}</el-tag>
+            <el-tag v-for="item in notice.post.tags">{{ item.name }}</el-tag>
         </p>
         <div class="info-bar">
-            <div class="info-left-bar"><a @click="read(post.id)">Read More</a></div>
-            <div class="info-right-bar"><span>By: <i>{{post.user.name}}</i>,<i>{{post.created_at}}</i></span></div>
+            <div class="info-left-bar"><a @click="read(notice.post.id)">Read More</a></div>
         </div>
     </article>
 </div>
@@ -23,16 +22,16 @@
     export default {
         data: function(){
             return {
-              posts:[
-                  {user:{}}
-              ]
+                notices:[
+                    {post:{content:""}}
+                ]
             };
         },
         mounted() {
             var _this = this;
-            axios.get('post')
+            axios.get('notice')
                 .then(function (res) {
-                    _this.posts = res.data;
+                    _this.notices = res.data;
                 });
         },
         methods: {

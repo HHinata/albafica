@@ -23,16 +23,16 @@ trait JudgeTrait
         if ($this->grabMethod == 'regular')
         {
             $page = file_get_contents($url);
-
             foreach ($this->rules as $key => $value)
             {
                 preg_match($value, $page, $match);
-                $content[$key] = $match[1];
+                if (count($match) > 0)  $content[$key] = $match[1];
             }
         }
         else if ($this->grabMethod == 'query_list')
+        {
             $content = \QL\QueryList::Query($url,$this->rules)->data;
-
-        return array_merge($content, ['id'=>$id]);
+        }
+        return $content;
     }
 }

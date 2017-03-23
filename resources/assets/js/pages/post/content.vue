@@ -19,13 +19,13 @@
         </div>
     </article>
 
-    <div class="comment" v-for="item in comments">
+    <div class="comment" v-for="item in post.comments">
         <el-row>
             <el-col :span="2">
-                <img width="80%" :src="item.user.avatar" style="border-radius:50%">
+                <!--<img width="80%" :src="item.user.avatar" style="border-radius:50%">-->
             </el-col>
             <el-col :span="21">
-                <p><b>{{item.user.name}}</b>@<i>{{item.created_at}}</i></p>
+                <!--<p><b>{{item.user.name}}</b>@<i>{{item.created_at}}</i></p>-->
                 <p v-html="item.content"></p>
             </el-col>
         </el-row>
@@ -47,9 +47,9 @@
         data: function(){
             return {
                 post: {
-                    user:{}
+                    user:{},
+                    comments: [],
                 },
-                comments: [],
                 comment: "",
                 starStyle:{color:'blue'}
             };
@@ -60,17 +60,13 @@
                 .then(function (res) {
                     _this.post = res.data;
                 });
-            axios.get('comment', {params:{id:this.$route.params.id, type:"post"}})
-                .then(function (res) {
-                    _this.comments = res.data;
-                });
         },
         methods: {
             commentTo: function () {
                 var _this = this;
-                axios.put('comment', {type:"post", id: this.post.id, content: this.comment})
+                axios.put('post/comment', {id: this.post.id, content: this.comment})
                     .then(function (res) {
-                        _this.comments.push(res.data);
+                        _this.post.comments.push(res.data);
                         _this.$message({
                             message: '恭喜你，评论成功',
                             type: 'success'

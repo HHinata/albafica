@@ -13,18 +13,21 @@ class ZOJService implements PlatformContract
 {
     use JudgeTrait;
 
-    protected $grabUrl = 'http://poj.org/problem?id=%d';
+    function __construct()
+    {
+        $this->grabUrl = 'http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=%d';
 
-    protected $rules = [
-        'Problem Description'=>"{<p class=\"pst\">Description</p>([\\s\\S]*?)<p class=\"pst\"}",
-        'Input'=>"{<p class=\"pst\">Input</p>([\\s\\S]*?)<p class=\"pst\"}",
-        'Output'=>"{<p class=\"pst\">Output</p>([\\s\\S]*?)<p class=\"pst\"}",
-        'Sample Input'=>"{<p class=\"pst\">Sample Input</p>([\\s\\S]*?)<p class=\"pst\"}",
-        'Sample Output'=>"{<p class=\"pst\">Sample Output </p>([\\s\\S]*?)<p class=\"pst\"}",
-        'Source'=>"{<p class=\"pst\">Source</p>([\\s\\S]*?)<p class=\"pst\"}",
-    ];
+        $this->rules = [
+            'title'=>"{bigProblemTitle\">([\\s\\S]*?)</span>}",
+            'description'=>"{<BR>([\\s\\S]*?)<H2}",
+            'input'=>"{Input</H2>([\\s\\S]*?)<H2}",
+            'output'=>"{Output</H2>([\\s\\S]*?)<H2}",
+            'sample_input'=>"{Sample Input</H2>([\\s\\S]*?)<H2}",
+            'sample_output'=>"{Sample Output</H2>([\\s\\S]*?)<H2}",
+        ];
 
-    protected $grabMethod = "regular";
+        $this->grabMethod = "regular";
+    }
 
     /**
      * Grab problem infomation
