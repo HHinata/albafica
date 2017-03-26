@@ -1,8 +1,35 @@
 language: php
 
+php:
+  - 7.0
+
+matrix:
+  allow_failures:
+    - php: hhvm
+  fast_finish: true
+
+branches:
+  only:
+    - master
+
 before_script:
-    - sudo apt-get update -q
-    - sudo apt-get install php
+  - mysql -e 'create database lavarel;'
+  - cp .env.ci.example .env  #copy over CI environment configuration
+  - php artisan key:generate
+  - composer self-update
+  - composer install
+  - bin/composer install
+  - composer update
+  - chmod -R 777 storage/
+  - php artisan migrate
+  - php artisan db:seed
+  - php -S localhost:8000 -t public &
+  - sleep 5 # give artisan serve some time to start
 
 script:
-    - php tests/CreatesApplication.php
+  - php tests/CreatesApplication.php
+
+
+after_failure:
+  - cat storage/logs/laravel.log
+  - cat tests/_output/*
