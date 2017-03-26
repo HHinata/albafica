@@ -11,7 +11,8 @@ class NewUserSeeder extends Seeder
      */
     public function run()
     {
-        //
+
+        $faker = Faker\Factory::create();
         \App\User::create([
             'name' => 'skyfire',
             'email' => '739609084@qq.com',
@@ -19,11 +20,14 @@ class NewUserSeeder extends Seeder
             'rating' => rand(0, 1000),
         ]);
 
-        \App\User::create([
-            'name' => 'skyfirelee',
-            'email' => '739609084@gmail.com',
-            'password' => bcrypt('123456'),
-            'rating' => rand(0, 1000)
-        ]);
+        foreach (range(0, 20) as $item)
+        {
+            \App\User::create([
+                'name' => $faker->userName,
+                'email' => $faker->email,
+                'password' => $faker->password,
+                'rating' => $faker->numberBetween(0, 2000)
+            ]);
+        }
     }
 }
