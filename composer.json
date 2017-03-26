@@ -15,7 +15,7 @@
         "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {
-        "fzaninotto/faker": "~1.4",
+        "fzaninotto/faker": "dev-master",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.0"
     },
