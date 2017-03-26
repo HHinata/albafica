@@ -13,7 +13,7 @@ branches:
     - master
 
 before_script:
-  - mysql -e 'create database lavarel;'
+  - mysql -e 'create database laravel;'
   - cp .env.ci.example .env  #copy over CI environment configuration
   - composer self-update
   - composer install
