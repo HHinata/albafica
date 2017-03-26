@@ -1,0 +1,8 @@
+language: php
+
+before_script:
+    - sudo apt-get update -q
+    - sudo apt-get install php
+
+script:
+    - php tests/CreatesApplication.php
