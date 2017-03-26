@@ -17,7 +17,8 @@ before_script:
   - cp .env.ci.example .env  #copy over CI environment configuration
   - php artisan key:generate
   - composer self-update
-  - composer install --prefer-source --no-interaction --dev
+  - composer install
+  - bin/composer install
   - composer update
   - chmod -R 777 storage/
   - php artisan migrate
