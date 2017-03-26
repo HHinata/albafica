@@ -15,11 +15,11 @@ branches:
 before_script:
   - mysql -e 'create database lavarel;'
   - cp .env.ci.example .env  #copy over CI environment configuration
-  - php artisan key:generate
   - composer self-update
   - composer install
   - composer update
   - chmod -R 777 storage/
+  - php artisan key:generate
   - php artisan migrate
   - php artisan db:seed
   - php -S localhost:8000 -t public &
