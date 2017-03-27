@@ -1,6 +1,6 @@
 <template>
 <div>
-    <el-tabs v-model="activeName">
+    <el-tabs v-if="visible" v-model="activeName">
         <el-tab-pane label="OVERVIEW" name="overview">
             <overview :cid="$route.params.id" v-on:show='show' v-on:submit='submit' ></overview>
         </el-tab-pane>
@@ -20,6 +20,12 @@
             <rank :cid="cid"></rank>
         </el-tab-pane>
     </el-tabs>
+    <el-dialog title="密码验证" v-model="dialogFormVisible" :show-close="false">
+        <el-input v-model="password" auto-complete="off"></el-input>
+        <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="verify">确 定</el-button>
+        </div>
+    </el-dialog>
 </div>
 </template>
 
@@ -37,10 +43,15 @@
                 activeName: 'overview',
                 pid: 0,
                 cid: this.$route.params.id,
-                visible: false
+                visible: false,
+                dialogFormVisible: false,
+                password: ""
             };
         },
         components:{ 'overview': detail, submit, problem, discuss, rank, status},
+        mounted:function () {
+            this.verify();
+        },
         methods: {
             show: function (index) {
                 this.activeName = 'problem';
@@ -49,6 +60,21 @@
             submit: function (index) {
                 this.activeName = 'submit';
                 this.pid = index;
+            },
+            verify: function () {
+                var _this = this;
+                axios.get('contest/verify', { params: { id: this.cid, pwd: _this.password }})
+                    .then(function(res) {
+                        _this.visible = true;
+                        _this.dialogFormVisible = false;
+                    })
+                    .catch(function () {
+                        _this.$message({
+                            message: '权限不足',
+                            type: 'error'
+                        });
+                        _this.dialogFormVisible = true;
+                    });
             }
         }
     }

@@ -120,6 +120,7 @@
             axios.get("contest/show", {params: {id: this.id}})
                 .then(function (res) {
                     _this.contest = res.data;
+                    console.log(res.data);
                 });
         },
         methods: {

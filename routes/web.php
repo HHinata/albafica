@@ -41,11 +41,14 @@ Route::get('solution/detail', 'SolutionController@detail');
 Route::post('solution/callback', 'SolutionController@callback');
 
 Route::get('contest', 'ContestController@index');
+Route::group(['middleware' => 'verify.contest'], function() {
+    Route::get('contest/verify', 'ContestController@verify');
+    Route::get('contest/detail', 'ContestController@detail');
+    Route::get('contest/problem', 'ContestController@problem');
+    Route::get('contest/rank', 'ContestController@rank');
+});
 Route::get('contest/rack', 'ContestController@rack');
 Route::get('contest/show', 'ContestController@show');
-Route::get('contest/rank', 'ContestController@rank');
-Route::get('contest/detail', 'ContestController@detail');
-Route::get('contest/problem', 'ContestController@problem');
 Route::get('contest/speech', 'ContestController@speech');
 
 Route::put('contest/comment', 'ContestController@comment');

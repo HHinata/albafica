@@ -10,6 +10,7 @@ use App\Models\Team;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ContestController extends Controller
 {
@@ -19,7 +20,7 @@ class ContestController extends Controller
      */
     public function index()
     {
-        return Contest::where("private", 0)->paginate(20, ['id', 'title', 'start_time', 'end_time', 'private']);
+        return Contest::paginate(20, ['id', 'title', 'start_time', 'end_time', 'private']);
     }
 
     public function rack()
@@ -124,8 +125,8 @@ class ContestController extends Controller
     public function problem(Request $request)
     {
         $id = $request->input('id');
-        $cid = $request->input('cid');
-        $problem = Contest::find($cid)->problems()->wherePivot('order', $id)->first()->toArray();
+        $pid = $request->input('pid');
+        $problem = Contest::find($id)->problems()->wherePivot('order', $pid)->first()->toArray();
         return $problem;
     }
 
@@ -195,14 +196,10 @@ class ContestController extends Controller
         if ($contest->private == 1)
         {
             $team = Team::find($contest->team_id)->toArray();
-            $contest->team = ['id'=>$team['id'], 'value'=>$team['name']];
+            $contest->team = ['id'=>$team['id'], 'name'=>$team['name'], 'value'=>$team['name']];
         }
+        else    $contest->team = ['value'=>''];
         return $contest;
-    }
-
-    public function checkPass()
-    {
-
     }
 
     public function comment(Request $request)
@@ -221,4 +218,22 @@ class ContestController extends Controller
         return Contest::with("comments")->find($request->input('id'));
     }
 
+    public function verify(Request $request)
+    {
+        $cookies = $request->cookie();
+
+        $id = $request->input('id');
+        $contest = Contest::find($id);
+
+        switch ($contest->private)
+        {
+            case 2:
+                $pwd = $request->input('pwd', "");
+                if ($pwd == "")  $pwd = $cookies['cst-'.$id];
+                return response([true])->cookie('cst-'.$id, $pwd);
+                break;
+            default:
+                return [true];
+        }
+    }
 }

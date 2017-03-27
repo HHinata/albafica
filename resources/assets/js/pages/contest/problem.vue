@@ -35,7 +35,7 @@
         props: ['pid', 'cid'],
         mounted() {
             var _this = this;
-            axios.get('contest/problem', { params: { id: this.pid, cid: this.cid }})
+            axios.get('contest/problem', { params: { id: this.cid, pid: this.pid }})
                 .then(function(res) {
                     _this.problem = res.data;
                 });
@@ -43,7 +43,7 @@
         watch: {
             pid: function () {
                 var _this = this;
-                axios.get('contest/problem', { params: { id: this.pid, cid: this.cid }})
+                axios.get('contest/problem', { params: { id: this.cid, pid: this.pid }})
                 .then(function(res) {
                     _this.problem = res.data;
                 });
