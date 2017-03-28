@@ -14,8 +14,15 @@ class NewUserSeeder extends Seeder
 
         $faker = Faker\Factory::create();
         \App\User::create([
-            'name' => 'skyfire',
+            'name' => 'skyfire00',
             'email' => '739609084@qq.com',
+            'password' => bcrypt('123456'),
+            'rating' => rand(0, 1000),
+        ]);
+
+        \App\User::create([
+            'name' => 'skyfire01',
+            'email' => '739609084@163.com',
             'password' => bcrypt('123456'),
             'rating' => rand(0, 1000),
         ]);

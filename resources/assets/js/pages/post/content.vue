@@ -1,11 +1,10 @@
 <template>
 <div>
-    <article>
+    <article id="p-article">
         <header>
             <h1 class="title">{{ post.title }}</h1>
             <p>
                 <span>By: <i>{{post.user.name}}</i>,<i>{{post.created_at}}</i></span>
-                <span><i @click="starOn" v-bind:style="[post.users_count>0?starStyle:'']" class="el-icon-star-on"></i></span>
             </p>
         </header>
         <hr>
@@ -14,18 +13,21 @@
             <el-tag v-for="item in post.tags">{{ item.name }}</el-tag>
         </p>
         <div class="info-bar">
-            <div class="info-left-bar"><a @click="read(post.id)">Read More</a></div>
+            <div class="info-left-bar">
+                <span @click="starOn" v-bind:style="[post.users_count>0?starStyle:'']">收藏</span>
+                <span @click="edit(post.id)">编辑</span>
+            </div>
             <div class="info-right-bar"><span>By: <i>{{post.user.name}}</i>,<i>{{post.created_at}}</i></span></div>
         </div>
     </article>
-
+    <div style="clear: both"></div>
     <div class="comment" v-for="item in post.comments">
         <el-row>
             <el-col :span="2">
-                <!--<img width="80%" :src="item.user.avatar" style="border-radius:50%">-->
+                <img width="80%" :src="item.user.avatar" style="border-radius:50%">
             </el-col>
             <el-col :span="21">
-                <!--<p><b>{{item.user.name}}</b>@<i>{{item.created_at}}</i></p>-->
+                <p><b>{{item.user.name}}</b>@<i>{{item.created_at}}</i></p>
                 <p v-html="item.content"></p>
             </el-col>
         </el-row>
@@ -59,7 +61,9 @@
             axios.get('post/detail', {params:{id:this.$route.params.id}})
                 .then(function (res) {
                     _this.post = res.data;
-                });
+                }).catch(function () {
+                    window.location.hash = '/blog';
+            });
         },
         methods: {
             commentTo: function () {
@@ -78,6 +82,9 @@
                     });
                 });
             },
+            edit: function (index) {
+                window.location.hash = '/profile/post/' + index;
+            },
             starOn: function() {
                 var _this = this;
                 axios.post('post/star', {id: this.post.id})
@@ -89,7 +96,9 @@
     }
 </script>
 <style>
-
+    #p-article{
+        min-height: 10px;
+    }
     .post-section{
         border-left: 4px solid rgb(185, 185, 185);
         padding-left: 10px;

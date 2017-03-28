@@ -35,15 +35,19 @@ class HomeController extends Controller
 
     public function menu()
     {
-        $menuList = Menu::get()->toArray();
+
+        if (Auth::user()->hasRole('admin')) $menuList = Menu::get()->toArray();
+        else    $menuList = Menu::where('class', 'Base')->get()->toArray();
+
         $menuJson = [];
         foreach ($menuList as $menu)
         {
             $class = $menu['class'];
             if (isset($menuJson[$class]) == false)
-                $menuJson[$class] = [];
-
-            $menuJson[$class][] = $menu;
+            {
+                $menuJson[$class] = [$menu];
+            }
+            else    $menuJson[$class][] = $menu;
         }
         return $menuJson;
     }

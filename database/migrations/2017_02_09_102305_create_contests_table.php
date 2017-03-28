@@ -20,6 +20,7 @@ class CreateContestsTable extends Migration
 
             $table->string('password')->default("");
             $table->integer('team_id')->default(0);
+            $table->integer('user_id');
 
             $table->boolean('defunct')->default(0);
             $table->smallInteger('private')->default(0);

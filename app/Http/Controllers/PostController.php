@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    /**
+     * 首页博客板块信息
+     *
+     * @return mixed
+     */
     public function index()
     {
         return Post::withCount(['users'=>function($query){
@@ -18,27 +23,78 @@ class PostController extends Controller
         }])->where("private", 0)->with('user')->with('tags')->paginate(20);
     }
 
+    /**
+     * 首页博客详情模块
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function show(Request $request)
     {
         $id = $request->input('id');
-        $post = Post::with('tags')->find($id)->toArray();
-        $post['tags'] = array_column($post['tags'], 'id');
-        return $post;
+        $user = Auth::user();
+        $query = Post::with('tags');
+
+        if ($user->hasRole('admin') == false)
+        {
+            $query = $query->where('user_id', $user->id);
+        }
+        $result = $query->find($id);
+
+        if ($result == null)    return response('',404);
+        else
+        {
+            $result = $result->toArray();
+            $result['tags'] = array_column($result['tags'], 'id');
+            return $result;
+        }
     }
 
+    /**
+     * 后台博客详情
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function detail(Request $request)
     {
-        return Post::withCount(['users'=>function($query){
+        $id = $request->input('id');
+        $query = Post::withCount(['users'=>function($query){
             $uid = Auth::user()?Auth::user()->id:0;
             $query->where('user_id', $uid);
-        }])->with(['user', 'tags', 'comments'])->find($request->input('id'));
+        }]);
+        $result = $query->with(['user', 'tags', 'comments', 'comments.user'])->find($id);
+
+        if ($result == null)
+        {
+            return response('',404);
+        }
+        return $result;
     }
 
+    /**
+     * 后台博客列表页
+     *
+     * @return mixed
+     */
     public function rack()
     {
+        $user = Auth::user();
+
+        if ($user->hasRole('admin') == false)
+        {
+            return Post::where('user_id', $user->id)->paginate(20, ['id', 'title']);
+        }
+
         return Post::paginate(20, ['id', 'title']);
     }
 
+    /**
+     * 动态获得博客搜索信息
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function seek(Request $request)
     {
         $query = $request->input('query');
@@ -49,6 +105,12 @@ class PostController extends Controller
         return $postList;
     }
 
+    /**
+     * 添加新文章
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function store(Request $request)
     {
         $post = new Post();
@@ -76,6 +138,12 @@ class PostController extends Controller
         return $post->id;
     }
 
+    /**
+     * 更新文章信息
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function update(Request $request)
     {
         $post = Post::find($request->input('id'));
@@ -102,18 +170,32 @@ class PostController extends Controller
         return $post->id;
     }
 
+
+    /**
+     * 用户收藏文章操作
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function star(Request $request)
     {
         if (Auth::user())
         {
             $uid = Auth::user()->id;
             $post = Post::has('users')->find($request->input('id'));
+
             if ($post)  Post::find($request->input('id'))->users()->detach($uid);
-            else    Post::find($request->input('id'))->users()->sync([$uid]);
+            else        Post::find($request->input('id'))->users()->sync([$uid]);
             return $post;
         }
     }
 
+    /**
+     * 文章评论功能
+     *
+     * @param Request $request
+     * @return Comment
+     */
     public function comment(Request $request)
     {
         $post = Post::find($request->input('id'));
@@ -122,11 +204,19 @@ class PostController extends Controller
         $comment->user_id = Auth::user()->id;
         $comment->save();
         $post->comments()->save($comment);
+        $comment->user = $comment->user()->first();
         return $comment;
     }
 
+
+    /**
+     * 得到文章评论信息
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function speech(Request $request)
     {
-        return Post::with("comments")->find($request->input('id'));
+        return Post::with("comments", 'comments.user')->find($request->input('id'));
     }
 }

@@ -24,7 +24,9 @@
             axios.get('menu')
                 .then(function (res) {
                     _this.menus = res.data;
-                });
+                }).catch(function () {
+                window.location.hash='/login';
+            });
         }
     }
 </script>

@@ -46,7 +46,6 @@ class MenuTableSeeder extends Seeder
         \App\Models\Menu::create(
             [
                 'name'=>'比赛管理',
-                'class' =>  'Manage',
                 'href'=>'/profile/contest'
             ]
         );

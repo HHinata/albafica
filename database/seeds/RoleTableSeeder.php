@@ -25,5 +25,8 @@ class RoleTableSeeder extends Seeder
 
         $user = \App\User::where('email', '739609084@qq.com')->first();
         $user->attachRole($admin);
+
+        $user = \App\User::where('email', '739609084@163.com')->first();
+        $user->attachRole($owner);
     }
 }

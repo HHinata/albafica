@@ -16,6 +16,14 @@ class TeamController extends Controller
 
     public function rack()
     {
+        $user = Auth::user();
+
+        if ($user->hasRole('admin') == false)
+        {
+            return Team::whereHas('users', function($query)use($user){
+                $query->where('user_id', $user->id)->where('role', 1);
+            })->paginate(20, ['id', 'name', 'avatar', 'desc']);
+        }
         return Team::paginate(20, ['id', 'name', 'avatar', 'desc']);
     }
 
@@ -34,21 +42,38 @@ class TeamController extends Controller
         return $team->id;
     }
 
+    public function detail(Request $request)
+    {
+        $id = $request->input('id');
+        $query = Team::with(["users", "contests", "comments"]);
+        return$query->find($id);
+    }
+
     public function show(Request $request)
     {
         $id = $request->input('id');
-        return Team::with(["users", "contests", "comments"])->find($id);
+        $user = Auth::user();
+        $query = Team::with(["users", "contests", "comments"]);
+
+        if ($user->hasRole('admin') == false)
+        {
+            $query = $query->whereHas('users', function($query)use($user){
+                $query->where('user_id', $user->id)->where('role', 1);
+            });
+        }
+        $result = $query->find($id);
+
+        if ($result == null)    return response('',404);
+        else    return $result;
     }
 
     public function apply(Request $request)
     {
         $id = $request->input('id');
-        return Team::find($id);
-    }
-
-    public function test()
-    {
-        return Team::with('users')->find(1);
+        $user = Auth::user();
+        $team = Team::find($id);
+        $team->users()->sync([$user->id=>['role' => 0]]);
+        return [true];
     }
 
     public function seek(Request $request)

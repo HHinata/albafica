@@ -35,7 +35,9 @@
             axios.get("team/show", {params: {id: this.id}})
                 .then(function (res) {
                     _this.team = res.data;
-                });
+                }).catch(function () {
+                window.location.hash = '/team/'+_this.id;
+            });
         },
         methods: {
             submit: function () {
@@ -43,7 +45,7 @@
                 axios.post("team", _this.team)
                     .then(function (res) {
                         _this.$message({
-                            message: '恭喜你，比赛更新成功',
+                            message: '恭喜你，队伍信息更新成功',
                             type: 'success'
                         });
                     });

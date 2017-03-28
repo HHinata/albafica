@@ -9,7 +9,7 @@ class Team extends Model
     //
     public function users()
     {
-        return $this->belongsToMany('App\User', 'team_user', 'team_id', 'id')->withPivot('role');
+        return $this->belongsToMany('App\User', 'team_user', 'team_id', 'user_id')->withPivot('role');
     }
 
     public function contests()

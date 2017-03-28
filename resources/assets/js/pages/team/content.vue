@@ -2,11 +2,12 @@
     <div>
         <el-row :gutter="20">
             <el-col :span="24">
-                <el-col :span="3">
+                <el-col :span="4">
                     <img :src="team.avatar" width="100%" style="border-radius: 50%"/>
                 </el-col>
-                <el-col :span="21">
-                    <h1>{{team.name}} </span></h1><small>{{team.desc}}</small>
+                <el-col :span="20">
+                    <div><h1>{{team.name}} </span></h1><small>{{team.desc}}</small></div>
+                    <div><button @click="apply" style="margin-top: 15px">Apply</button></div>
                 </el-col>
             </el-col>
             <el-col :span="24" style="margin-top: 50px">
@@ -47,6 +48,7 @@
                                     label="姓名">
                             </el-table-column>
                             <el-table-column
+                                    :formatter='roleFormat'
                                     prop="pivot.role"
                                     label="身份"
                                     width="180">
@@ -94,20 +96,25 @@
                     contests:[],
                     comments:[]
                 },
-                comment:""
+                comment:"",
+                roleOptions:{
+                    0:'游客',
+                    1:'创建者',
+                    2:'成员'
+                }
             }
         },
         mounted: function() {
             this.id = this.$route.params.id;
             var _this = this;
-            axios.get("team/show", {params: {id: this.id}})
+            axios.get("team/detail", {params: {id: this.id}})
                 .then(function (res) {
                     _this.team = res.data;
                 });
         },
         methods: {
             apply: function () {
-                axios.get("team/apply", {params: {id: this.id}})
+                axios.post("team/apply", {id: this.id})
                     .then(function (res) {
                         _this.team = res.data;
                     });
@@ -128,6 +135,9 @@
                             type: 'error'
                         });
                     });
+            },
+            roleFormat:function (row) {
+                return this.roleOptions[row.pivot.role];
             }
         }
     }

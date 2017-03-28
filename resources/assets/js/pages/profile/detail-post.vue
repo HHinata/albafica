@@ -2,7 +2,7 @@
     <div>
         <el-row :gutter="20">
             <el-col :span="24">
-                <h1>New Post</h1>
+                <h1>{{post.title}}</h1>
             </el-col>
             <el-col :span="12">
                 <h3>Title</h3>
@@ -34,7 +34,7 @@
                 <quill-editor v-model="post.content" :config="editorOption"></quill-editor>
             </el-col>
             <el-col :span="24">
-                <el-button type="primary" @click="submit">添加文章</el-button>
+                <el-button type="primary" @click="submit" style="margin-top: 10px; float: right">更新文章</el-button>
             </el-col>
         </el-row>
     </div>
@@ -73,7 +73,9 @@
             axios.get("post/show", {params: {id: this.id}})
                 .then(function (res) {
                     _this.post = res.data;
-                });
+                }).catch(function () {
+                window.location.hash = '/post/' + _this.id;
+            });
             axios.get("tags")
                 .then(function (res) {
                     _this.tag_options = res.data;
@@ -85,7 +87,7 @@
                 axios.post("post", _this.post)
                     .then(function (res) {
                         _this.$message({
-                            message: '恭喜你，比赛更新成功',
+                            message: '恭喜你，文章更新成功',
                             type: 'success'
                         });
                     });

@@ -25,6 +25,13 @@ class ContestController extends Controller
 
     public function rack()
     {
+        $user = Auth::user();
+
+        if ($user->hasRole('admin') == false)
+        {
+            return Contest::where('user_id', $user->id)->paginate(20, ['id', 'title', 'start_time', 'end_time']);
+        }
+
         return Contest::paginate(20, ['id', 'title', 'start_time', 'end_time']);
     }
 
@@ -34,6 +41,7 @@ class ContestController extends Controller
     public function store(Request $request)
     {
         $contest = new Contest();
+        $contest->user_id = Auth::user();
         $contest->desc = $request->input('description');
         $contest->title = $request->input('title');
         $contest->private = $request->input('private');
