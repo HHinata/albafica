@@ -78,7 +78,9 @@ Route::group(['prefix'=>'team'],function() {
     Route::get('/seek', 'TeamController@seek');
     Route::put('/comment', 'TeamController@comment');
     Route::post('/apply', 'TeamController@apply');
+    Route::post('/switch', 'TeamController@switchRole');
     Route::put('/', 'TeamController@store');
+    Route::post('/', 'TeamController@update');
 });
 
 Route::get('message', 'MessageController@index');
@@ -91,6 +93,6 @@ Route::get('user/info', 'UserController@info');
 Route::post('user', 'UserController@update');
 Route::post('user/star', 'UserController@star');
 
-Route::post('solution/callback', 'SolutionController@callback');
 Route::get('solution', 'SolutionController@index');
 Route::get('solution/detail', 'SolutionController@detail');
+Route::post('solution/callback', 'SolutionController@callback');

@@ -2,7 +2,7 @@
 <div>
     <el-row :gutter="20">
         <el-col :span="24">
-            <h1>New Problem</h1>
+            <h1>New Contest</h1>
         </el-col>
         <el-col :span="24">
             <h3>Title</h3>
@@ -85,9 +85,9 @@
         data () {
             return {
                 contest: {
-                    title: 'This is title input box',
-                    description: '<b>This is descript input box</b>',
-                    time: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+                    title: '',
+                    description: '',
+                    time: [new Date(0), new Date(0)],
                     private: 0,
                     password: "",
                     team: {value:""},

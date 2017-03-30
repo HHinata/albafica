@@ -10,6 +10,7 @@ use App\Models\Team;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ContestController extends Controller
@@ -23,15 +24,18 @@ class ContestController extends Controller
         return Contest::paginate(20, ['id', 'title', 'start_time', 'end_time', 'private']);
     }
 
+    /**
+     * 后台比赛列表
+     *
+     * @return mixed
+     */
     public function rack()
     {
         $user = Auth::user();
-
         if ($user->hasRole('admin') == false)
         {
             return Contest::where('user_id', $user->id)->paginate(20, ['id', 'title', 'start_time', 'end_time']);
         }
-
         return Contest::paginate(20, ['id', 'title', 'start_time', 'end_time']);
     }
 
@@ -41,7 +45,7 @@ class ContestController extends Controller
     public function store(Request $request)
     {
         $contest = new Contest();
-        $contest->user_id = Auth::user();
+        $contest->user_id = Auth::user()->id;
         $contest->desc = $request->input('description');
         $contest->title = $request->input('title');
         $contest->private = $request->input('private');
@@ -79,6 +83,8 @@ class ContestController extends Controller
     public function update(Request $request)
     {
         $contest = Contest::find($request->input('id'));
+        if ($contest->user_id != Auth::user()->id)  return response('',404);
+
         $contest->desc = $request->input('desc');
         $contest->title = $request->input('title');
         $contest->private = $request->input('private');
@@ -120,7 +126,6 @@ class ContestController extends Controller
     {
        $id = $request->input('id');
        $contest = Contest::with('problems')->find($id);
-       // 联表得到所有的问题信息,包括id,标题
        return $contest;
     }
 
@@ -140,7 +145,6 @@ class ContestController extends Controller
 
     public function rank(Request $request)
     {
-        //TODO: 比赛的rank榜
         $rank = [];
         $contestId = $request->input('id');
 
@@ -177,7 +181,12 @@ class ContestController extends Controller
 
     public function submit(Request $request)
     {
-        //TODO: 比赛的提交功能
+        $contest_id = $request->input('cid');
+        $contest = Contest::find($contest_id);
+        $timestamp = time();
+        if ($contest->start_time > $timestamp || $timestamp > $contest->end_time)
+            return response("", 404);
+
         $solution = new Solution();
         $solution->user_id = Auth::user()->id;
         $solution->lang = $request->input('lang');
@@ -185,7 +194,7 @@ class ContestController extends Controller
         $solution->code = $request->input('code');
 
         $order = $request->input('pid');
-        $problem = Contest::find($solution->contest_id)->problems()->wherePivot('order', $order)->first();
+        $problem = $contest->problems()->wherePivot('order', $order)->first();
 
         $solution->problem_id = $problem->id;
         $solution->platform = $problem->platform;
@@ -218,12 +227,13 @@ class ContestController extends Controller
         $comment->user_id = Auth::user()->id;
         $comment->save();
         $contest->comments()->save($comment);
+        $comment->user = $comment->user()->first();
         return $comment;
     }
 
     public function speech(Request $request)
     {
-        return Contest::with("comments")->find($request->input('id'));
+        return Contest::with("comments", "comments.user")->find($request->input('id'));
     }
 
     public function verify(Request $request)

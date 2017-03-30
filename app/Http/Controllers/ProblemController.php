@@ -19,10 +19,15 @@ class ProblemController extends Controller
      */
     public function index()
     {
-        return Problem::where("private", 0)->with('tags')
-            ->paginate(20, ['id', 'title', 'solved', 'submited']);
+        $query = Problem::where("private", 0)->with('tags');
+        return $query->paginate(20, ['id', 'title', 'solved', 'submited']);
     }
 
+    /**
+     * 后台题目列表
+     *
+     * @return mixed
+     */
     public function rack()
     {
         return Problem::paginate(20, ['id', 'title', 'solved', 'submited']);
@@ -36,9 +41,11 @@ class ProblemController extends Controller
      */
     public function detail(Request $request)
     {
-        return Problem::withCount(['users'=>function($query){
-            $uid = Auth::user()?Auth::user()->id:0;
-            $query->where('user_id', $uid);
+        $user = Auth::user();
+        return Problem::withCount(['users'=>
+            function($query)use($user){
+                $uid = $user?$user->id:0;
+                $query->where('user_id', $uid);
         }])->find($request->input('id'));
     }
 
@@ -50,15 +57,18 @@ class ProblemController extends Controller
      */
     public function submit(Request $request)
     {
-        //TODO:题目的提交功能
+        $pid = $request->input('id');
+        $problem = Problem::find($pid);
+        if ($problem->private)  return response('', 404);
+
         $solution = new Solution();
 
+        $solution->problem_id = $pid;
         $solution->user_id = Auth::user()->id;
+
         $solution->lang = $request->input('lang');
-        $solution->problem_id = $request->input('id');
         $solution->code = $request->input('code');
 
-        $problem = Problem::find($solution->problem_id);
         $solution->platform = $problem->platform;
         $solution->sign = $problem->sign;
 
@@ -68,7 +78,7 @@ class ProblemController extends Controller
             $problem->save();
         }
 
-        return  [];
+        return $solution->id;
     }
 
     /**
@@ -99,9 +109,6 @@ class ProblemController extends Controller
     {
         $problem = new Problem();
 
-        $problem->platform = $request->input('platform');
-        $problem->sign = $request->input('sign');
-
         $problem->title = $request->input('title');
         $problem->desc = $request->input('description');
         $problem->input = $request->input('input');
@@ -112,6 +119,14 @@ class ProblemController extends Controller
 
         $problem->time_limit = $request->input('time_limit');
         $problem->mem_limit = $request->input('mem_limit');
+
+        $problem->platform = $request->input('platform');
+        if ($problem->platform == 'local')
+        {
+            $problem->data_input = $request->input('data_input');
+            $problem->data_output = $request->input('data_output');
+        }
+        else    $problem->sign = $request->input('sign');
 
         if ($problem->save())
         {
@@ -136,9 +151,6 @@ class ProblemController extends Controller
     {
         $problem = Problem::find($request->input('id'));
 
-        $problem->platform = $request->input('platform');
-        $problem->sign = $request->input('sign');
-
         $problem->title = $request->input('title');
         $problem->desc = $request->input('desc');
         $problem->input = $request->input('input');
@@ -149,6 +161,14 @@ class ProblemController extends Controller
 
         $problem->time_limit = $request->input('time_limit');
         $problem->mem_limit = $request->input('mem_limit');
+
+        $problem->platform = $request->input('platform');
+        if ($problem->platform == 'local')
+        {
+            $problem->data_input = $request->input('data_input');
+            $problem->data_output = $request->input('data_output');
+        }
+        else    $problem->sign = $request->input('sign');
 
         if ($problem->save())
         {
@@ -184,7 +204,12 @@ class ProblemController extends Controller
         return $problemList;
     }
 
-
+    /**
+     * 后台题目信息详情
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function show(Request $request)
     {
         $id = $request->input('id');
@@ -193,18 +218,29 @@ class ProblemController extends Controller
         return $problem;
     }
 
+    /**
+     * 收藏功能
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function star(Request $request)
     {
-        if (Auth::user())
-        {
-            $uid = Auth::user()->id;
-            $problem = Problem::has('users')->find($request->input('id'));
-            if ($problem)  Problem::find($request->input('id'))->users()->detach($uid);
-            else    Problem::find($request->input('id'))->users()->sync([$uid]);
-            return $problem;
-        }
+        $user = Auth::user();
+        if ($user == null)  return response('', 404);
+        $uid = $user->id;
+        $problem = Problem::has('users')->find($request->input('id'));
+        if ($problem)  Problem::find($request->input('id'))->users()->detach($uid);
+        else    Problem::find($request->input('id'))->users()->sync([$uid]);
+        return $problem->id;
     }
 
+    /**
+     * 评论功能
+     *
+     * @param Request $request
+     * @return Comment
+     */
     public function comment(Request $request)
     {
         $problem = Problem::find($request->input('id'));
@@ -213,12 +249,18 @@ class ProblemController extends Controller
         $comment->user_id = Auth::user()->id;
         $comment->save();
         $problem->comments()->save($comment);
+        $comment->user = $comment->user()->first();
         return $comment;
     }
 
+    /**
+     * 获得评论信息列表
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function speech(Request $request)
     {
         return Problem::with("comments")->find($request->input('id'));
     }
-
 }

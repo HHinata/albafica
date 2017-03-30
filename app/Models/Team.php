@@ -21,4 +21,10 @@ class Team extends Model
     {
         return $this->morphToMany('App\Models\Comment', 'object', 'comment_links', 'object_id', 'comment_id');
     }
+
+    public function userRole($uId)
+    {
+        $user = $this->users()->find($uId);
+        return $user != null?$user->pivot->role:-1;
+    }
 }

@@ -28,12 +28,23 @@ class UserController extends Controller
         return $user->id;
     }
 
+    /**
+     * 获取用户信息
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function info(Request $request)
     {
-        $user = User::withCount(['followers'=>function($query)use($request){
-            $uid = Auth::user()?Auth::user()->id:0;
-            $query->where('user_id', $uid);
-        }])->with(['posts', 'problems', 'followers', 'followings', 'solution', 'teams'])->where('name', $request->input('name', Auth::user()->name))->first();
+        $user = Auth::user();
+        $name = $request->input('name', $user->name);
+        $fields = ['posts', 'problems', 'followers', 'followings', 'solution', 'teams'];
+
+        $user = User::withCount(['followers'=>
+            function($query)use($request){
+                $uid = Auth::user()?Auth::user()->id:0;
+                $query->where('user_id', $uid);
+        }])->with($fields)->where('name', $name)->first();
 
         $user->solved = Solution::where('user_id', $user->id)->where('result', 1)->count();
         $user->submited = Solution::where('user_id', $user->id)->count();

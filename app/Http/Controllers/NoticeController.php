@@ -9,7 +9,7 @@ class NoticeController extends Controller
 {
     public function index()
     {
-        return Notice::with('post')->where('publish_time', '<', time())->get();
+        return Notice::with(['post', 'post.user'])->where('publish_time', '<', time())->orderBy('created_at', 'desc')->get();
     }
 
     public function rack()

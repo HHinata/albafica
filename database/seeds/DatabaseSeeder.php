@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
          $this->call(NewProblems::class);
          $this->call(NewPost::class);
          $this->call(NewTeams::class);
+         $this->call(NewTags::class);
     }
 }

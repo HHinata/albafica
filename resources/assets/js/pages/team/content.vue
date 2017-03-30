@@ -7,7 +7,7 @@
                 </el-col>
                 <el-col :span="20">
                     <div><h1>{{team.name}} </span></h1><small>{{team.desc}}</small></div>
-                    <div><button @click="apply" style="margin-top: 15px">Apply</button></div>
+                    <div v-if="team.inTeam == -1"><button @click="apply" style="margin-top: 15px">Apply</button></div>
                 </el-col>
             </el-col>
             <el-col :span="24" style="margin-top: 50px">
@@ -16,10 +16,10 @@
                         <div class="comment" v-for="item in team.comments">
                             <el-row>
                                 <el-col :span="2">
-                                    <!--<img width="80%" :src="item.user.avatar" style="border-radius:50%">-->
+                                    <img width="80%" :src="item.user.avatar" style="border-radius:50%">
                                 </el-col>
                                 <el-col :span="21">
-                                    <!--<p><b>{{item.user.name}}</b>@<i>{{item.created_at}}</i></p>-->
+                                    <p><b>{{item.user.name}}</b>@<i>{{item.created_at}}</i></p>
                                     <p v-html="item.content"></p>
                                 </el-col>
                             </el-row>
@@ -53,6 +53,13 @@
                                     label="身份"
                                     width="180">
                             </el-table-column>
+                            <el-table-column v-if="team.inTeam==1" label="操作" width="100">
+                                <template scope="scope">
+                                    <el-button @click.native.prevent="switchRole(scope.$index, team.users)" type="text" size="small">
+                                        {{roleSwitchFormat(scope.$index, team.users)}}
+                                    </el-button>
+                                </template>
+                            </el-table-column>
                         </el-table>
                     </el-tab-pane>
                     <el-tab-pane label="相关竞赛">
@@ -69,13 +76,16 @@
                                     label="名称">
                             </el-table-column>
                             <el-table-column
-                                    prop="desc"
-                                    label="描述">
-                            </el-table-column>
-                            <el-table-column
+                                    :formatter="time"
                                     prop="start_time"
                                     label="开始时间"
-                                    width="180">
+                                    width="220">
+                            </el-table-column>
+                            <el-table-column
+                                    :formatter="time"
+                                    prop="end_time"
+                                    label="结束时间"
+                                    width="220">
                             </el-table-column>
                         </el-table>
                     </el-tab-pane>
@@ -94,7 +104,8 @@
                     desc: '',
                     users:[],
                     contests:[],
-                    comments:[]
+                    comments:[],
+                    inTeam: null
                 },
                 comment:"",
                 roleOptions:{
@@ -138,6 +149,29 @@
             },
             roleFormat:function (row) {
                 return this.roleOptions[row.pivot.role];
+            },
+            time: function (row, column) {
+                return new Date(parseInt(row[column.property]) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+            },
+            switchRole: function (index, rows) {
+                var _this = this;
+                axios.post('team/switch', {id: this.team.id, uid: rows[index].id})
+                    .then(function (res) {
+                        _this.$message({
+                            message: '恭喜你，操作成功',
+                            type: 'success'
+                        });
+                    })
+                    .catch(function () {
+                        _this.$message({
+                            message: '操作失败,请稍后再试',
+                            type: 'error'
+                        });
+                    });
+            },
+            roleSwitchFormat: function (index, rows) {
+                if (rows[index].pivot.role == 0)    return '同意';
+                return '踢出';
             }
         }
     }

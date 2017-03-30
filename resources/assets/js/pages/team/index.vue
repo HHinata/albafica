@@ -45,7 +45,8 @@
             handleClick: function (index) {
                 window.location.hash = '/team/'+index;
 
-            }
+            },
+
         }
     }
 </script>

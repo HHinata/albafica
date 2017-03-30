@@ -4,7 +4,7 @@
         <header>
             <h2 class="title" @click="read(notice.post.id)">{{ notice.post.title }}</h2>
             <p>
-                <span>By: <i>{{notice.post.created_at}}</i></span>
+                <span>By: <i>{{notice.post.user.name}}</i> Publish: <i>{{notice.post.created_at}}</i></span>
             </p>
         </header>
         <section class="home-section" v-html="notice.post.content"></section>
@@ -23,7 +23,7 @@
         data: function(){
             return {
                 notices:[
-                    {post:{content:""}}
+                    {post:{content:"",user:{name:""}}}
                 ]
             };
         },
@@ -46,15 +46,18 @@
         margin-bottom: 100px;
     }
 
-    .home-section{
-        border-left: 4px solid rgb(185, 185, 185);
-        padding-left: 10px;
-        font-size: 1em;
-        line-height: 1.4em;
-        max-height: 400px;
-        font-family: verdana,arial,sans-serif;
-        overflow:hidden;white-space:nowrap;
-        text-overflow: ellipsis;
+    .home-section img{
+        width: 100%;
+    }
+
+    .home-section code{
+        padding: 0;
+        padding-top: 0.2em;
+        padding-bottom: 0.2em;
+        margin: 0;
+        font-size: 85%;
+        background-color: rgba(27,31,35,0.05);
+        border-radius: 3px;
     }
 
     .info-bar{
