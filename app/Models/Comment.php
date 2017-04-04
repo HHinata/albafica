@@ -10,4 +10,9 @@ class Comment extends Model
     {
         return $this->hasOne('App\User', 'id', 'user_id');
     }
+
+    public function comments()
+    {
+        return $this->morphToMany('App\Models\Comment', 'object', 'comment_links', 'object_id', 'comment_id');
+    }
 }

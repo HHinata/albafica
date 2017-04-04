@@ -63,7 +63,7 @@ class PostController extends Controller
             $uid = Auth::user()?Auth::user()->id:0;
             $query->where('user_id', $uid);
         }]);
-        $result = $query->with(['user', 'tags', 'comments', 'comments.user'])->find($id);
+        $result = $query->with(['user', 'tags', 'comments', 'comments.user', 'comments.comments'])->find($id);
 
         if ($result == null)
         {
@@ -217,6 +217,6 @@ class PostController extends Controller
      */
     public function speech(Request $request)
     {
-        return Post::with("comments", 'comments.user')->find($request->input('id'));
+        return Post::with("comments", 'comments.user', 'comments.comments')->find($request->input('id'));
     }
 }

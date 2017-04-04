@@ -23,12 +23,13 @@
     <div style="clear: both"></div>
     <div class="comment" v-for="item in post.comments">
         <el-row>
-            <el-col :span="2">
-                <img width="80%" :src="item.user.avatar" style="border-radius:50%">
+            <el-col :span="2" style="text-align: center">
+                <img width="60%" :src="item.user.avatar" style="border-radius:50%">
             </el-col>
-            <el-col :span="21">
-                <p><b>{{item.user.name}}</b>@<i>{{item.created_at}}</i></p>
+            <el-col :span="22">
+                <p><b>{{item.user.name}}</b></p>
                 <p v-html="item.content"></p>
+                <p>{{item.created_at}}-回复</p>
             </el-col>
         </el-row>
     </div>

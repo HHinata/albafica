@@ -37,7 +37,8 @@ class UserController extends Controller
     public function info(Request $request)
     {
         $user = Auth::user();
-        $name = $request->input('name', $user->name);
+        $name = $request->input('name', null);
+        if ($name == null && $user!=null)   $name = $user->name;
         $fields = ['posts', 'problems', 'followers', 'followings', 'solution', 'teams'];
 
         $user = User::withCount(['followers'=>
