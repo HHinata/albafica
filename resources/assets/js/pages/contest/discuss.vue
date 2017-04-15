@@ -3,27 +3,14 @@
         <article>
             <header><h3>{{ contest.title }}</h3></header>
         </article>
-        <div class="comment" v-for="item in contest.comments">
-            <el-row>
-                <el-col :span="2" style="line-height: 80px; text-align: center">
-                    <img :src="item.user.avatar" style="width: 60px;vertical-align: middle; border-radius: 50%"/>
-                </el-col>
-                <el-col :span="22">
-                    <p class="username">{{item.user.name}}</p>
-                    <p v-html="item.content"></p>
-                </el-col>
-            </el-row>
-        </div>
-        <div>
-            <quill-editor v-model="comment" :config="editorOption"></quill-editor>
-            <el-button @click="commentTo">Comment</el-button>
-        </div>
+        <comments ctype="App\Models\Contest" :cid="this.cid" :open="true" :single="true"></comments>
     </div>
 </template>
 
 <script>
-
+    import comments from '../../components/comments.vue'
     export default {
+        components:{comments},
         data: function () {
             return {
                 contest: {comments: [],},

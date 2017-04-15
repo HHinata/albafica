@@ -19,9 +19,10 @@ class ContestController extends Controller
      * 首页比赛列表
      * @return mixed
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Contest::paginate(20, ['id', 'title', 'start_time', 'end_time', 'private']);
+        $page = $request->input('page_count', 20);
+        return Contest::paginate($page, ['id', 'title', 'start_time', 'end_time', 'private']);
     }
 
     /**

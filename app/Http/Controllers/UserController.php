@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function rank()
+    public function rank(Request $request)
     {
-        return User::orderBy("rating", "desc")->paginate(20);
+        $page = $request->input('page_count', 20);
+        return User::orderBy("rating", "desc")->paginate($page);
     }
 
     public function update(Request $request)
@@ -64,5 +65,10 @@ class UserController extends Controller
             else    User::find($request->input('id'))->followers()->sync([$uid]);
             return $user;
         }
+    }
+
+    public function role()
+    {
+        return User::with("roles")->paginate(20);
     }
 }

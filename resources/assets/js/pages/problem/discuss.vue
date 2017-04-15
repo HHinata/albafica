@@ -3,34 +3,15 @@
     <article>
         <header><h1>{{problem.id}}.{{ problem.title }}</h1></header>
     </article>
-
-    <div class="comment" v-for="item in problem.comments">
-        <el-row>
-            <el-col :span="2">
-                <!--<img width="80%" :src="item.user.avatar" style="border-radius:50%">-->
-            </el-col>
-            <el-col :span="21">
-                <!--<p><b>{{item.user.name}}</b>@<i>{{item.created_at}}</i></p>-->
-                <p v-html="item.content"></p>
-            </el-col>
-        </el-row>
-    </div>
-
-    <el-row>
-        <el-col :span="20">
-            <el-input v-model="comment" placeholder="请输入内容"></el-input>
-        </el-col>
-        <el-col :span="2">
-            <el-button @click="commentTo">评论</el-button>
-        </el-col>
-    </el-row>
-
+    <comments ctype="App\Models\Problem" :cid="this.pid" :open="true" :single="true"></comments>
 </div>
 </template>
 
 <script>
     import Uploader from 'qiniu-web-uploader'
+    import comments from '../../components/comments.vue'
     export default {
+        components:{comments},
         data: function () {
             return {
                 problem: {comments: [],},

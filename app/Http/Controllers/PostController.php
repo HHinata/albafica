@@ -188,6 +188,7 @@ class PostController extends Controller
             else        Post::find($request->input('id'))->users()->sync([$uid]);
             return $post;
         }
+        else    return response('',404);
     }
 
     /**

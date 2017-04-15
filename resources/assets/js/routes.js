@@ -5,6 +5,9 @@ export default [
             {   path: '',
                 component: require('./pages/index.vue')
             },
+            {   path: 'faq',
+                component: require('./pages/faq.vue')
+            },
             {
                 path: 'problem',
                 component: require('./pages/problem/index.vue'),
@@ -64,6 +67,10 @@ export default [
                     {
                         path: 'message',
                         component: require('./pages/profile/message.vue'),
+                    },
+                    {
+                        path: 'role',
+                        component: require('./pages/profile/role.vue'),
                     },
                     {
                         path: 'index',

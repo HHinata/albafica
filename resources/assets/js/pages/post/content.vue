@@ -4,7 +4,7 @@
         <header>
             <h1 class="title">{{ post.title }}</h1>
             <p>
-                <span>By: <i>{{post.user.name}}</i>,<i>{{post.created_at}}</i></span>
+                <span>By: <i><a :href="'#/home/' + post.user.name">{{post.user.name}}</a></i>,<i>{{post.created_at}}</i></span>
             </p>
         </header>
         <hr>
@@ -17,36 +17,18 @@
                 <span @click="starOn" v-bind:style="[post.users_count>0?starStyle:'']">收藏</span>
                 <span @click="edit(post.id)">编辑</span>
             </div>
-            <div class="info-right-bar"><span>By: <i>{{post.user.name}}</i>,<i>{{post.created_at}}</i></span></div>
+            <div class="info-right-bar"><span>By: <i><a :href="'#/home/' + post.user.name">{{post.user.name}}</a></i>,<i>{{post.created_at}}</i></span></div>
         </div>
     </article>
     <div style="clear: both"></div>
-    <div class="comment" v-for="item in post.comments">
-        <el-row>
-            <el-col :span="2" style="text-align: center">
-                <img width="60%" :src="item.user.avatar" style="border-radius:50%">
-            </el-col>
-            <el-col :span="22">
-                <p><b>{{item.user.name}}</b></p>
-                <p v-html="item.content"></p>
-                <p>{{item.created_at}}-回复</p>
-            </el-col>
-        </el-row>
-    </div>
-
-    <el-row>
-        <el-col :span="20">
-            <el-input v-model="comment" placeholder="请输入内容"></el-input>
-        </el-col>
-        <el-col :span="2">
-            <el-button @click="commentTo">评论</el-button>
-        </el-col>
-    </el-row>
+    <comments ctype="App\Models\Post" :cid="this.$route.params.id" :open="true" :single="true"></comments>
 </div>
 </template>
 
 <script>
+    import comments from '../../components/comments.vue'
     export default {
+        components:{comments},
         data: function(){
             return {
                 post: {
@@ -67,22 +49,6 @@
             });
         },
         methods: {
-            commentTo: function () {
-                var _this = this;
-                axios.put('post/comment', {id: this.post.id, content: this.comment})
-                    .then(function (res) {
-                        _this.post.comments.push(res.data);
-                        _this.$message({
-                            message: '恭喜你，评论成功',
-                            type: 'success'
-                        });
-                    }).catch(function () {
-                    _this.$message({
-                        message: '评论失败,请稍后再试',
-                        type: 'error'
-                    });
-                });
-            },
             edit: function (index) {
                 window.location.hash = '/profile/post/' + index;
             },

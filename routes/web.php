@@ -21,6 +21,8 @@ Route::get('menu', 'HomeController@menu');
 Route::get('tags', 'HomeController@tags');
 Route::get('token', 'HomeController@token');
 
+Route::get('comment', 'CommentController@index');
+Route::put('comment', 'CommentController@store');
 
 Route::group(['prefix'=>'problem'],function() {
     Route::get('/', 'ProblemController@index');
@@ -90,6 +92,7 @@ Route::get('notice/rack', 'NoticeController@rack');
 Route::put('notice', 'NoticeController@store');
 
 Route::get('user/info', 'UserController@info');
+Route::get('user/role', 'UserController@role');
 Route::post('user', 'UserController@update');
 Route::post('user/star', 'UserController@star');
 
