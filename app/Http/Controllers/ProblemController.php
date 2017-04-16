@@ -59,7 +59,9 @@ class ProblemController extends Controller
     {
         $pid = $request->input('id');
         $problem = Problem::find($pid);
-        if ($problem->private)  return response('', 404);
+        if ($problem->private) {
+            return response('', 404);
+        }
 
         $solution = new Solution();
 

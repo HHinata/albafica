@@ -3,7 +3,10 @@
         <el-col :span="4">
             <el-menu mode="vertical" default-active="1" class="el-menu-vertical-demo" :router="true">
                 <el-menu-item-group v-for="(menu, name) in menus" :title="name">
-                    <el-menu-item v-for="(v, k) in menu" :index="v.href"><i :class="v.icon"></i>{{ v.name }}</el-menu-item>
+                    <el-menu-item v-for="(v, k) in menu" :index="v.href">
+                        <i :class="v.icon"></i>
+                        {{ v.name }}
+                    </el-menu-item>
                 </el-menu-item-group>
             </el-menu>
         </el-col>

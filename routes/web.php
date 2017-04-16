@@ -14,7 +14,6 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index');
-Route::get('tag', 'HomeController@tag');
 Route::get('info', 'HomeController@info');
 Route::get('rank', 'UserController@rank');
 Route::get('menu', 'HomeController@menu');
@@ -31,10 +30,8 @@ Route::group(['prefix'=>'problem'],function() {
     Route::get('/seek', 'ProblemController@seek');
     Route::get('/detail', 'ProblemController@detail');
     Route::get('/crawler', 'ProblemController@crawler');
-    Route::get('/speech', 'ProblemController@speech');
 
     Route::put('/', 'ProblemController@store');
-    Route::put('/comment', 'ProblemController@comment');
 
     Route::post('/', 'ProblemController@update');
     Route::post('/star', 'ProblemController@star');
@@ -45,7 +42,6 @@ Route::group(['prefix'=>'contest'],function() {
     Route::get('/', 'ContestController@index');
     Route::get('/rack', 'ContestController@rack');
     Route::get('/show', 'ContestController@show');
-    Route::get('/speech', 'ContestController@speech');
 
     Route::get('/rank', 'ContestController@rank');
     Route::get('/verify', 'ContestController@verify');
@@ -55,7 +51,6 @@ Route::group(['prefix'=>'contest'],function() {
     Route::put('/', 'ContestController@store');
     Route::post('/', 'ContestController@update');
     Route::post('/submit', 'ContestController@submit');
-    Route::put('/comment', 'ContestController@comment');
 });
 
 Route::group(['prefix'=>'post'],function() {
@@ -64,21 +59,17 @@ Route::group(['prefix'=>'post'],function() {
     Route::get('/rack', 'PostController@rack');
     Route::get('/show', 'PostController@show');
     Route::get('/seek', 'PostController@seek');
-    Route::get('/speech', 'PostController@speech');
     Route::post('/', 'PostController@update');
-    Route::put('/comment', 'PostController@comment');
     Route::post('/star', 'PostController@star');
     Route::put('/', 'PostController@store');
 });
 
 Route::group(['prefix'=>'team'],function() {
-    Route::get('/speech', 'TeamController@speech');
     Route::get('/show', 'TeamController@show');
     Route::get('/detail', 'TeamController@detail');
     Route::get('/', 'TeamController@index');
     Route::get('/rack', 'TeamController@rack');
     Route::get('/seek', 'TeamController@seek');
-    Route::put('/comment', 'TeamController@comment');
     Route::post('/apply', 'TeamController@apply');
     Route::post('/switch', 'TeamController@switchRole');
     Route::put('/', 'TeamController@store');

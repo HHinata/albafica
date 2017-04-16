@@ -1,24 +1,22 @@
 <template>
     <div>
         <el-table :data="rank.data" style="width: 100%">
-            <el-table-column prop="id" label="#" width="100">
+            <el-table-column type="index" label="#" width="100">
             </el-table-column>
-            <el-table-column prop="name" label="Name">
+            <el-table-column label="Name">
+                <template scope="scope">
+                    <a :href="'#/home/'+rank.data[scope.$index].name">
+                        {{rank.data[scope.$index].name}}
+                    </a>
+                </template>
             </el-table-column>
             <el-table-column prop="info" label="">
             </el-table-column>
-            <el-table-column prop="rating" label="Rating">
-            </el-table-column>
-            <el-table-column label="操作" width="100">
-                <template scope="scope">
-                    <el-button @click.native.prevent="handleClick(scope.$index, rank.data)" type="text" size="small">
-                        查看
-                    </el-button>
-                </template>
+            <el-table-column prop="rating" label="Rating" width="100">
             </el-table-column>
         </el-table>
         <el-row type='flex' justify='center' style="margin-top: 20px">
-            <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :total="rank.total"
+            <el-pagination layout="prev, pager, next" @current-change="pageSwitch" :total="rank.total"
                            :page-size="rank.per_page">
             </el-pagination>
         </el-row>
@@ -35,21 +33,18 @@
             };
         },
         mounted() {
-            this.updateRank(1);
+            this.update(1);
         },
         methods: {
-            handleCurrentChange: function (val) {
-                this.updateRank(val);
+            pageSwitch: function (val) {
+                this.update(val);
             },
-            updateRank: function (val) {
+            update: function (val) {
                 var _this = this;
                 axios.get('rank', {params: {page: val}})
                     .then(function (res) {
                         _this.rank = res.data;
                     });
-            },
-            handleClick: function (index, rows) {
-                window.location.hash = '/home/' + rows[index].name;
             }
         }
     }

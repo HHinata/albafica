@@ -4,23 +4,25 @@
             <h2>团队管理</h2>
         </el-col>
         <el-col :span="6">
-            <el-button type="success" @click="newTeam">添加团队</el-button>
+            <a href="#/profile/new-team">
+                <el-button type="success">添加团队</el-button>
+            </a>
         </el-col>
         <el-col :span="24">
             <el-table :data="team.data" style="width: 100%">
-                <el-table-column prop="id" label="#">
-                </el-table-column>
-                <el-table-column prop="name" label="Name">
-                </el-table-column>
+                <el-table-column prop="id" label="#" width="100"></el-table-column>
+                <el-table-column prop="name" label="Name"></el-table-column>
                 <el-table-column label="操作" width="100">
                     <template scope="scope">
-                        <el-button @click.native.prevent="handleClick(scope.$index, team.data)" type="text" size="small">编辑</el-button>
+                        <a :href="'#/team/'+team.data[scope.$index].id">查看</a>
+                        <a :href="'#/profile/team/'+team.data[scope.$index].id">编辑</a>
                     </template>
                 </el-table-column>
             </el-table>
         </el-col>
         <el-col :span="24" style="text-align: center">
-            <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :total="team.total" :page-size="team.per_page">
+            <el-pagination layout="prev, pager, next"  @current-change="pageSwitch"
+                           :total="team.total" :page-size="team.per_page">
             </el-pagination>
         </el-col>
     </el-row>
@@ -35,25 +37,19 @@
                 }
             };
         },
-        mounted() {
-            this.updateTeam(1);
+        mounted: function() {
+            this.update(1);
         },
         methods: {
-            handleCurrentChange: function (val) {
-                this.updateTeam(val);
+            pageSwitch: function (val) {
+                this.update(val);
             },
-            updateTeam: function (val) {
+            update: function (val) {
                 var _this = this;
                 axios.get('team/rack', { params: { page: val }})
                     .then(function(res) {
                         _this.team = res.data;
                     });
-            },
-            handleClick: function (index, rows) {
-                window.location.hash = 'profile/team/'+rows[index].id;
-            },
-            newTeam: function () {
-                window.location.hash = 'profile/new-team';
             }
         }
     }

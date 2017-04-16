@@ -2,10 +2,10 @@
 <div>
     <el-tabs v-if="visible" v-model="activeName">
         <el-tab-pane label="OVERVIEW" name="overview">
-            <overview :cid="$route.params.id" v-on:show='show' v-on:submit='submit' ></overview>
+            <overview :cid="$route.params.id" v-on:show='show' v-on:submit='submit'></overview>
         </el-tab-pane>
         <el-tab-pane label="PROBLEM" name="problem">
-            <problem :pid="pid" :cid="cid"></problem>
+            <problem :pid="pid" :cid="cid" v-on:submit='submit'></problem>
         </el-tab-pane>
         <el-tab-pane label="STATUS" name="status">
             <status :cid="cid"></status>
@@ -30,13 +30,12 @@
 </template>
 
 <script>
-    import detail from './detail.vue'
-    import problem from './problem.vue'
-    import submit from './submit.vue'
-    import discuss from './discuss.vue'
     import rank from './rank.vue'
+    import detail from './detail.vue'
+    import submit from './submit.vue'
     import status from './status.vue'
-
+    import problem from './problem.vue'
+    import discuss from './discuss.vue'
     export default {
         data: function () {
             return {

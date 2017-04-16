@@ -16,6 +16,9 @@
         <h3>Sample Output</h3>
             <div v-html="problem.sample_output"><b>asdf</b></div>
     </div>
+    <div style="text-align: center">
+        <el-button  @click="submit">提交</el-button>
+    </div>
 </div>
 </template>
 
@@ -23,13 +26,11 @@
     export default {
         data: function () {
             return {
-                problem: {
-                },
-                starStyle:{color:'blue'}
+                problem: { }
             };
         },
         props: ['pid'],
-        mounted() {
+        mounted: function() {
             var _this = this;
             axios.get('problem/detail', { params: { id: this.pid }})
                 .then(function(res) {
@@ -37,12 +38,8 @@
                 });
         },
         methods: {
-            starOn: function() {
-                var _this = this;
-                axios.post('problem/star', {id: this.problem.id})
-                    .then(function (res) {
-                        _this.problem.users_count ^= 1;
-                    });
+            submit: function () {
+                this.$emit('submit', true);
             }
         },
         watch: {
@@ -51,7 +48,6 @@
                 axios.get('problem/detail', { params: { id: this.pid }})
                 .then(function(res) {
                     _this.problem = res.data;
-                    console.log(_this.problem);
                 });
             }
         }

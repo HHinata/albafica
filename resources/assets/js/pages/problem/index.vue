@@ -3,7 +3,12 @@
         <el-table :data="problem.data" style="width: 100%">
             <el-table-column prop="id" label="#" width="100">
             </el-table-column>
-            <el-table-column prop="title" label="Title">
+            <el-table-column label="Title">
+                <template scope="scope">
+                    <a :href="'#/problem/'+problem.data[scope.$index].id">
+                        {{problem.data[scope.$index].title}}
+                    </a>
+                </template>
             </el-table-column>
             <el-table-column>
                 <template scope="scope">
@@ -14,16 +19,9 @@
             </el-table-column>
             <el-table-column prop="submited" width="150" label="Submited">
             </el-table-column>
-            <el-table-column label="操作" width="100">
-                <template scope="scope">
-                    <el-button @click.native.prevent="handleClick(scope.$index, problem.data)" type="text" size="small">
-                        查看
-                    </el-button>
-                </template>
-            </el-table-column>
         </el-table>
         <el-row type='flex' justify='center' style="margin-top: 20px">
-            <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :total="problem.total"
+            <el-pagination layout="prev, pager, next" @current-change="pageSwitch" :total="problem.total"
                            :page-size="problem.per_page">
             </el-pagination>
         </el-row>
@@ -40,21 +38,18 @@
             };
         },
         mounted() {
-            this.updateProblem(1);
+            this.update(1);
         },
         methods: {
-            handleCurrentChange: function (val) {
-                this.updateProblem(val);
+            pageSwitch: function (val) {
+                this.update(val);
             },
-            updateProblem: function (val) {
+            update: function (val) {
                 var _this = this;
-                axios.get('problem', {params: {page: val}})
+                axios.get('problem', {params: { page: val } })
                     .then(function (res) {
                         _this.problem = res.data;
                     });
-            },
-            handleClick: function (index, rows) {
-                window.location.hash = '/problem/' + rows[index].id;
             }
         }
     }

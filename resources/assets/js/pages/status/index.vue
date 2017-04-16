@@ -11,7 +11,7 @@
         <el-table-column prop="memory" width="100" label="Memory"></el-table-column>
     </el-table>
     <el-row type='flex' justify='center' style="margin-top: 20px">
-        <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :total="status.total" :page-size="status.per_page">
+        <el-pagination layout="prev, pager, next"  @current-change="pageSwitch" :total="status.total" :page-size="status.per_page">
         </el-pagination>
     </el-row>
 </div>
@@ -43,13 +43,13 @@
             };
         },
         mounted() {
-            this.updateStatus(1);
+            this.update(1);
         },
         methods: {
-            handleCurrentChange: function (val) {
-                this.updateStatus(val);
+            pageSwitch: function (val) {
+                this.update(val);
             },
-            updateStatus: function (val) {
+            update: function (val) {
                 var _this = this;
                 axios.get('solution', { params: { page: val }})
                 .then(function(res) {

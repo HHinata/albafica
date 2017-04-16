@@ -10,7 +10,7 @@
         data: function () {
             return {
                 status: {
-                    user:{}
+                    user: { }
                 },
                 resOptions: {
                     0:"Queuing",

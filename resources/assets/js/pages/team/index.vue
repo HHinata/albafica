@@ -1,10 +1,12 @@
 <template>
-    <el-row>
-        <el-col :span="3" v-for="item in team.data">
-            <el-card :body-style="{ padding: '0px' }">
+    <el-row :gutter="20">
+        <el-col :span="3" v-for="item in team.data" style="margin-bottom: 20px">
+            <el-card :body-style="{ padding: '0', height: '200px' }">
                 <img :src="item.avatar" class="image">
                 <div style="padding: 14px;">
-                    <span @click="handleClick(item.id)">{{item.name}}</span>
+                    <span>
+                        <a :href="'#/team/'+item.id">{{item.name}}</a>
+                    </span>
                     <div class="clearfix">
                         <time class="time">{{item.desc}}</time>
                     </div>
@@ -12,7 +14,8 @@
             </el-card>
         </el-col>
         <el-col :span="24" style="text-align: center">
-        <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :total="team.total" :page-size="team.per_page">
+        <el-pagination layout="prev, pager, next"  @current-change="pageSwitch" :total="team.total"
+                       :page-size="team.per_page">
         </el-pagination>
         </el-col>
     </el-row>
@@ -29,24 +32,19 @@
             };
         },
         mounted() {
-            this.updateTeam(1);
+            this.update(1);
         },
         methods: {
-            handleCurrentChange: function (val) {
-                this.updateTeam(val);
+            pageSwitch: function (val) {
+                this.update(val);
             },
-            updateTeam: function (val) {
+            update: function (val) {
                 var _this = this;
                 axios.get('team', { params: { page: val }})
                     .then(function(res) {
                         _this.team = res.data;
                     });
-            },
-            handleClick: function (index) {
-                window.location.hash = '/team/'+index;
-
-            },
-
+            }
         }
     }
 </script>

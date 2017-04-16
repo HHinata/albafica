@@ -190,34 +190,4 @@ class PostController extends Controller
         }
         else    return response('',404);
     }
-
-    /**
-     * 文章评论功能
-     *
-     * @param Request $request
-     * @return Comment
-     */
-    public function comment(Request $request)
-    {
-        $post = Post::find($request->input('id'));
-        $comment = new Comment();
-        $comment->content = $request->input('content');
-        $comment->user_id = Auth::user()->id;
-        $comment->save();
-        $post->comments()->save($comment);
-        $comment->user = $comment->user()->first();
-        return $comment;
-    }
-
-
-    /**
-     * 得到文章评论信息
-     *
-     * @param Request $request
-     * @return mixed
-     */
-    public function speech(Request $request)
-    {
-        return Post::with("comments", 'comments.user', 'comments.comments')->find($request->input('id'));
-    }
 }

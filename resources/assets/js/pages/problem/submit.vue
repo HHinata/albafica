@@ -27,7 +27,7 @@
     export default {
         data: function () {
             return {
-                code: '// Type away! \n',
+                code: '',
                 lang: 1,
                 options:[
                     {

@@ -1,8 +1,8 @@
 <template>
 <div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs v-model="activeName">
         <el-tab-pane label="DETAIL" name="detail">
-            <detail :pid="$route.params.id"></detail>
+            <detail :pid="$route.params.id" v-on:submit='submit'></detail>
         </el-tab-pane>
         <el-tab-pane label="SUBMIT" name="submit">
             <submit :pid="$route.params.id"></submit>
@@ -24,10 +24,10 @@
                 activeName: 'detail'
             };
         },
-        components:{ 'detail': detail, 'submit': submit, 'discuss': discuss },
+        components: { 'detail': detail, 'submit': submit, 'discuss': discuss },
         methods: {
-            handleClick(tab, event) {
-                console.log(tab, event);
+            submit: function (val) {
+                this.activeName = 'submit';
             }
         }
     }

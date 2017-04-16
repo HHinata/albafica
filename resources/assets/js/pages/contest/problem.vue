@@ -17,6 +17,9 @@
             <h3>Sample Output</h3>
                 <div v-html="problem.sample_output"></div>
         </div>
+        <div style="text-align: center">
+            <el-button  @click="submit(pid)">提交</el-button>
+        </div>
     </div>
     <div v-else>
         <h1>There not have Problems</h1>
@@ -33,20 +36,26 @@
             };
         },
         props: ['pid', 'cid'],
-        mounted() {
+        mounted: function() {
             var _this = this;
             axios.get('contest/problem', { params: { id: this.cid, pid: this.pid }})
                 .then(function(res) {
                     _this.problem = res.data;
                 });
         },
+        methods: {
+            submit: function (index) {
+                console.log(index);
+                this.$emit('submit', index);
+            }
+        },
         watch: {
             pid: function () {
                 var _this = this;
                 axios.get('contest/problem', { params: { id: this.cid, pid: this.pid }})
-                .then(function(res) {
-                    _this.problem = res.data;
-                });
+                    .then(function(res) {
+                        _this.problem = res.data;
+                    });
             }
         }
     }

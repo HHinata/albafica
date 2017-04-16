@@ -7,7 +7,7 @@
     <title>Welcome To | Bootstrap Based Admin Template - Material Design</title>
     <!-- Favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-
+    <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
         /* http://meyerweb.com/eric/tools/css/reset/
            v2.0 | 20110126

@@ -17,7 +17,10 @@
         <el-table :data="contest.problems" stripe style="width: 100%">
             <el-table-column type="index" label="#" width="180">
             </el-table-column>
-            <el-table-column prop="title" label="Title">
+            <el-table-column label="Title">
+                <template scope="scope">
+                    <a @click="show(scope.$index)">{{contest.problems[scope.$index].title}}</a>
+                </template>
             </el-table-column>
             <el-table-column prop="submited" label="Submited" width="180">
             </el-table-column>
@@ -25,10 +28,9 @@
             </el-table-column>
             <el-table-column prop="solved" label="Solved" width="180">
             </el-table-column>
-            <el-table-column label="Op" width="180">
+            <el-table-column label="" width="180">
                 <template scope="scope">
-                    <el-button @click.native.prevent="show(scope.$index)"  type="text" size="small">查看</el-button>
-                    <el-button @click.native.prevent="submit(scope.$index)"  type="text" size="small">提交</el-button>
+                    <el-button @click.native.prevent="submit(scope.$index)"  type="text" size="small"><i class="fa fa-code"></i>提交</el-button>
                 </template>
             </el-table-column>
         </el-table>

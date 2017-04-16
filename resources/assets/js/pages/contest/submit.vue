@@ -27,9 +27,9 @@
     export default {
         data: function () {
             return {
-                code: '// Type away! \n',
+                code: '',
                 lang: '',
-                options:[
+                options: [
                     {
                         value: 1,
                         label: 'C++'
@@ -58,18 +58,18 @@
             submit: function () {
                 var _this = this;
                 axios.post('contest/submit', { pid: this.pid, cid: this.cid, code: this.code, lang: this.lang })
-                .then(function(res) {
-                    _this.$message({
-                      message: '恭喜你，代码提交成功',
-                      type: 'success'
+                    .then(function(res) {
+                        _this.$message({
+                          message: '恭喜你，代码提交成功',
+                          type: 'success'
+                        });
+                    })
+                    .catch(function (error) {
+                        _this.$message({
+                          message: '你的代码有些问题,请修改之后重新提交',
+                          type: 'error'
+                        });
                     });
-                })
-                .catch(function (error) {
-                    _this.$message({
-                      message: '你的代码有些问题,请修改之后重新提交',
-                      type: 'error'
-                    });
-                });
             }
         }
     }

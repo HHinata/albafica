@@ -20,7 +20,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -30,52 +30,76 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        return view('index');
     }
 
+    /**
+     * 用户管理页菜单
+     *
+     * @return array
+     */
     public function menu()
     {
-
-        if (Auth::user()->hasRole('admin')) $menuList = Menu::get()->toArray();
-        else    $menuList = Menu::where('class', 'Base')->get()->toArray();
+        if (Auth::user()->hasRole('admin')) {
+            $menuList = Menu::get()->toArray();
+        }
+        else {
+            $menuList = Menu::where('class', 'Base')->get()->toArray();
+        }
 
         $menuJson = [];
-        foreach ($menuList as $menu)
-        {
+        foreach ($menuList as $menu) {
             $class = $menu['class'];
-            if (isset($menuJson[$class]) == false)
-            {
+            if (isset($menuJson[$class]) == false) {
                 $menuJson[$class] = [$menu];
             }
-            else    $menuJson[$class][] = $menu;
+            else {
+                $menuJson[$class][] = $menu;
+            }
         }
         return $menuJson;
     }
 
+    /**
+     * 获得当前用户信息
+     *
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     */
     public function info()
     {
         return Auth::user();
     }
 
-    public function tag()
-    {
-        return Tag::find(1)->posts;
-    }
-
+    /**
+     * 七牛文件上传token
+     *
+     * @return array
+     */
     public function token()
     {
-        $disk = QiniuStorage::disk('qiniu');
         $key = time();
+        $disk = QiniuStorage::disk('qiniu');
         $token = $disk->uploadToken($key);
-        return ['key'=>\Qiniu\base64_urlSafeEncode($key), 'uptoken'=>$token, 'domain'=>env('QINIU_DOMAIN')];
+
+        return [
+            'key'   => \Qiniu\base64_urlSafeEncode($key),
+            'uptoken'   => $token,
+            'domain'    => env('QINIU_DOMAIN')];
     }
 
+    /**
+     * 获得标签列表
+     *
+     * @return array
+     */
     public function tags()
     {
         $tags = Tag::all()->toArray();
-        foreach ($tags as &$tag)
-        {
-            $tag = ['value'=>$tag['id'], 'label'=>$tag['name']];
+        foreach ($tags as &$tag) {
+            $tag = [
+                'value' => $tag['id'],
+                'label' => $tag['name']
+            ];
         }
         return $tags;
     }

@@ -17,12 +17,15 @@ class ContestController extends Controller
 {
     /**
      * 首页比赛列表
+     *
+     * @param Request $request
      * @return mixed
      */
     public function index(Request $request)
     {
         $page = $request->input('page_count', 20);
-        return Contest::paginate($page, ['id', 'title', 'start_time', 'end_time', 'private']);
+        $fields = ['id', 'title', 'start_time', 'end_time', 'private'];
+        return Contest::paginate($page, $fields);
     }
 
     /**
@@ -33,11 +36,12 @@ class ContestController extends Controller
     public function rack()
     {
         $user = Auth::user();
+        $fields = ['id', 'title', 'start_time', 'end_time'];
         if ($user->hasRole('admin') == false)
         {
-            return Contest::where('user_id', $user->id)->paginate(20, ['id', 'title', 'start_time', 'end_time']);
+            return Contest::where('user_id', $user->id)->paginate(20, $fields);
         }
-        return Contest::paginate(20, ['id', 'title', 'start_time', 'end_time']);
+        return Contest::paginate(20, $fields);
     }
 
     /**
@@ -46,31 +50,33 @@ class ContestController extends Controller
     public function store(Request $request)
     {
         $contest = new Contest();
-        $contest->user_id = Auth::user()->id;
-        $contest->desc = $request->input('description');
+        $contest->user_id   = Auth::user()->id;
+        $contest->private   = $request->input('private');
+        $contest->desc  = $request->input('description');
         $contest->title = $request->input('title');
-        $contest->private = $request->input('private');
 
-        switch ($contest->private)
-        {
-            case 1: $contest->team_id = $request->input('team')['id'];
+        switch ($contest->private) {
+            case 1:
+                $contest->team_id   = $request->input('team')['id'];
                 break;
-            case 2: $contest->password = $request->input('password');
+            case 2:
+                $contest->password  = $request->input('password');
                 break;
         }
 
         $timeRange = $request->input('time');
-        $contest->start_time = strtotime($timeRange[0]);
-        $contest->end_time = strtotime($timeRange[1]);
+        $contest->start_time    = strtotime($timeRange[0]);
+        $contest->end_time  = strtotime($timeRange[1]);
 
-        if ($contest->save())
-        {
+        if ($contest->save()) {
             $problemData = [];
             $problemList = $request->input('problems');
-            foreach ($problemList as $key=>$problem)
-            {
+
+            foreach ($problemList as $key=>$problem) {
                 $item['order'] = $key;
-                if (isset($problem['alias']))   $item['alias'] = $problem['alias'];
+                if (isset($problem['alias'])) {
+                    $item['alias'] = $problem['alias'];
+                }
                 $problemData[$problem['id']] = $item;
             }
             $contest->problems()->sync($problemData);
@@ -80,21 +86,28 @@ class ContestController extends Controller
 
     /**
      * 更新比赛
+     *
+     * @param Request $request
+     * @return Response
      */
     public function update(Request $request)
     {
-        $contest = Contest::find($request->input('id'));
-        if ($contest->user_id != Auth::user()->id)  return response('',404);
+        $id = $request->input('id');
+        $contest = Contest::find($id);
+        if ($contest->user_id != Auth::user()->id) {
+            return response('',404);
+        }
 
-        $contest->desc = $request->input('desc');
+        $contest->desc  = $request->input('desc');
         $contest->title = $request->input('title');
-        $contest->private = $request->input('private');
+        $contest->private   = $request->input('private');
 
-        switch ($contest->private)
-        {
-            case 1: $contest->team_id = $request->input('team')['id'];
+        switch ($contest->private) {
+            case 1:
+                $contest->team_id = $request->input('team')['id'];
                 break;
-            case 2: $contest->password = $request->input('password');
+            case 2:
+                $contest->password = $request->input('password');
                 break;
         }
 
@@ -102,16 +115,18 @@ class ContestController extends Controller
         $contest->start_time = strtotime($timeRange[0]);
         $contest->end_time = strtotime($timeRange[1]);
 
-        if ($contest->save())
-        {
+        if ($contest->save()) {
             $problemData = [];
             $problemList = $request->input('problems');
-            foreach ($problemList as $key=>$problem)
-            {
+
+            foreach ($problemList as $key=>$problem) {
                 $item['order'] = $key;
-                if (isset($problem['alias']))   $item['alias'] = $problem['alias'];
+                if (isset($problem['alias'])) {
+                    $item['alias'] = $problem['alias'];
+                }
                 $problemData[$problem['id']] = $item;
             }
+
             $contest->problems()->sync($problemData);
         }
         return $contest->id;
@@ -140,39 +155,47 @@ class ContestController extends Controller
     {
         $id = $request->input('id');
         $pid = $request->input('pid');
-        $problem = Contest::find($id)->problems()->wherePivot('order', $pid)->first()->toArray();
+
+        $problem = Contest::find($id)->problems()
+            ->wherePivot('order', $pid)->first()->toArray();
         return $problem;
     }
 
+    /**
+     * 获得比赛排行榜信息
+     *
+     * @param Request $request
+     * @return array
+     */
     public function rank(Request $request)
     {
         $rank = [];
         $contestId = $request->input('id');
 
-        $solutions = Solution::with('user')->where('contest_id', $contestId)->where('result', '>', 0)->orderBy('result')->get()->toArray();
+        $solutions = Solution::with('user')->where('contest_id', $contestId)
+            ->where('result', '>', 0)->orderBy('result')->get()->toArray();
 
         $contest = Contest::find($contestId);
         $problems = $contest->problems;
         $users = array_column($solutions, 'user');
-        foreach ($users as $user)
-        {
+
+        foreach ($users as $user) {
             $rank[$user['id']] = ['time'=>0, 'name'=>$user['name']];
-            foreach ($problems as $problem)
-            {
+            foreach ($problems as $problem) {
                 $rank[$user['id']]['info'][$problem['id']] = ['submited'=>0, 'solved'=>0];
             }
         }
 
-        foreach ($solutions as $solution)
-        {
-            if ($solution['result'] === 1)
-            {
-                $rank[$solution['user_id']]['time'] = intval((strtotime($solution['created_at']) - $contest['start_time'])/60);
+        foreach ($solutions as $solution) {
+            if ($solution['result'] === 1) {
+                $rank[$solution['user_id']]['time'] =
+                    intval((strtotime($solution['created_at']) - $contest['start_time'])/60);
                 $rank[$solution['user_id']]['info'][$solution['problem_id']]['solved'] = 1;
             }
-            else
-            {
-                if ($rank[$solution['user_id']]['time'])    $rank[$solution['user_id']]['time'] += 20;
+            else {
+                if ($rank[$solution['user_id']]['time']) {
+                    $rank[$solution['user_id']]['time'] += 20;
+                }
                 $rank[$solution['user_id']]['info'][$solution['problem_id']]['submited'] += 1;
             }
         }
@@ -180,13 +203,22 @@ class ContestController extends Controller
         return ['problems'=>$problems, 'rank'=>$rank];
     }
 
+    /**
+     * 用于比赛代码提交
+     *
+     * @param Request $request
+     * @return Response|mixed
+     */
     public function submit(Request $request)
     {
         $contest_id = $request->input('cid');
         $contest = Contest::find($contest_id);
         $timestamp = time();
-        if ($contest->start_time > $timestamp || $timestamp > $contest->end_time)
+
+        if ($timestamp < $contest->start_time ||
+            $timestamp > $contest->end_time) {
             return response("", 404);
+        }
 
         $solution = new Solution();
         $solution->user_id = Auth::user()->id;
@@ -205,38 +237,41 @@ class ContestController extends Controller
         return $solution->id;
     }
 
+    /**
+     * 用于得到比赛信息
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function show(Request $request)
     {
         $id = $request->input('id');
         $contest = Contest::with('problems')->find($id);
-        $contest['time'] = [date("Y-m-d\TH:i:s\Z", $contest['start_time']), date("Y-m-d\TH:i:s\Z", $contest['end_time'])];
-        // 联表得到所有的问题信息,包括id,标题
-        if ($contest->private == 1)
-        {
+        $contest['time'] = [
+            date("Y-m-d\TH:i:s\Z", $contest['start_time']),
+            date("Y-m-d\TH:i:s\Z", $contest['end_time'])
+        ];
+
+        if ($contest->private === 1) {
             $team = Team::find($contest->team_id)->toArray();
-            $contest->team = ['id'=>$team['id'], 'name'=>$team['name'], 'value'=>$team['name']];
+            $contest->team = [
+                'id'    => $team['id'],
+                'name'  => $team['name'],
+                'value' => $team['name']
+            ];
         }
-        else    $contest->team = ['value'=>''];
+        else {
+            $contest->team = ['value'=>''];
+        }
         return $contest;
     }
 
-    public function comment(Request $request)
-    {
-        $contest = Contest::find($request->input('id'));
-        $comment = new Comment();
-        $comment->content = $request->input('content');
-        $comment->user_id = Auth::user()->id;
-        $comment->save();
-        $contest->comments()->save($comment);
-        $comment->user = $comment->user()->first();
-        return $comment;
-    }
-
-    public function speech(Request $request)
-    {
-        return Contest::with("comments", "comments.user")->find($request->input('id'));
-    }
-
+    /**
+     * 用于验证用户是否拥有权限
+     *
+     * @param Request $request
+     * @return array
+     */
     public function verify(Request $request)
     {
         $cookies = $request->cookie();
@@ -244,15 +279,16 @@ class ContestController extends Controller
         $id = $request->input('id');
         $contest = Contest::find($id);
 
-        switch ($contest->private)
-        {
+        switch ($contest->private) {
             case 2:
                 $pwd = $request->input('pwd', "");
-                if ($pwd == "")  $pwd = $cookies['cst-'.$id];
-                return response([true])->cookie('cst-'.$id, $pwd);
+                if ($pwd == "") {
+                    $pwd = $cookies['cst-'.$id];
+                }
+                return response('')->cookie('cst-'.$id, $pwd);
                 break;
             default:
-                return [true];
+                return response('');
         }
     }
 }

@@ -27,19 +27,18 @@
         methods: {
             login: function() {
                 var _this = this;
-                axios.post('login', this.form)
-                .then(function(res) {
+                axios.post('login', this.form).then(function(res) {
                     _this.$message({
-                      message: '恭喜你，登陆成功',
-                      type: 'success'
+                        message: '恭喜你，登陆成功',
+                        type: 'success'
                     });
                     _this.$emit('login', true)
                     window.location.hash = '/';
                 })
                 .catch(function (error) {
                     _this.$message({
-                      message: '你的信息有误,请重新提交',
-                      type: 'error'
+                        message: '你的信息有误,请重新提交',
+                        type: 'error'
                     });
                 });
             }

@@ -67,37 +67,28 @@
         },
         mounted() {
             var _this = this;
-            axios.get('info')
-            .then(function(res) {
+            axios.get('info').then(function(res) {
                 _this.info = res.data;
             })
-            .catch(function (error) {
-            });
         },
         methods: {
             'login': function(msg) {
                 if( msg ) {
                     var _this = this;
-                    axios.get('info')
-                    .then(function(res) {
+                    axios.get('info').then(function(res) {
                         _this.info = res.data;
                     })
-                    .catch(function (error) {
-                    });
                 }
             },
             'logout': function() {
                 var _this = this;
-                axios.post('/logout')
-                .then(function(res) {
+                axios.post('/logout').then(function(res) {
                     _this.info = {};
                     _this.$message({
                         message: '账号退出成功',
                         type: 'success'
                     });
                 })
-                .catch(function (error) {
-                });
             }
         }
     }

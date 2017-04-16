@@ -15,7 +15,7 @@
                     <el-input type="password" v-model="form.password_confirmation" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="register">登陆</el-button>
+                    <el-button type="primary" @click="register">注册</el-button>
                     <el-button>取消</el-button>
                 </el-form-item>
             </el-form>

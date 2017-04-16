@@ -4,20 +4,20 @@
         <header>
             <h1 class="title">{{ post.title }}</h1>
             <p>
-                <span>By: <i><a :href="'#/home/' + post.user.name">{{post.user.name}}</a></i>,<i>{{post.created_at}}</i></span>
+                <i class="fa fa-user-o"><a :href="'#/home/' + post.user.name">{{post.user.name}}</a></i>
+                <span>|</span>
+                <span class="fa fa-clock-o">{{post.created_at}}</span>
+                <span>|</span>
+                <el-tag v-for="item in post.tags">{{ item.name }}</el-tag>
             </p>
         </header>
         <hr>
         <section class="post-section" v-html="post.content"></section>
-        <p>
-            <el-tag v-for="item in post.tags">{{ item.name }}</el-tag>
-        </p>
         <div class="info-bar">
             <div class="info-left-bar">
                 <span @click="starOn" v-bind:style="[post.users_count>0?starStyle:'']">收藏</span>
-                <span @click="edit(post.id)">编辑</span>
+                <a :href="'#/profile/post/'+post.id">编辑</a>
             </div>
-            <div class="info-right-bar"><span>By: <i><a :href="'#/home/' + post.user.name">{{post.user.name}}</a></i>,<i>{{post.created_at}}</i></span></div>
         </div>
     </article>
     <div style="clear: both"></div>
@@ -39,19 +39,16 @@
                 starStyle:{color:'blue'}
             };
         },
-        mounted() {
+        mounted: function() {
             var _this = this;
             axios.get('post/detail', {params:{id:this.$route.params.id}})
                 .then(function (res) {
                     _this.post = res.data;
                 }).catch(function () {
                     window.location.hash = '/blog';
-            });
+                });
         },
         methods: {
-            edit: function (index) {
-                window.location.hash = '/profile/post/' + index;
-            },
             starOn: function() {
                 var _this = this;
                 axios.post('post/star', {id: this.post.id})
@@ -71,6 +68,7 @@
         padding-left: 10px;
         font-size: 1em;
         line-height: 1.4em;
+        margin: 10px;
         font-family: verdana,arial,sans-serif;
     }
 
