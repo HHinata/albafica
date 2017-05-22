@@ -69,11 +69,16 @@
                             message: '恭喜你，评论成功',
                             type: 'success'
                         });
+                        console.log(_this.commentList)
+                        _this.commentList.push(res.data);
                     }).catch(function () {
-                    _this.$message({
-                        message: '评论失败,请稍后再试',
-                        type: 'error'
-                    });
+                        _this.$message({
+                            message: '评论失败,请稍后再试',
+                            type: 'error',
+                            onClose: function () {
+                                window.location.hash = '/login';
+                            }
+                        });
                 });
             }
         }

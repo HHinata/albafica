@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Welcome To | Bootstrap Based Admin Template - Material Design</title>
+    <title>[]~(￣▽￣)~* Welcome To | Albafice </title>
     <!-- Favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -42,10 +42,17 @@
             border-collapse: collapse;
             border-spacing: 0;
         }
+
+        #lazyload{
+            text-align: center;
+            vertical-align: middle;
+            height: 100%;
+        }
     </style>
 </head>
 
 <body class="theme-red">
+<div class="lazyload" id="lazyload"></div>
 <div id="app">
     @yield('content')
 </div>
@@ -55,8 +62,8 @@
 
 <script>
     var square = new Sonic({
-        width: document.body.scrollWidth,
-        height: 400,
+        width: 100,
+        height: 100,
         fillColor: '#000',
         path: [
             ['line', 10, 10, 90, 10],
@@ -67,11 +74,11 @@
     });
 
     square.play();
-    document.body.appendChild(square.canvas);
+    document.getElementById('lazyload').appendChild(square.canvas);
 
     LazyLoad.js("{{ mix('js/app.js') }}", function () {
         square.stop();
-        document.body.removeChild(square.canvas);
+        document.getElementById('lazyload').removeChild(square.canvas);
     });
 </script>
 

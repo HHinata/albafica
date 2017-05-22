@@ -1,46 +1,57 @@
 <template>
-    <el-row>
-        <el-dialog title="提示" v-model="dialogVisible" size="tiny">
-            <el-autocomplete
-                    v-model="notice_obj.post_id.title"
-                    :fetch-suggestions="querySearchAsync"
-                    @select="handleSelect"
-                    placeholder="请输入题目信息">
-            </el-autocomplete>
-            <span class="demonstration">默认</span>
-            <el-date-picker
-                    v-model="notice_obj.publish_time"
-                    type="datetime"
-                    placeholder="选择日期时间">
-            </el-date-picker>
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addNotice">确 定</el-button>
-          </span>
-        </el-dialog>
+    <div>
+        <el-row>
+            <el-col :span="18">
+                <h2>公告管理</h2>
+            </el-col>
+            <el-col :span="6">
+                <el-button type="success" @click="dialogVisible = true">添加公告</el-button>
+            </el-col>
+            <el-col :span="24">
+                <el-table :data="notice.data" style="width: 100%">
+                    <el-table-column prop="id" label="#">
+                    </el-table-column>
+                    <el-table-column prop="post.title" label="Name">
+                    </el-table-column>
+                    <el-table-column label="操作" width="100">
+                        <template scope="scope">
+                            <el-button @click.native.prevent="handleClick(scope.$index, notice.data)" type="text" size="small">删除</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-col>
+            <el-col :span="24" style="text-align: center">
+                <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :total="notice.total" :page-size="notice.per_page">
+                </el-pagination></el-col>
+        </el-row>
 
-        <el-col :span="18">
-            <h2>公告管理</h2>
-        </el-col>
-        <el-col :span="6">
-            <el-button type="success" @click="dialogVisible = true">添加公告</el-button>
-        </el-col>
-        <el-col :span="24">
-            <el-table :data="notice.data" style="width: 100%">
-                <el-table-column prop="id" label="#">
-                </el-table-column>
-                <el-table-column prop="post.title" label="Name">
-                </el-table-column>
-                <el-table-column label="操作" width="100">
-                    <template scope="scope">
-                        <el-button @click.native.prevent="handleClick(scope.$index, notice.data)" type="text" size="small">删除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </el-col>
-        <el-col :span="24" style="text-align: center">
-            <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :total="notice.total" :page-size="notice.per_page">
-            </el-pagination></el-col>
-    </el-row>
+        <el-dialog title="提示" v-model="dialogVisible" size="tiny">
+            <el-row>
+                <el-col :span="6">題目標題：</el-col>
+                <el-col :span="18">
+                    <el-autocomplete
+                            v-model="notice_obj.post_id.title"
+                            :fetch-suggestions="querySearchAsync"
+                            @select="handleSelect"
+                            placeholder="请输入题目信息">
+                    </el-autocomplete>
+                </el-col>
+                <el-col :span="6">發布時間：</el-col>
+                <el-col :span="18">
+                    <el-date-picker
+                        v-model="notice_obj.publish_time"
+                        type="datetime"
+                        placeholder="选择日期时间">
+                    </el-date-picker>
+                </el-col>
+                <el-col :span="24">
+                    <el-button type="primary" @click="addNotice">确 定</el-button>
+                    <el-button @click="dialogVisible = false">取 消</el-button>
+                </el-col>
+            </el-row>
+        </el-dialog>
+    </div>
+
 </template>
 <script>
     export default{

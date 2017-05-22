@@ -5,7 +5,7 @@
                 <img :src="item.avatar" class="image">
                 <div style="padding: 14px;">
                     <span>
-                        <a :href="'#/team/'+item.id">{{item.name}}</a>
+                        <div @click="enter(item.id)">{{item.name}}</div>
                     </span>
                     <div class="clearfix">
                         <time class="time">{{item.desc}}</time>
@@ -43,6 +43,18 @@
                 axios.get('team', { params: { page: val }})
                     .then(function(res) {
                         _this.team = res.data;
+                    });
+            },
+            enter: function (id) {
+                var _this = this;
+                axios.get('/team/verify')
+                    .then(function (res) {
+                        window.location.hash = '/team/'+id;
+                    }).catch(function (error) {
+                        _this.$message({
+                            message: '你并不属于该团队',
+                            type: 'error'
+                        });
                     });
             }
         }

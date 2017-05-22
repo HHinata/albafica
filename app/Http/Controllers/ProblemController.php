@@ -6,8 +6,11 @@ use App\Models\Comment;
 use App\Models\Problem;
 use App\Models\Solution;
 use App\Models\Tag;
+use Faker\Factory;
+use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProblemController extends Controller
 {
@@ -264,5 +267,58 @@ class ProblemController extends Controller
     public function speech(Request $request)
     {
         return Problem::with("comments")->find($request->input('id'));
+    }
+
+    /**
+     * 导出题目，并生成id
+     *
+     * @param Request $request
+     */
+    public function export(Request $request)
+    {
+        $problemSet = $request->input('problemSet');
+        $problemRes = Problem::whereIn('id', array_column($problemSet, 'id'))->get()->toArray();
+        foreach ($problemRes as &$problem) {
+            unset($problem['id']);
+        }
+
+        $faker = Factory::create();
+        $faker->addProvider(new Uuid($faker));
+        $id = $faker->uuid;
+        Storage::put($id, json_encode($problemRes));
+        return $id;
+    }
+
+    /**
+     * 生成下载信息
+     *
+     * @param Request $request
+     */
+    public function download(Request $request)
+    {
+        $uuid = $request->input('uuid');
+
+        return response()->download(
+            realpath(base_path('storage/app')).'/'. $uuid,
+            $uuid.'.dat'
+        );
+    }
+
+    /**
+     * 导入题目信息
+     *
+     * @param Request $request
+     */
+    public function import(Request $request)
+    {
+        $file = $request->data->store('json');
+        $content = Storage::get($file);
+        $data = json_decode($content, true);
+        foreach ($data as $item)
+        {
+            $problem = new Problem($item);
+            $problem->save();
+        }
+        return $file;
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -58,7 +60,7 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            return [true];
+            return Auth::user();
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -83,6 +85,8 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return [true];
+        Auth::logout();
+
+        return Auth::user();
     }
 }

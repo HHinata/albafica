@@ -30,7 +30,7 @@
                 <div class="info-content">
 
                     <div class="article">
-                        <h3>文章 <a style="float:right" class="more" href="">更多</a></h3>
+                        <h3>文章 <div style="float:right" class="more" href="" @click="postDialog=true">更多</div></h3>
                     </div>
                     <el-table :data="info.posts" style="width: 100%">
                         <el-table-column prop="title" label="名称">
@@ -45,7 +45,7 @@
                 </div>
                 <div class="info-content">
                     <div class="status">
-                        <h3>提交状态 <a style="float:right" class="more" href="">更多</a></h3>
+                        <h3>提交状态 <div style="float:right" class="more" href="" @click="solutionDialog=true">更多</div></h3>
                     </div>
                     <el-table :data="info.solution" style="width: 100%">
                         <el-table-column prop="user_id" label="用户">
@@ -62,7 +62,7 @@
             <el-col :span="12">
                 <div class="info-content">
                     <div class="article">
-                        <h3>关注者 <a style="float:right" class="more" href="">更多</a></h3>
+                        <h3>关注者 <div style="float:right" class="more" @click="followerDialog=true">更多</div></h3>
                     </div>
                     <el-table :data="info.followers" style="width: 100%">
                         <el-table-column prop="name" label="名称"
@@ -78,7 +78,7 @@
                 </div>
                 <div class="info-content">
                     <div class="status">
-                        <h3>团队 <a style="float:right" class="more" href="">更多</a></h3>
+                        <h3>团队 <div style="float:right" class="more" @click="teamDialog=true">更多</div></h3>
                     </div>
                     <el-table :data="info.teams" style="width: 100%">
                         <el-table-column prop="name" label="名称"
@@ -90,6 +90,51 @@
                 </div>
             </el-col>
         </el-row>
+        <el-dialog title="文章列表" v-model="postDialog">
+            <el-table :data="info.posts" style="width: 100%">
+                <el-table-column prop="title" label="名称">
+                </el-table-column>
+                <el-table-column prop="created_at" label="创建时间"
+                                 width="180">
+                </el-table-column>
+                <el-table-column prop="updated_at" label="更新时间"
+                                 width="180">
+                </el-table-column>
+            </el-table>
+        </el-dialog>
+        <el-dialog title="关注者列表" v-model="followerDialog">
+            <el-table :data="info.followers" style="width: 100%">
+                <el-table-column prop="name" label="名称"
+                                 width="80">
+                </el-table-column>
+                <el-table-column prop="email" label="邮箱"
+                                 width="180">
+                </el-table-column>
+                <el-table-column prop="info" label="简介">
+                </el-table-column>
+            </el-table>
+        </el-dialog>
+        <el-dialog title="评测列表" v-model="solutionDialog">
+            <el-table :data="info.solution" style="width: 100%">
+                <el-table-column prop="user_id" label="用户">
+                </el-table-column>
+                <el-table-column prop="lang" label="语言"
+                                 width="180">
+                </el-table-column>
+                <el-table-column prop="result" label="结果"
+                                 width="180">
+                </el-table-column>
+            </el-table>
+        </el-dialog>
+        <el-dialog title="团队列表" v-model="teamDialog">
+            <el-table :data="info.teams" style="width: 100%">
+                <el-table-column prop="name" label="名称"
+                                 width="120">
+                </el-table-column>
+                <el-table-column prop="desc" label="描述">
+                </el-table-column>
+            </el-table>
+        </el-dialog>
     </div>
 </template>
 
@@ -98,8 +143,17 @@
         data: function(){
             return {
                 info: {
-                    user:{}
+                    user:{
+                        posts: [],
+                        followers: [],
+                        solution: [],
+                        teams: []
+                    }
                 },
+                postDialog: false,
+                followerDialog: false,
+                solutionDialog: false,
+                teamDialog: false,
                 starStyle:{color:'blue'}
             };
         },

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,6 +44,7 @@ class CommentController extends Controller
         $comment->save();
 
         $post->comments()->save($comment);
+        $comment->user = User::find($comment->user_id);
         return $comment;
     }
 }

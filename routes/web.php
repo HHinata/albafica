@@ -18,6 +18,7 @@ Route::get('info', 'HomeController@info');
 Route::get('rank', 'UserController@rank');
 Route::get('menu', 'HomeController@menu');
 Route::get('tags', 'HomeController@tags');
+Route::get('roles', 'HomeController@roles');
 Route::get('token', 'HomeController@token');
 
 Route::get('comment', 'CommentController@index');
@@ -30,12 +31,15 @@ Route::group(['prefix'=>'problem'],function() {
     Route::get('/seek', 'ProblemController@seek');
     Route::get('/detail', 'ProblemController@detail');
     Route::get('/crawler', 'ProblemController@crawler');
+    Route::get('/download', 'ProblemController@download');
 
     Route::put('/', 'ProblemController@store');
 
     Route::post('/', 'ProblemController@update');
     Route::post('/star', 'ProblemController@star');
     Route::post('/submit', 'ProblemController@submit');
+    Route::post('/export', 'ProblemController@export');
+    Route::post('/import', 'ProblemController@import');
 });
 
 Route::group(['prefix'=>'contest'],function() {
@@ -63,17 +67,20 @@ Route::group(['prefix'=>'post'],function() {
     Route::post('/star', 'PostController@star');
     Route::put('/', 'PostController@store');
 });
-
 Route::group(['prefix'=>'team'],function() {
-    Route::get('/show', 'TeamController@show');
-    Route::get('/detail', 'TeamController@detail');
     Route::get('/', 'TeamController@index');
     Route::get('/rack', 'TeamController@rack');
     Route::get('/seek', 'TeamController@seek');
+    Route::get('/verify', 'TeamController@verify');
     Route::post('/apply', 'TeamController@apply');
-    Route::post('/switch', 'TeamController@switchRole');
-    Route::put('/', 'TeamController@store');
-    Route::post('/', 'TeamController@update');
+
+    Route::group(['middleware' => ['verify.team']],function() {
+        Route::get('/show', 'TeamController@show');
+        Route::get('/detail', 'TeamController@detail');
+        Route::put('/', 'TeamController@store');
+        Route::post('/', 'TeamController@update');
+        Route::post('/switch', 'TeamController@switchRole');
+    });
 });
 
 Route::get('message', 'MessageController@index');
@@ -84,6 +91,7 @@ Route::put('notice', 'NoticeController@store');
 
 Route::get('user/info', 'UserController@info');
 Route::get('user/role', 'UserController@role');
+Route::post('user/role', 'UserController@updateRole');
 Route::post('user', 'UserController@update');
 Route::post('user/star', 'UserController@star');
 

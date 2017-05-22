@@ -82,6 +82,9 @@
             axios.get("team/detail", {params: {id: this.id}})
                 .then(function (res) {
                     _this.team = res.data;
+                })
+                .catch(function () {
+                    window.location.hash = '/team';
                 });
         },
         methods: {

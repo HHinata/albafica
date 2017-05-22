@@ -192,4 +192,17 @@ class TeamController extends Controller
         if ($team->userRole($uid) == 0) return $team->users()->updateExistingPivot($uid, ['role'=>2]);
         else    $team->users()->detach($uid);
     }
+
+    public function verify(Request $request){
+        $id = $request->input('id');
+        $team = Team::find($id);
+        $user = Auth::user();
+
+        if (is_null($user)) return response('',404);
+        if ($user->hasRole('admin') === false){
+            $user = $team->users()->where('user_id', $user->id)->get();
+            if ($user->isEmpty())   return response('',404);
+        }
+        return response('', 200);
+    }
 }

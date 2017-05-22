@@ -71,4 +71,12 @@ class UserController extends Controller
     {
         return User::with("roles")->paginate(20);
     }
+
+    public function updateRole(Request $request){
+        $uid = $request->input('uid');
+        $roles = $request->input('roles');
+        $user = User::find($uid);
+        $user->roles()->sync($roles);
+        return $user->id;
+    }
 }

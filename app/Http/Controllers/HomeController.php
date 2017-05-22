@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Role;
 use App\Models\Tag;
 use App\Models\Usermeta;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -95,6 +96,20 @@ class HomeController extends Controller
     public function tags()
     {
         $tags = Tag::all()->toArray();
+        foreach ($tags as &$tag) {
+            $tag = [
+                'value' => $tag['id'],
+                'label' => $tag['name']
+            ];
+        }
+        return $tags;
+    }
+
+    /**
+     * 獲得權限列表
+     */
+    public function roles(){
+        $tags = Role::all()->toArray();
         foreach ($tags as &$tag) {
             $tag = [
                 'value' => $tag['id'],
