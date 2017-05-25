@@ -87,7 +87,7 @@
                 contest: {
                     title: '',
                     description: '',
-                    time: [new Date(0), new Date(0)],
+                    time: [new Date(), new Date()],
                     private: 0,
                     password: "",
                     team: {value:""},

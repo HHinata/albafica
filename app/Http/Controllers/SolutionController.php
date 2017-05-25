@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use App\Models\Problem;
 use App\Models\Solution;
 use App\User;
 use Illuminate\Http\Request;
@@ -30,13 +31,14 @@ class SolutionController extends Controller
         $key = $request->input('key', null);
         $id = $request->input('id', '');
 
-        if (($key == 'KEY' && $id !== null) || true)
+        if (($key == 'scCGuxQIyNWiLMZRb4Wn8Rs5hwZTlEYvbJlW41EyI' && $id !== null))
         {
             $solution = Solution::find($request->input('id'));
             if ($solution->result === 1)
             {
                 $user = User::find($solution->user_id);
-                $user->rating += $solution->problem_id;
+                $problem = Problem::find($solution->problem_id);
+                $user->rating += $problem->points;
                 $user->save();
 
                 Message::send($solution->user_id, 'Status is OK', 'Status is OK..........');

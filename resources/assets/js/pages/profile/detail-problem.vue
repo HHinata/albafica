@@ -30,17 +30,10 @@
                 </el-select>
                 <el-button :disabled="true" slot="append" icon="search"></el-button>
             </el-input>
+
         </el-col>
-        <el-col :span="8" v-if="problem.platform=='local'">
-            <input type="file" name="data_input" @change="upload" style='display: none !important;'>
-            <input type="file" name="data_output" @change="upload" style='display: none !important;'>
-            <input type="file" @change='upload' style='display: none !important;'>
-            <el-tooltip class="item" effect="dark" :content="problem.data_input" placement="top-start">
-                <el-button @click="upclick('data_input')" type="primary">输入样例上传<i class="el-icon-upload el-icon--right"></i></el-button>
-            </el-tooltip>
-            <el-tooltip class="item" effect="dark" :content="problem.data_output" placement="top-start">
-                <el-button @click="upclick('data_output')" type="primary">输出样例上传<i class="el-icon-upload el-icon--right"></i></el-button>
-            </el-tooltip>
+        <el-col :span="8">
+            <el-input-number v-model="problem.points"></el-input-number>
         </el-col>
         <el-col :span="24">
             <h3>Descript</h3>
@@ -84,10 +77,11 @@
                     sample_output: '',
                     data_input:'',
                     data_output:'',
-                    time_limit: 0,
-                    mem_limit: 0,
+                    time_limit: 1000,
+                    mem_limit: 65535,
                     platform: '',
                     sign: '',
+                    points: 0,
                     tags: [],
                 },
                 options: [],

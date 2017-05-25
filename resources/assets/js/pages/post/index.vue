@@ -1,6 +1,6 @@
 <template>
 <el-row :gutter="20">
-    <el-col :span="18" class="atricles">
+    <el-col :span="24">
         <article class="home-article" v-for="post in posts.data">
             <header>
                 <h2 class="title">
@@ -23,7 +23,6 @@
                        :page-size="posts.per_page">
         </el-pagination>
     </el-col>
-    <el-col :span="6"></el-col>
 </el-row>
 </template>
 

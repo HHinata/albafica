@@ -15,6 +15,8 @@
                     <el-tag v-for="item in problem.data[scope.$index].tags">{{ item.name }}</el-tag>
                 </template>
             </el-table-column>
+            <el-table-column prop="points" width="150" label="Points">
+            </el-table-column>
             <el-table-column prop="solved" width="150" label="Solved">
             </el-table-column>
             <el-table-column prop="submited" width="150" label="Submited">

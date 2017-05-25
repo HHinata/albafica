@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Message;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -127,9 +128,11 @@ class TeamController extends Controller
         if ($user == null)  return response('', 404);
         $id = $request->input('id');
         $team = Team::find($id);
-        if ($team->userRole($user->id) == -1)
+        if ($team->userRole($user->id) <= 0)
         {
             $team->users()->attach($user->id, ['role' => 0]);
+            $users = $team->users()->get()->toArray();
+            Message::sendAll(array_column($users, 'id'), 'A apply', 'A apply');
         }
         return $team->id;
     }
@@ -187,10 +190,15 @@ class TeamController extends Controller
         $uid = $request->input('uid');
 
         $team = Team::find($id);
-        if ($team->userRole($user->id) != 1 || $uid == $user->id)  return response('', 404);
+        if ($team->userRole($user->id) != 1 || $uid == $user->id) {
+            return response('', 404);
+        }
 
-        if ($team->userRole($uid) == 0) return $team->users()->updateExistingPivot($uid, ['role'=>2]);
-        else    $team->users()->detach($uid);
+        if ($team->userRole($uid) == 0) {
+            return $team->users()->updateExistingPivot($uid, ['role'=>2]);
+        } else {
+            $team->users()->detach($uid);
+        }
     }
 
     public function verify(Request $request){
@@ -200,8 +208,10 @@ class TeamController extends Controller
 
         if (is_null($user)) return response('',404);
         if ($user->hasRole('admin') === false){
-            $user = $team->users()->where('user_id', $user->id)->get();
-            if ($user->isEmpty())   return response('',404);
+            $user = $team->users()->where('user_id', $user->id)->first();
+            if (is_null($user) || $user->pivot->role === 0) {
+                return response('',404);
+            }
         }
         return response('', 200);
     }

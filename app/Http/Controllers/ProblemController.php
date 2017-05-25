@@ -100,6 +100,8 @@ class ProblemController extends Controller
         $problem = app()->make(strtoupper($platform))->grab($sign);
         $problem['platform'] = $platform;
         $problem['sign'] = $sign;
+        $problem['time_limit'] = 1000;
+        $problem['mem_limit'] = 65535;
 
         return $problem;
     }
@@ -166,6 +168,7 @@ class ProblemController extends Controller
 
         $problem->time_limit = $request->input('time_limit');
         $problem->mem_limit = $request->input('mem_limit');
+        $problem->points = $request->input('points');
 
         $problem->platform = $request->input('platform');
         if ($problem->platform == 'local')

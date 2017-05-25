@@ -280,11 +280,17 @@ class ContestController extends Controller
         $contest = Contest::find($id);
 
         switch ($contest->private) {
+            case 1:
+                $user = Team::find($contest->team_id)->users()->where('user_id', Auth::user()->id)->first();
+                if (is_null($user) || $user->pivot->role === 0)
+                    return response('',404);
+                break;
             case 2:
                 $pwd = $request->input('pwd', "");
                 if ($pwd == "") {
                     $pwd = $cookies['cst-'.$id];
                 }
+                if ($pwd != $contest->password) return response('',404);
                 return response('')->cookie('cst-'.$id, $pwd);
                 break;
             default:

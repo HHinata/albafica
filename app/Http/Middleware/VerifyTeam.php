@@ -23,8 +23,10 @@ class VerifyTeam
 
         if (is_null($user)) return response('',404);
         if ($user->hasRole('admin') === false){
-            $user = $team->users()->where('user_id', $user->id)->get();
-            if ($user->isEmpty())   return response('',404);
+            $user = $team->users()->where('user_id', $user->id)->first();
+            if (is_null($user) || $user->pivot->role === 0) {
+                return response('',404);
+            }
         }
         return $next($request);
     }

@@ -34,6 +34,7 @@ class CreateProblemsTable extends Migration
 
             $table->integer('time_limit');
             $table->integer('mem_limit');
+            $table->integer('points')->default(0);
 
             $table->string('hint')->default('');
             $table->string('author')->default('');
